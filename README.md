@@ -45,9 +45,11 @@ python3 -m http.server 8000
 
 ## 部署
 
-`main` 分支每次推送都会触发 `.github/workflows/deploy.yml`：检出代码 → 打包为 Pages 制品 → 发布到 GitHub Pages。
+线上地址：<https://lxun602.github.io/people-net/>
 
-仓库需在 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**（私有仓库需账户支持 Pages，或把仓库改为公开）。
+`main` 分支每次推送都会触发 `.github/workflows/deploy.yml`：检出代码 → 打包为 Pages 制品 → 发布到 GitHub Pages，约 1 分钟上线。
+
+仓库为 **public**（GitHub Pages 免费版只对公开仓库开放），Pages 的 **Build and deployment → Source** 已设置为 **GitHub Actions**，HTTPS 强制开启。
 
 ## 维护
 
