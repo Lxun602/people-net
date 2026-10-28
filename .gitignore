@@ -30,3 +30,6 @@ venv/
 *.tmp
 *.bak
 .cache/
+
+# ---- 助手工作记录（本地留存，不上传）----
+.workbuddy/
