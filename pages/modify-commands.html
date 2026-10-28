@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>二维图形修改命令</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 60px;
+    background: #eef1f4;
+    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    color: #1f2937; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  .backbar { max-width: 1200px; margin: 0 auto 14px; }
+  .backbar a { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: #1c4e80; text-decoration: none; background: #fff; border: 1px solid #dbe1e8; border-radius: 20px; padding: 6px 16px; transition: .18s; }
+  .backbar a:hover { background: #1c4e80; color: #fff; border-color: #1c4e80; }
+
+  .head { background: #fff; border: 1px solid #dbe1e8; border-radius: 12px; padding: 28px 32px; margin-bottom: 22px; border-top: 5px solid #1c4e80; }
+  .head h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: 1px; color: #143d63; }
+  .head .sub { margin: 0 0 18px; font-size: 14px; color: #5b6b7c; }
+  .meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 28px; font-size: 13.5px; }
+  .meta b { color: #143d63; display: inline-block; min-width: 76px; }
+  .meta span { color: #3d4d5c; }
+
+  .fig { background: #fff; border: 1px solid #dbe1e8; border-radius: 12px; margin-bottom: 22px; overflow: hidden; }
+  .fig-head { display: flex; align-items: center; gap: 14px; padding: 16px 26px; border-bottom: 1px solid #e7ecf1; background: #f8fafc; }
+  .fig-no { flex: none; font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #fff; background: #1c4e80; padding: 4px 9px; border-radius: 4px; }
+  .fig-head h2 { margin: 0; font-size: 17px; color: #143d63; font-weight: 600; }
+  .fig-head .tag { margin-left: auto; font-size: 12px; color: #7a8b9c; }
+  .fig-body { padding: 24px 26px 28px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { border: 1px solid #e0e6ec; padding: 9px 11px; text-align: left; vertical-align: top; line-height: 1.65; }
+  th { background: #eef3f7; color: #143d63; font-weight: 600; font-size: 12.5px; }
+  tr:nth-child(even) td { background: #fafcfd; }
+  td.k { font-family: Consolas, "Courier New", monospace; color: #b8442a; font-weight: 700; white-space: nowrap; }
+  td.c { font-family: Consolas, monospace; color: #143d63; font-weight: 700; white-space: nowrap; }
+  .tbl-cap { font-size: 12.5px; color: #6b7d8e; margin-top: 10px; line-height: 1.7; }
+
+  .cmp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .cmp.two { grid-template-columns: 1fr 1fr; }
+  .cmp-box { border: 1px solid #e0e7ee; border-radius: 9px; overflow: hidden; }
+  .cmp-h { background: #f2f6fa; border-bottom: 1px solid #e0e7ee; padding: 9px 14px; font-size: 14px; font-weight: 700; color: #143d63; display: flex; align-items: center; gap: 8px; }
+  .cmp-h .bg { font-size: 11px; padding: 1px 7px; border-radius: 3px; color: #fff; font-weight: 700; }
+  .b1 { background: #1c4e80; } .b2 { background: #d9480f; } .b3 { background: #2f7a4f; }
+  .cmp-b { padding: 14px; }
+  .cmp-b svg { display: block; width: 100%; height: auto; }
+  .cmp-b p { margin: 10px 0 0; font-size: 13px; line-height: 1.75; color: #37474f; }
+  .cmp-b p b { color: #143d63; }
+  .cmp-b .warn { background: #fdf4f2; border-left: 3px solid #c1502e; padding: 8px 11px; font-size: 12.5px; color: #8a3a20; margin-top: 10px; border-radius: 0 4px 4px 0; }
+
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .m { border: 1px solid #e0e7ee; border-radius: 9px; padding: 14px; text-align: center; background: #fafcfd; }
+  .m svg { display: block; margin: 0 auto 10px; }
+  .m .mt { font-size: 13.5px; font-weight: 700; color: #143d63; }
+  .m .md { font-size: 12.5px; color: #55657a; line-height: 1.7; margin-top: 5px; }
+  .m .mk { font-family: Consolas, monospace; font-size: 11.5px; color: #b8442a; font-weight: 700; margin-top: 6px; }
+
+  .tipbox { background: #f2f7fb; border-left: 3px solid #1c4e80; padding: 12px 15px; font-size: 13px; color: #2b4157; line-height: 1.8; border-radius: 0 4px 4px 0; margin-top: 14px; }
+  .tipbox b { color: #143d63; }
+  .tipbox.warn2 { background: #fdf4ee; border-left-color: #d9480f; color: #8a4a25; }
+
+  /* ---------- 命令框（仿真命令行） ---------- */
+  .cmdg { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .cmdp { border: 1px solid #dbe1e8; border-radius: 9px; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+  .cmdp-h { padding: 10px 13px; background: #f2f6fa; border-bottom: 1px solid #e0e7ee; font-size: 14px; font-weight: 700; color: #143d63; display: flex; align-items: center; gap: 9px; }
+  .ckey { font-family: Consolas, monospace; background: #143d63; color: #fff; font-size: 12px; padding: 2px 9px; border-radius: 3px; font-weight: 700; flex: none; }
+  .cname { font-size: 12px; color: #7a8b9c; font-weight: 400; }
+  .cmdw-t { background: #2b3a48; color: #9fb3c6; font-size: 10.5px; padding: 4px 12px; letter-spacing: 1.5px; }
+  .cmdbox { background: #1e2b38; padding: 11px 13px; font-family: Consolas, "Courier New", monospace; font-size: 12px; line-height: 1.85; color: #cfd9e2; flex: 1; }
+  .cmdbox .p { color: #7ee0a0; }
+  .cmdbox .o { color: #f5c185; }
+  .cmdbox .n { color: #8fb4d4; }
+  .cmdp-note { padding: 10px 13px 12px; font-size: 12.5px; color: #37474f; line-height: 1.75; border-top: 1px solid #eef2f6; }
+  .cmdp-note b { color: #143d63; }
+  .cmdp-note .k { font-family: Consolas, monospace; background: #fff5e8; border: 1px solid #f0c88f; color: #a5560c; border-radius: 3px; padding: 0 5px; font-weight: 700; font-size: 12px; }
+
+  .foot { background: #fff; border: 1px solid #dbe1e8; border-radius: 12px; padding: 22px 28px; font-size: 12.5px; color: #55657a; line-height: 1.9; }
+  .foot h3 { margin: 0 0 10px; font-size: 14px; color: #143d63; }
+  .foot ol { margin: 0 0 12px; padding-left: 20px; }
+  .foot li { margin-bottom: 5px; }
+  .foot .todo { color: #c1502e; font-weight: 700; }
+
+  @media (max-width: 1000px) { .cmp, .cmp.two, .three, .meta { grid-template-columns: 1fr; } }
+  @media print { body { background: #fff; padding: 0; } .fig, .head, .foot { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="backbar">
+    <a href="../index.html">
+      <svg fill="none" height="14" viewBox="0 0 24 24" width="14"><path d="M19 12H6M12 6l-6 6 6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/></svg>
+      返回总入口
+    </a>
+  </div>
+
+
+  <div class="head">
+    <h1>二维图形修改命令</h1>
+    <p class="sub">把画好的东西「改一改」的那些命令 —— 对应教材第 6 章</p>
+    <div class="meta">
+      <div><b>书名</b><span>《环境工程制图与CAD》（第 2 版）</span></div>
+      <div><b>主编</b><span>张晶、潘立卫、王嘉斌</span></div>
+      <div><b>出版</b><span>化学工业出版社，2022 年 1 月</span></div>
+      <div><b>ISBN</b><span>978-7-122-38763-9</span></div>
+      <div><b>软件平台</b><span>AutoCAD 2018</span></div>
+      <div><b>依据</b><span>Autodesk 官方《AutoCAD 快捷键手册》</span></div>
+    </div>
+  </div>
+
+  <!-- 图 01 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 01</span><h2>修改命令速查表</h2><span class="tag">17 个，先认脸再挑着用</span></div>
+    <div class="fig-body">
+      <table>
+        <thead><tr><th style="width:120px">命令</th><th style="width:80px">快捷键</th><th style="width:190px">干什么</th><th>什么时候用它</th></tr></thead>
+        <tbody>
+          <tr><td class="c">OFFSET</td><td class="k">O</td><td>等距复制（偏移）</td><td><b>用得最多</b>。池壁、道路边线、同心圆、平行管线</td></tr>
+          <tr><td class="c">TRIM</td><td class="k">TR</td><td>剪掉多余的线头</td><td>管线交叉、线条出头太多</td></tr>
+          <tr><td class="c">EXTEND</td><td class="k">EX</td><td>把线补到边界上</td><td>线没画够长，接到另一条线上</td></tr>
+          <tr><td class="c">FILLET</td><td class="k">F</td><td>倒圆角</td><td>池体内壁转角、管线转弯处</td></tr>
+          <tr><td class="c">CHAMFER</td><td class="k">CHA</td><td>倒斜角</td><td>设备基础、安装孔的 45° 倒角</td></tr>
+          <tr><td class="c">COPY</td><td class="k">CO</td><td>原样复制一份</td><td>同样的设备画第二台、第三台</td></tr>
+          <tr><td class="c">MIRROR</td><td class="k">MI</td><td>镜像（翻面复制）</td><td>左右对称的池体、对称布置的设备</td></tr>
+          <tr><td class="c">ARRAY</td><td class="k">AR</td><td>阵列（批量复制）</td><td>曝气头、喷头、检查井成排布置</td></tr>
+          <tr><td class="c">MOVE</td><td class="k">M</td><td>搬位置</td><td>摆错地方了挪一挪</td></tr>
+          <tr><td class="c">ROTATE</td><td class="k">RO</td><td>转个角度</td><td>设备摆斜了、管线改走向</td></tr>
+          <tr><td class="c">SCALE</td><td class="k">SC</td><td>整体放大缩小</td><td>图块插入后尺寸不对，按比例缩放</td></tr>
+          <tr><td class="c">STRETCH</td><td class="k">S</td><td>拉长/拉短（形状跟着变）</td><td>池体加长、渠宽调整</td></tr>
+          <tr><td class="c">LENGTHEN</td><td class="k">LEN</td><td>改长度（形状不变）</td><td>单根线加长，不牵动别的</td></tr>
+          <tr><td class="c">BREAK</td><td class="k">BR</td><td>打断成两段 / 挖掉一段</td><td>管线留接口、断开标注线</td></tr>
+          <tr><td class="c">JOIN</td><td class="k">J</td><td>把断开的接成一根</td><td>BREAK 的反向操作</td></tr>
+          <tr><td class="c">EXPLODE</td><td class="k">X</td><td>炸开（拆成零件）</td><td>图块、多段线、矩形要单独改一部分时</td></tr>
+          <tr><td class="c">ERASE</td><td class="k">E</td><td>删除</td><td>画错了删掉（跟键盘 Delete 键一样）</td></tr>
+        </tbody>
+      </table>
+      <p class="tbl-cap">快捷键按 Autodesk 官方《AutoCAD 快捷键手册》与 AutoCAD 2018 中文版界面。删除也可以直接按键盘 Delete 键。</p>
+    </div>
+  </div>
+
+  <!-- 图 02 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 02</span><h2>命令框实况：每个命令到底在跟你说什么</h2><span class="tag">绿字=你输入的，橙字=可以选的选项</span></div>
+    <div class="fig-body">
+      <div class="tipbox" style="margin-top:0">
+        <b>先学会看命令行：</b><span style="font-family:Consolas,monospace">命令:</span> 后面是你敲的；<b>方括号 [ ] 里的字母</b>是可以选的选项，敲那个字母回车就切换；尖括号 <span style="font-family:Consolas,monospace">&lt; &gt;</span> 里是默认值，直接回车就用它。<b>所有修改命令都是「先选对象，回车，再操作」。</b>
+      </div>
+
+      <div class="cmdg">
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">O</span>偏移<span class="cname">OFFSET</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">O</span></div>
+            <div>OFFSET 当前设置: 删除源对象=否 图层=源</div>
+            <div>指定偏移距离或 <span class="o">[通过(T)/删除(E)/图层(L)]</span> &lt;通过&gt;: <span class="p">240</span></div>
+            <div>选择要偏移的对象，或 <span class="o">[退出(E)/放弃(U)]</span> &lt;退出&gt;: <span class="n">（选池壁圆）</span></div>
+            <div>指定要偏移的那一侧上的点，或 <span class="o">[退出(E)/多个(M)/放弃(U)]</span> &lt;退出&gt;: <span class="n">（点外侧）</span></div>
+          </div>
+          <div class="cmdp-note">三步走：<b>输距离 → 选对象 → 点偏哪一侧</b>。敲 <b>T</b> 可以让偏移后的线刚好通过某个点（不用算距离）。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">TR</span>修剪<span class="cname">TRIM</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">TR</span></div>
+            <div>TRIM 当前设置: 投影=UCS，边=无</div>
+            <div>选择剪切边... 选择对象或 <span class="n">&lt;全部选择&gt;</span>: <span class="p">回车</span></div>
+            <div>选择要修剪的对象，或按住 Shift 键选择要延伸的对象，或 <span class="o">[栏选(F)/窗交(C)/投影(P)/边(E)/删除(R)/放弃(U)]</span>:</div>
+            <div><span class="n">（点要剪掉的线头）</span></div>
+          </div>
+          <div class="cmdp-note"><b>直接回车 = 全图都当剪刀</b>，然后点哪剪哪，省掉选边界这步。这是最省事的用法。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">EX</span>延伸<span class="cname">EXTEND</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">EX</span></div>
+            <div>EXTEND 当前设置: 投影=UCS，边=无</div>
+            <div>选择边界的边... 选择对象或 <span class="n">&lt;全部选择&gt;</span>: <span class="p">回车</span></div>
+            <div>选择要延伸的对象，或按住 Shift 键选择要修剪的对象，或 <span class="o">[栏选(F)/窗交(C)/投影(P)/边(E)/放弃(U)]</span>:</div>
+            <div><span class="n">（点要补长的线）</span></div>
+          </div>
+          <div class="cmdp-note">操作步骤跟修剪<b>一模一样</b>。按住 <b>Shift</b> 能临时切成修剪，两个命令来回切。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">F</span>圆角<span class="cname">FILLET</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">F</span></div>
+            <div>FILLET 当前设置: 模式 = 修剪，半径 = <span class="n">0.0000</span></div>
+            <div>选择第一个对象或 <span class="o">[放弃(U)/多段线(P)/半径(R)/修剪(T)/多个(M)]</span>: <span class="p">R</span></div>
+            <div>指定圆角半径 &lt;0.0000&gt;: <span class="p">30</span></div>
+            <div>选择第一个对象或 <span class="o">[...]</span>: <span class="n">（点第一条线）</span></div>
+            <div>选择第二个对象，或按住 Shift 键选择要应用角点的对象: <span class="n">（点第二条）</span></div>
+          </div>
+          <div class="cmdp-note"><b>第一次必须先敲 R 设半径</b>，否则半径是 0，倒出来什么都没有。<b>M</b> = 连着倒多个角不退出。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">CHA</span>倒角<span class="cname">CHAMFER</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">CHA</span></div>
+            <div>CHAMFER 选择第一条直线或 <span class="o">[放弃(U)/多段线(P)/距离(D)/角度(A)/修剪(T)/方式(E)/多个(M)]</span>: <span class="p">D</span></div>
+            <div>指定第一个倒角距离 &lt;0.0000&gt;: <span class="p">40</span></div>
+            <div>指定第二个倒角距离 &lt;40.0000&gt;: <span class="p">回车</span></div>
+            <div>选择第一条直线: <span class="n">（点第一条）</span></div>
+            <div>选择第二条直线: <span class="n">（点第二条）</span></div>
+          </div>
+          <div class="cmdp-note">两个距离<b>相等</b>就是标准 45° 倒角。第二个距离默认跟着第一个，直接回车即可。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">CO</span>复制<span class="cname">COPY</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">CO</span></div>
+            <div>COPY 选择对象: <span class="n">找到 1 个</span></div>
+            <div>选择对象: <span class="p">回车</span></div>
+            <div>指定基点或 <span class="o">[位移(D)/模式(O)]</span> &lt;位移&gt;: <span class="n">（在对象上点个基准点）</span></div>
+            <div>指定第二个点或 <span class="o">[阵列(A)]</span> &lt;使用第一个点作为位移&gt;: <span class="p">@12000,0</span></div>
+          </div>
+          <div class="cmdp-note"><span class="k">@12000,0</span> = 相对刚才那个点向右 12000。<b>@ 符号就是「相对」</b>的意思，画第二格池子直接用。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">MI</span>镜像<span class="cname">MIRROR</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">MI</span></div>
+            <div>MIRROR 选择对象: <span class="n">找到 1 个</span></div>
+            <div>指定镜像线的第一点: <span class="n">（点对称轴一头）</span></div>
+            <div>指定镜像线的第二点: <span class="n">（点另一头）</span></div>
+            <div>要删除源对象吗？<span class="o">[是(Y)/否(N)]</span> &lt;否&gt;: <span class="p">N</span></div>
+          </div>
+          <div class="cmdp-note"><b>N</b> = 原来的留着（两边都有）；<b>Y</b> = 原来的删掉（相当于翻过去）。<b>文字会被镜像反</b>，先输 <span class="k">MIRRTEXT</span> 设成 0。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">AR</span>阵列<span class="cname">ARRAY</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">AR</span></div>
+            <div>ARRAY 选择对象: <span class="n">找到 1 个</span></div>
+            <div>输入阵列类型 <span class="o">[矩形(R)/路径(PA)/极轴(PO)]</span> &lt;矩形&gt;: <span class="p">PO</span></div>
+            <div>指定阵列的中心点或 <span class="o">[基点(B)/旋转轴(A)]</span>: <span class="n">（点池中心）</span></div>
+            <div>输入阵列中的项目数目: <span class="p">8</span></div>
+            <div>指定填充角度 <span class="o">(+=逆时针, -=顺时针)</span> &lt;360&gt;: <span class="p">回车</span></div>
+          </div>
+          <div class="cmdp-note"><b>R</b> 排行列、<b>PA</b> 沿线排、<b>PO</b> 绕圈排（界面里叫「<b>环形阵列</b>」）。填 360 回车 = 整整一圈。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">M</span>移动<span class="cname">MOVE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">M</span></div>
+            <div>MOVE 选择对象: <span class="n">找到 1 个</span></div>
+            <div>指定基点或 <span class="o">[位移(D)]</span> &lt;位移&gt;: <span class="n">（在自己身上点个"把手"）</span></div>
+            <div>指定第二个点或 &lt;使用第一个点作为位移&gt;: <span class="n">（把手放到目标位置）</span></div>
+          </div>
+          <div class="cmdp-note">先在自己身上抓一个点，再把这个点放到目标处。<b>开对象捕捉（F3）</b>抓端点、中点最准。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">RO</span>旋转<span class="cname">ROTATE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">RO</span></div>
+            <div>ROTATE 指定基点: <span class="n">（点旋转中心）</span></div>
+            <div>指定旋转角度，或 <span class="o">[复制(C)/参照(R)]</span> &lt;0&gt;: <span class="p">90</span></div>
+          </div>
+          <div class="cmdp-note">正角度 = 逆时针，负角度 = 顺时针。<b>C</b> = 转一份、原样留一份；<b>R</b> = 照着现有方向对齐（改管线走向时超好用）。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">SC</span>缩放<span class="cname">SCALE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">SC</span></div>
+            <div>SCALE 选择对象: <span class="n">找到 1 个</span></div>
+            <div>指定基点: <span class="n">（点一个不动的点）</span></div>
+            <div>指定比例因子或 <span class="o">[复制(C)/参照(R)]</span> &lt;1.0000&gt;: <span class="p">R</span></div>
+            <div>指定参照长度 &lt;1&gt;: <span class="n">（点现在的长度两端）</span></div>
+            <div>指定新的长度或 <span class="o">[点(P)]</span> &lt;1&gt;: <span class="p">5000</span></div>
+          </div>
+          <div class="cmdp-note">直接输 <b>2</b> = 放大一倍，<b>0.5</b> = 缩小一半。敲 <b>R</b> 可以输「现在多长 → 应该多长」，<b>不用自己算比例</b>。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">S</span>拉伸<span class="cname">STRETCH</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">S</span></div>
+            <div>STRETCH <span class="n">以交叉窗口或交叉多边形选择要拉伸的对象...</span></div>
+            <div>选择对象: 指定对角点: <span class="n">（从右往左拉框，虚线框）</span></div>
+            <div>选择对象: <span class="p">回车</span></div>
+            <div>指定基点或 <span class="o">[位移(D)]</span> &lt;位移&gt;: <span class="n">（点一下）</span></div>
+            <div>指定第二个点或 &lt;使用第一个点作为位移&gt;: <span class="n">（往要拉的方向点）</span></div>
+          </div>
+          <div class="cmdp-note">命令行第一句就明说了：<b>必须交叉窗口</b>（从右往左拉）。拉成实线框就变成移动了。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">BR</span>打断<span class="cname">BREAK</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">BR</span></div>
+            <div>BREAK 选择对象: <span class="n">（点对象，这一点就是第一个断点）</span></div>
+            <div>指定第二个打断点 或 <span class="o">[第一点(F)]</span>: <span class="n">（点第二点）</span></div>
+          </div>
+          <div class="cmdp-note">两点之间那段被挖掉。<b>想精确指定第一个断点</b>就敲 <b>F</b>，不然「点对象」的那下也算断点，位置不准。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">J</span>合并<span class="cname">JOIN</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">J</span></div>
+            <div>JOIN 选择源对象或要一次合并的多个对象: <span class="n">（框选要接的几段）</span></div>
+            <div>选择要合并的对象: <span class="p">回车</span></div>
+            <div><span class="p">3 条直线已合并为 1 条直线</span></div>
+          </div>
+          <div class="cmdp-note">前提是<b>在同一条直线上（共线）</b>，歪一点都合不了。合完就变成整体，能一起偏移。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">X</span>分解<span class="cname">EXPLODE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">X</span></div>
+            <div>EXPLODE 选择对象: <span class="n">找到 1 个</span></div>
+            <div>选择对象: <span class="p">回车</span></div>
+            <div><span class="n">（图块 / 矩形 / 多段线 被拆成单独的线和弧）</span></div>
+          </div>
+          <div class="cmdp-note">炸开是<b>不可逆的整体感</b>：炸完就不能整体偏移、整体改线宽了。要改整体前先想清楚。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">LEN</span>拉长<span class="cname">LENGTHEN</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">LEN</span></div>
+            <div>LENGTHEN 选择对象或 <span class="o">[增量(DE)/百分数(P)/全部(T)/动态(DY)]</span>: <span class="p">DY</span></div>
+            <div>选择要修改的对象或 <span class="o">[放弃(U)]</span>: <span class="n">（点线靠近要长的那一端）</span></div>
+            <div>指定新端点: <span class="n">（拖到想要的长度）</span></div>
+          </div>
+          <div class="cmdp-note"><b>DY（动态）最直观</b>：点哪一端就拖哪一端。<b>DE</b> = 输「加长多少」，<b>T</b> = 输「改成总共多长」。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">E</span>删除<span class="cname">ERASE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">E</span></div>
+            <div>ERASE 选择对象: <span class="n">找到 1 个</span></div>
+            <div>选择对象: <span class="p">回车</span></div>
+            <div><span class="n">（对象消失）</span></div>
+          </div>
+          <div class="cmdp-note">跟「先选中、再按键盘 Delete 键」效果一样。删错了按 <span class="k">Ctrl+Z</span> 撤回来。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 03 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 03</span><h2>三个「都是复制」的命令，别混</h2><span class="tag">新人第一道坎</span></div>
+    <div class="fig-body">
+      <div class="cmp">
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b1">CO</span>复制 COPY</div>
+          <div class="cmp-b">
+            <svg height="120" viewBox="0 0 220 120" width="220" xmlns="http://www.w3.org/2000/svg">
+              <rect fill="#eef4fa" height="40" stroke="#111827" stroke-width="2.2" width="55" x="25" y="45"/>
+              <rect fill="#dbe9f7" height="40" stroke="#1c4e80" stroke-width="2.6" width="55" x="120" y="45"/>
+              <line stroke="#d9480f" stroke-width="1.6" x1="88" x2="112" y1="65" y2="65"/>
+              <path d="M112 65 l-7 -4 M112 65 l-7 4" fill="none" stroke="#d9480f" stroke-width="1.6"/>
+              <text fill="#d9480f" font-family="Microsoft YaHei" font-size="10.5" text-anchor="middle" x="100" y="55">指定距离</text>
+              <text fill="#55657a" font-family="Microsoft YaHei" font-size="11" text-anchor="middle" x="52" y="100">原样</text>
+              <text fill="#1c4e80" font-family="Microsoft YaHei" font-size="11" text-anchor="middle" x="147" y="100">一模一样</text>
+            </svg>
+            <p>原样搬一份到别处，<b>方向、大小完全不变</b>。你给个方向和距离就行。</p>
+            <div class="warn">例：一号池画好了，二号池一模一样 → CO，指定间距 12000</div>
+          </div>
+        </div>
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b2">MI</span>镜像 MIRROR</div>
+          <div class="cmp-b">
+            <svg height="120" viewBox="0 0 220 120" width="220" xmlns="http://www.w3.org/2000/svg">
+              <line stroke="#d9480f" stroke-dasharray="6 4" stroke-width="1.8" x1="110" x2="110" y1="18" y2="104"/>
+              <path d="M100 45 h-45 v40 h45 l12 -20 z" fill="#eef4fa" stroke="#111827" stroke-width="2.2"/>
+              <path d="M120 45 h45 v40 h-45 l-12 -20 z" fill="#fbe6d6" stroke="#1c4e80" stroke-width="2.6"/>
+              <text fill="#d9480f" font-family="Microsoft YaHei" font-size="11" text-anchor="middle" x="110" y="116">对称轴</text>
+            </svg>
+            <p>沿一条对称轴<b>翻面</b>复制。形状镜像对称，左右颠倒。</p>
+            <div class="warn"><b>文字会被镜像反！</b>命令行问「是否删除源对象」之前，先把 <b>MIRRTEXT</b> 系统变量设成 <b>0</b>，文字才不会变成反的。</div>
+          </div>
+        </div>
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b3">O</span>偏移 OFFSET</div>
+          <div class="cmp-b">
+            <svg height="120" viewBox="0 0 220 120" width="220" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="95" cy="60" fill="none" r="26" stroke="#111827" stroke-width="2.2"/>
+              <circle cx="95" cy="60" fill="none" r="44" stroke="#1c4e80" stroke-width="2.6"/>
+              <line stroke="#d9480f" stroke-width="1.4" x1="95" x2="139" y1="60" y2="60"/>
+              <circle cx="95" cy="60" fill="#d9480f" r="2.5"/>
+              <text fill="#d9480f" font-family="Consolas" font-size="10.5" x="117" y="52">240</text>
+              <text fill="#55657a" font-family="Microsoft YaHei" font-size="11" text-anchor="middle" x="95" y="116">同心 / 平行，间距固定</text>
+            </svg>
+            <p>生成一个<b>等距</b>的新对象。圆→同心圆，直线→平行线，多段线→整体平行。</p>
+            <div class="warn">例：池内壁画好了，壁厚 240 → O，输 240，点外侧</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 04 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 04</span><h2>修剪 与 延伸：一对反操作</h2><span class="tag">先选边界，再选对象</span></div>
+    <div class="fig-body">
+      <div class="cmp two">
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b1">TR</span>修剪 TRIM —— 剪短的</div>
+          <div class="cmp-b">
+            <svg height="130" viewBox="0 0 320 130" width="320" xmlns="http://www.w3.org/2000/svg">
+              <line stroke="#55657a" stroke-width="2.4" x1="160" x2="160" y1="18" y2="112"/>
+              <line stroke="#1c4e80" stroke-width="2.4" x1="30" x2="152" y1="65" y2="65"/>
+              <line stroke="#1c4e80" stroke-width="2.4" x1="168" x2="290" y1="65" y2="65"/>
+              <line stroke="#c9d3dc" stroke-dasharray="7 5" stroke-width="3" x1="160" x2="290" y1="65" y2="65"/>
+              <text fill="#9aa8b6" font-family="Microsoft YaHei" font-size="11.5" text-anchor="middle" x="225" y="52">被剪掉的部分</text>
+              <text fill="#55657a" font-family="Microsoft YaHei" font-size="11" text-anchor="middle" x="160" y="124">竖线是「边界」，横线被剪断</text>
+            </svg>
+            <p>把线<b>超出去的部分剪掉</b>。操作：<b>TR 回车</b> → 先点边界线（竖线）→ 回车 → 再点要剪掉的那一段。</p>
+            <div class="warn">嫌选边界麻烦？<b>TR 回车后直接再回车一次</b>，等于「全图都能当边界」，然后直接点要剪的线头，快很多。</div>
+          </div>
+        </div>
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b2">EX</span>延伸 EXTEND —— 补长的</div>
+          <div class="cmp-b">
+            <svg height="130" viewBox="0 0 320 130" width="320" xmlns="http://www.w3.org/2000/svg">
+              <line stroke="#55657a" stroke-width="2.4" x1="160" x2="160" y1="18" y2="112"/>
+              <line stroke="#1c4e80" stroke-width="2.4" x1="30" x2="158" y1="45" y2="45"/>
+              <line stroke="#d9480f" stroke-width="2.6" x1="158" x2="290" y1="45" y2="45"/>
+              <circle cx="158" cy="45" fill="#d9480f" r="3"/>
+              <text fill="#d9480f" font-family="Microsoft YaHei" font-size="11.5" text-anchor="middle" x="225" y="32">补出来的部分</text>
+              <text fill="#55657a" font-family="Microsoft YaHei" font-size="11" text-anchor="middle" x="160" y="124">线不够长，接上去</text>
+            </svg>
+            <p>把线<b>补长到边界上</b>。操作跟修剪一模一样：<b>EX 回车</b> → 先点边界 → 回车 → 点要延长的线。</p>
+            <div class="warn">同样可以 <b>EX 回车后再回车</b>，跳过选边界这步。</div>
+          </div>
+        </div>
+      </div>
+      <div class="tipbox">
+        <b>记法：</b>两个命令的操作顺序完全一样 —— 都是「先选边界，回车，再选对象」。区别只在于一个是剪短、一个是补长。按住 <b>Shift</b> 还能在两个命令之间临时切换。
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 05 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 05</span><h2>移动 与 拉伸：一个整体搬，一个局部拽</h2><span class="tag">拉伸必须「交叉框选」</span></div>
+    <div class="fig-body">
+      <div class="cmp two">
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b1">M</span>移动 MOVE</div>
+          <div class="cmp-b">
+            <svg height="130" viewBox="0 0 320 130" width="320" xmlns="http://www.w3.org/2000/svg">
+              <rect fill="#eef4fa" height="60" stroke="#111827" stroke-width="2.2" width="120" x="40" y="40"/>
+              <rect fill="#dbe9f7" height="60" stroke="#1c4e80" stroke-width="2.6" width="120" x="170" y="40"/>
+              <line stroke="#d9480f" stroke-width="1.6" x1="168" x2="200" y1="70" y2="70"/>
+              <text fill="#55657a" font-family="Microsoft YaHei" font-size="11" text-anchor="middle" x="100" y="115">形状一点不变</text>
+            </svg>
+            <p>整个对象<b>原封不动</b>换个位置。形状、大小都不变。</p>
+          </div>
+        </div>
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b2">S</span>拉伸 STRETCH</div>
+          <div class="cmp-b">
+            <svg height="130" viewBox="0 0 320 130" width="320" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40 40 H160 V100 H40 Z" fill="#eef4fa" stroke="#111827" stroke-width="2.2"/>
+              <path d="M160 40 H210 V100 H160 Z" fill="#fbe6d6" stroke="#d9480f" stroke-width="2.6"/>
+              <rect fill="none" height="76" stroke="#2f7a4f" stroke-dasharray="5 4" stroke-width="1.8" width="30" x="150" y="32"/>
+              <text fill="#2f7a4f" font-family="Microsoft YaHei" font-size="11" text-anchor="middle" x="185" y="122">框住的右边被拽出来了</text>
+            </svg>
+            <p>只把<b>被框住的那一头</b>拽走，没框住的那头钉着不动，形状跟着变。</p>
+            <div class="warn"><b>必须用「交叉框选」：鼠标从右往左拉</b>，框成虚线绿框。从左往右拉（实线蓝框）会把整个对象选中，就变成移动了。</div>
+          </div>
+        </div>
+      </div>
+      <div class="tipbox warn2">
+        <b>框选方向是新人最常踩的坑：</b>从左往右拉 = 实线框 = 只有<b>完全框住</b>的才选中；从右往左拉 = 虚线框 = <b>碰到就选中</b>。拉伸、延伸、修剪这些「只改一部分」的命令，都用后者。
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 06 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 06</span><h2>圆角 与 倒角</h2><span class="tag">一个圆滑，一个切平</span></div>
+    <div class="fig-body">
+      <div class="cmp two">
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b1">F</span>圆角 FILLET</div>
+          <div class="cmp-b">
+            <svg height="130" viewBox="0 0 320 130" width="320" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40 30 H120 A30 30 0 0 1 150 60 V100" fill="none" stroke="#55657a" stroke-dasharray="5 4" stroke-width="2"/>
+              <path d="M40 30 H118 A32 32 0 0 1 150 62 V100" fill="none" stroke="#1c4e80" stroke-width="2.8"/>
+              <circle cx="150" cy="94" fill="none" r="1.5"/>
+              <path d="M120 30 H150" stroke="#d9480f" stroke-width="1.4"/>
+              <path d="M150 60 V100" stroke="#d9480f" stroke-width="1.4"/>
+              <text fill="#d9480f" font-family="Consolas" font-size="11.5" x="175" y="55">R30</text>
+              <text fill="#55657a" font-family="Microsoft YaHei" font-size="11" text-anchor="middle" x="150" y="122">用一段圆弧拐弯</text>
+            </svg>
+            <p>两条线之间<b>用圆弧过渡</b>，给半径 R。操作：F → 输 R → 输半径值 → 点两条线。</p>
+            <div class="warn">池体内壁转角、管线转弯都用这个。半径设 0 时，能当「把两条线接到一起」用。</div>
+          </div>
+        </div>
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b2">CHA</span>倒角 CHAMFER</div>
+          <div class="cmp-b">
+            <svg height="130" viewBox="0 0 320 130" width="320" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40 30 H150 V100" fill="none" stroke="#55657a" stroke-dasharray="5 4" stroke-width="2"/>
+              <path d="M40 30 H110 L150 70 V100" fill="none" stroke="#1c4e80" stroke-width="2.8"/>
+              <text fill="#d9480f" font-family="Consolas" font-size="11" x="88" y="22">40</text>
+              <text fill="#d9480f" font-family="Consolas" font-size="11" x="160" y="88">40</text>
+              <text fill="#55657a" font-family="Microsoft YaHei" font-size="11" text-anchor="middle" x="150" y="122">切成一个斜面</text>
+            </svg>
+            <p>把尖角<b>切掉一小块，成一个斜面</b>。给两个距离（或距离+角度）。操作：CHA → 输 D → 输两个距离 → 点两条线。</p>
+            <div class="warn">设备基础、安装孔的 45° 倒角。两个距离相等就是标准 45° 倒角。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 07 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 07</span><h2>阵列的三种排法</h2><span class="tag">批量布置设备全靠它</span></div>
+    <div class="fig-body">
+      <div class="three">
+        <div class="m">
+          <svg height="130" viewBox="0 0 180 130" width="180" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#dbe9f7" stroke="#1c4e80" stroke-width="1.8">
+              <circle cx="35" cy="35" r="11"/><circle cx="75" cy="35" r="11"/><circle cx="115" cy="35" r="11"/><circle cx="145" cy="35" r="11"/>
+              <circle cx="35" cy="70" r="11"/><circle cx="75" cy="70" r="11"/><circle cx="115" cy="70" r="11"/><circle cx="145" cy="70" r="11"/>
+              <circle cx="35" cy="105" r="11"/><circle cx="75" cy="105" r="11"/><circle cx="115" cy="105" r="11"/><circle cx="145" cy="105" r="11"/>
+            </g>
+          </svg>
+          <div class="mt">矩形阵列</div>
+          <div class="md">排成几行几列。给行数、列数、行距、列距</div>
+          <div class="mk">AR → 矩形(R)</div>
+          <div style="font-size:12px; color:#55657a; margin-top:6px">例：曝气池底 4×3 个曝气头</div>
+        </div>
+        <div class="m">
+          <svg height="130" viewBox="0 0 180 130" width="180" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 100 Q80 20 165 45" fill="none" stroke="#55657a" stroke-dasharray="5 4" stroke-width="1.8"/>
+            <g fill="#fbe6d6" stroke="#d9480f" stroke-width="1.8">
+              <circle cx="30" cy="82" r="10"/><circle cx="60" cy="59" r="10"/><circle cx="90" cy="47" r="10"/><circle cx="120" cy="43" r="10"/><circle cx="148" cy="45" r="10"/>
+            </g>
+          </svg>
+          <div class="mt">路径阵列</div>
+          <div class="md">沿着一条线（路径）等距排布</div>
+          <div class="mk">AR → 路径(PA)</div>
+          <div style="font-size:12px; color:#55657a; margin-top:6px">例：沿管沟每 30m 一个检查井</div>
+        </div>
+        <div class="m">
+          <svg height="130" viewBox="0 0 180 130" width="180" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="90" cy="65" fill="none" r="46" stroke="#9aa8b6" stroke-dasharray="4 3" stroke-width="1.2"/>
+            <circle cx="90" cy="65" fill="#55657a" r="3"/>
+            <g fill="#e8f0e8" stroke="#2f7a4f" stroke-width="1.8">
+              <circle cx="136" cy="65" r="10"/><circle cx="122" cy="97" r="10"/><circle cx="90" cy="109" r="10"/>
+              <circle cx="58" cy="97" r="10"/><circle cx="44" cy="65" r="10"/><circle cx="58" cy="33" r="10"/>
+              <circle cx="90" cy="21" r="10"/><circle cx="122" cy="33" r="10"/>
+            </g>
+          </svg>
+          <div class="mt">环形阵列</div>
+          <div class="md">绕一个中心点转圈排。给数量、总角度</div>
+          <div class="mk">AR → 环(PO)</div>
+          <div style="font-size:12px; color:#55657a; margin-top:6px">例：圆形池子一圈 8 个布水口</div>
+        </div>
+      </div>
+      <div class="tipbox">
+        <b>三种阵列关系：</b>阵列出来的对象<b>是一组</b>，改一个全跟着改（阵列是关联的）。要单独改某一个，先输 <b>X（分解）</b> 把它炸开。
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 08 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 08</span><h2>框选方向：决定你选中了什么</h2><span class="tag">所有修改命令的第一步</span></div>
+    <div class="fig-body">
+      <div class="cmp two">
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b1">←→</span>从左往右拉 = 窗口选择</div>
+          <div class="cmp-b">
+            <svg height="130" viewBox="0 0 320 130" width="320" xmlns="http://www.w3.org/2000/svg">
+              <rect fill="#eef4fa" height="50" stroke="#111827" stroke-width="2" width="60" x="60" y="35"/>
+              <rect fill="#eef4fa" height="40" stroke="#111827" stroke-width="2" width="90" x="150" y="45"/>
+              <rect fill="rgba(28,78,128,.07)" height="70" stroke="#1c4e80" stroke-dasharray="0" stroke-width="2.2" width="215" x="50" y="28"/>
+              <text fill="#1c4e80" font-family="Microsoft YaHei" font-size="11.5" text-anchor="middle" x="155" y="118">实线蓝框 · 完全框住的才选中 → 两个都选中</text>
+            </svg>
+            <p>框是<b>实线</b>。对象必须<b>整个在框里面</b>才算选中。碰边不算。</p>
+          </div>
+        </div>
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="bg b3">→←</span>从右往左拉 = 交叉选择</div>
+          <div class="cmp-b">
+            <svg height="130" viewBox="0 0 320 130" width="320" xmlns="http://www.w3.org/2000/svg">
+              <rect fill="#f4f6f8" height="50" stroke="#9aa8b6" stroke-width="2" width="60" x="60" y="35"/>
+              <rect fill="#e8f0e8" height="40" stroke="#2f7a4f" stroke-width="2.6" width="90" x="150" y="45"/>
+              <rect fill="rgba(47,122,79,.07)" height="70" stroke="#2f7a4f" stroke-dasharray="6 4" stroke-width="2.2" width="120" x="130" y="28"/>
+              <text fill="#2f7a4f" font-family="Microsoft YaHei" font-size="11.5" text-anchor="middle" x="155" y="118">虚线绿框 · 碰到的就选中 → 只选中右边那个</text>
+            </svg>
+            <p>框是<b>虚线</b>。只要<b>碰到框</b>就算选中，不用整个进去。</p>
+          </div>
+        </div>
+      </div>
+      <div class="tipbox warn2">
+        <b>什么时候用哪个：</b>要整个对象（复制、移动、删除）→ 从左往右，实线框。只要改一部分（拉伸、局部修剪）→ 从右往左，虚线框。<br>
+        记不住就看框的颜色：<b>蓝实线 = 全包住，绿虚线 = 碰就中。</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <h3>出处</h3>
+    <ol>
+      <li>张晶, 潘立卫, 王嘉斌. 环境工程制图与CAD[M]. 2 版. 北京: 化学工业出版社, 2022. ISBN 978-7-122-38763-9.（第 6 章 二维图形修改命令）</li>
+      <li>命令名与快捷键：Autodesk 官方《AutoCAD 快捷键手册》（autodesk.com.cn/shortcuts/autocad），并与 AutoCAD 2018 中文版界面对照。</li>
+      <li>MIRRTEXT（镜像文字）、关联阵列等行为，按 AutoCAD 2018 默认设置描述。</li>
+    </ol>
+    <p style="margin:0">待核项：教材第 6 章的具体页码未查到，用前建议翻书核对。</p>
+  </div>
+
+</div>
+</body>
+</html>

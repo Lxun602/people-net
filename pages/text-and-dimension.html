@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AutoCAD 文字样式与尺寸标注 · 操作图解</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 20px 60px;
+    background: #eef1f4;
+    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    color: #1f2937;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  .backbar { max-width: 1200px; margin: 0 auto 14px; }
+  .backbar a { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: #1c4e80; text-decoration: none; background: #fff; border: 1px solid #dbe1e8; border-radius: 20px; padding: 6px 16px; transition: .18s; }
+  .backbar a:hover { background: #1c4e80; color: #fff; border-color: #1c4e80; }
+
+
+  /* ---------- 页头 ---------- */
+  .head {
+    background: #fff;
+    border: 1px solid #dbe1e8;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 22px;
+    border-top: 5px solid #1c4e80;
+  }
+  .head h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: 1px; color: #143d63; }
+  .head .sub { margin: 0 0 20px; font-size: 14px; color: #5b6b7c; }
+  .meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 28px; font-size: 13.5px; line-height: 1.9; }
+  .meta b { color: #143d63; font-weight: 600; display: inline-block; min-width: 76px; }
+  .meta span { color: #3d4d5c; }
+
+  /* ---------- 图卡片 ---------- */
+  .fig {
+    background: #fff;
+    border: 1px solid #dbe1e8;
+    border-radius: 12px;
+    margin-bottom: 22px;
+    overflow: hidden;
+  }
+  .fig-head {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 26px;
+    border-bottom: 1px solid #e7ecf1;
+    background: #f8fafc;
+  }
+  .fig-no {
+    flex: none;
+    font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    color: #fff; background: #1c4e80;
+    padding: 4px 9px; border-radius: 4px;
+  }
+  .fig-head h2 { margin: 0; font-size: 17px; color: #143d63; font-weight: 600; }
+  .fig-head .tag { margin-left: auto; font-size: 12px; color: #7a8b9c; }
+  .fig-body { padding: 24px 26px 28px; }
+
+  /* ---------- 标注解剖图 ---------- */
+  .anatomy { display: block; width: 100%; max-width: 820px; margin: 0 auto 18px; }
+  .legend { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 22px; }
+  .lg { display: flex; gap: 11px; font-size: 13.5px; line-height: 1.75; color: #37474f; }
+  .lg .num {
+    flex: none; width: 22px; height: 22px; border-radius: 50%;
+    background: #1c4e80; color: #fff; font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .lg b { color: #143d63; }
+  .lg em { font-style: normal; color: #b8442a; font-weight: 600; }
+
+  /* ---------- 对话框仿真 ---------- */
+  .dlg-row { display: flex; gap: 26px; align-items: flex-start; flex-wrap: wrap; }
+  .dlg {
+    width: 430px; flex: none;
+    border: 1px solid #b9c4cf; border-radius: 5px;
+    background: #f2f4f6;
+    font-size: 12px; color: #1f2937;
+    box-shadow: 0 2px 6px rgba(20,61,99,.09);
+  }
+  .dlg.wide { width: 700px; }
+  .dlg-t {
+    background: linear-gradient(#fdfdfe, #e8ecf0);
+    border-bottom: 1px solid #ccd5de;
+    padding: 6px 10px; font-size: 12px; font-weight: 700; color: #143d63;
+    border-radius: 4px 4px 0 0;
+  }
+  .dlg-b { padding: 12px 14px 14px; }
+  .grp { border: 1px solid #d3dae1; border-radius: 4px; padding: 9px 11px 11px; margin-bottom: 10px; background: #f7f9fa; }
+  .grp > .gt { font-size: 11px; color: #6b7d8e; margin-bottom: 7px; letter-spacing: .5px; }
+  .row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+  .row:last-child { margin-bottom: 0; }
+  .row label { flex: none; width: 74px; text-align: right; color: #3d4d5c; }
+  .row label.w2 { width: 60px; }
+  .ctl {
+    flex: 1; min-width: 0;
+    border: 1px solid #a8b4bf; background: #fff; border-radius: 2px;
+    padding: 3px 6px; font-size: 12px; color: #143d63; font-weight: 600;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .ctl.sel::after { content: "▾"; color: #5b6b7c; font-size: 10px; margin-left: 4px; }
+  .ctl.plain { color: #55657a; font-weight: 400; }
+  .btn {
+    border: 1px solid #a8b4bf; background: linear-gradient(#fff, #eaedf0);
+    border-radius: 3px; padding: 4px 12px; font-size: 12px; color: #26333f; white-space: nowrap;
+  }
+  .btn.pri { border-color: #1c4e80; background: linear-gradient(#2c6ba5, #1c4e80); color: #fff; font-weight: 600; }
+  .btn-row { display: flex; gap: 7px; justify-content: flex-end; margin-top: 12px; }
+  .chk { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #3d4d5c; }
+  .chk i {
+    width: 12px; height: 12px; border: 1px solid #8c99a5; background: #fff; border-radius: 2px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-style: normal; font-size: 10px; color: #1c4e80; line-height: 1;
+  }
+  .chk.on i { background: #fff; }
+  .prev {
+    border: 1px solid #a8b4bf; background: #fff; border-radius: 2px;
+    height: 62px; display: flex; align-items: center; justify-content: center;
+    font-size: 17px; color: #111; letter-spacing: 2px;
+  }
+  .prev .fx { font-family: "FangSong", "STFangsong", serif; }
+
+  /* 说明列表 */
+  .notes { flex: 1; min-width: 340px; }
+  .note { display: flex; gap: 11px; margin-bottom: 13px; font-size: 13.5px; line-height: 1.8; color: #37474f; }
+  .note:last-child { margin-bottom: 0; }
+  .note .n {
+    flex: none; width: 21px; height: 21px; border-radius: 4px;
+    background: #e8eef4; color: #1c4e80; border: 1px solid #c3d2e0;
+    font-size: 11.5px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .note b { color: #143d63; }
+  .note .val {
+    display: inline-block; background: #fff5e8; border: 1px solid #f0c88f;
+    color: #a5560c; border-radius: 3px; padding: 0 5px; font-weight: 700;
+    font-family: Consolas, "Courier New", monospace; font-size: 12.5px;
+  }
+  .warn {
+    background: #fdf4f2; border-left: 3px solid #c1502e;
+    padding: 9px 12px; font-size: 13px; color: #8a3a20; line-height: 1.7;
+    margin-top: 12px; border-radius: 0 4px 4px 0;
+  }
+
+  /* 选项卡条 */
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid #b9c4cf; margin: -12px -14px 0; padding: 0 8px; background: #eef1f4; }
+  .tab {
+    padding: 6px 13px; font-size: 12px; color: #4a5a6a;
+    border: 1px solid transparent; border-bottom: none;
+    border-radius: 3px 3px 0 0; margin-bottom: -1px;
+  }
+  .tab.on { background: #f7f9fa; border-color: #b9c4cf; color: #143d63; font-weight: 700; }
+  .tabpage { padding: 14px 0 0; }
+
+  /* 参数卡片 */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
+  .card {
+    border: 1px solid #dbe1e8; border-radius: 8px; overflow: hidden; background: #fff;
+    display: flex; flex-direction: column;
+  }
+  .card-h {
+    background: #1c4e80; color: #fff; font-size: 13px; font-weight: 600;
+    padding: 8px 12px; display: flex; align-items: center; gap: 7px;
+  }
+  .card-h .idx {
+    background: rgba(255,255,255,.22); border-radius: 3px;
+    padding: 0 5px; font-size: 11px; font-weight: 700;
+  }
+  .card-b { padding: 10px 12px 13px; font-size: 13px; line-height: 1.95; color: #37474f; flex: 1; }
+  .card-b .kv { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px dashed #e7ecf1; padding: 3px 0; }
+  .card-b .kv:last-child { border-bottom: none; }
+  .card-b .kv span { color: #55657a; }
+  .card-b .kv b { color: #b8442a; font-family: Consolas, "Courier New", monospace; font-size: 12.5px; white-space: nowrap; }
+
+  /* ---------- 表格 ---------- */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { border: 1px solid #e0e6ec; padding: 9px 11px; text-align: left; vertical-align: top; line-height: 1.65; }
+  th { background: #eef3f7; color: #143d63; font-weight: 600; font-size: 12.5px; }
+  tr:nth-child(even) td { background: #fafcfd; }
+  td.n { font-family: Consolas, "Courier New", monospace; color: #b8442a; font-weight: 700; white-space: nowrap; }
+  td.src { font-size: 11.5px; color: #6b7d8e; white-space: nowrap; }
+  .tbl-cap { font-size: 12.5px; color: #6b7d8e; margin-top: 10px; line-height: 1.7; }
+
+  /* ---------- 流程 ---------- */
+  .flow { display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; }
+  .step {
+    flex: 1; min-width: 150px; border: 1px solid #dbe1e8; border-radius: 8px;
+    background: #fafcfd; padding: 12px 13px; position: relative; margin-right: 22px; margin-bottom: 10px;
+  }
+  .step:last-child { margin-right: 0; }
+  .step::after {
+    content: "▶"; position: absolute; right: -17px; top: 50%; transform: translateY(-50%);
+    color: #a8b8c8; font-size: 11px;
+  }
+  .step:last-child::after { display: none; }
+  .step .sn { font-size: 11px; font-weight: 700; color: #1c4e80; letter-spacing: 1px; }
+  .step .st { font-size: 13.5px; font-weight: 600; color: #143d63; margin: 3px 0 6px; }
+  .step .sd { font-size: 12.5px; color: #55657a; line-height: 1.7; }
+  .step .cmd {
+    display: inline-block; margin-top: 6px; font-family: Consolas, monospace;
+    background: #143d63; color: #fff; font-size: 11.5px; padding: 1px 7px; border-radius: 3px;
+  }
+
+  /* ---------- 常见坑 ---------- */
+  .pits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .pit { border: 1px solid #e5d6cf; background: #fdf9f7; border-radius: 8px; padding: 13px 15px; }
+  .pit .p-t { font-size: 13.5px; font-weight: 700; color: #8a3a20; margin-bottom: 5px; }
+  .pit .p-d { font-size: 13px; color: #5a4a42; line-height: 1.75; }
+  .pit .p-d b { color: #b8442a; }
+
+  /* ---------- 页脚 ---------- */
+  .foot { background: #fff; border: 1px solid #dbe1e8; border-radius: 12px; padding: 22px 28px; font-size: 12.5px; color: #55657a; line-height: 1.9; }
+  .foot h3 { margin: 0 0 10px; font-size: 14px; color: #143d63; }
+  .foot ol { margin: 0 0 12px; padding-left: 20px; }
+  .foot li { margin-bottom: 5px; }
+  .foot .todo { color: #c1502e; font-weight: 700; }
+
+  @media (max-width: 1000px) {
+    .dlg, .dlg.wide { width: 100%; }
+    .cards, .legend, .pits, .meta { grid-template-columns: 1fr; }
+  }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .fig, .head, .foot { break-inside: avoid; box-shadow: none; }
+    .dlg { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="backbar">
+    <a href="../index.html">
+      <svg fill="none" height="14" viewBox="0 0 24 24" width="14"><path d="M19 12H6M12 6l-6 6 6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/></svg>
+      返回总入口
+    </a>
+  </div>
+
+
+  <!-- ============ 页头 ============ -->
+  <div class="head">
+    <h1>AutoCAD 文字样式 · 尺寸标注 · 新建标注 —— 照着做的图解</h1>
+    <p class="sub">对应教材第 8 章《文本和尺寸标注》：8.1 文字样式 / 8.2 尺寸样式</p>
+    <div class="meta">
+      <div><b>书名</b><span>《环境工程制图与CAD》（第 2 版）</span></div>
+      <div><b>主编</b><span>张晶、潘立卫、王嘉斌</span></div>
+      <div><b>出版</b><span>化学工业出版社，2022 年 1 月，271 页</span></div>
+      <div><b>ISBN</b><span>978-7-122-38763-9</span></div>
+      <div><b>软件平台</b><span>AutoCAD 2018（全书 14 章，第 8 章讲文字与标注）</span></div>
+      <div><b>依据</b><span>GB/T 50001-2017、GB/T 14691-1993（文末标出处）</span></div>
+    </div>
+  </div>
+
+  <!-- ============ 图 01 ============ -->
+  <div class="fig">
+    <div class="fig-head">
+      <span class="fig-no">图 01</span>
+      <h2>尺寸标注到底由哪几块拼成</h2>
+      <span class="tag">先认清零件，再去调参数</span>
+    </div>
+    <div class="fig-body">
+      <svg class="anatomy" viewBox="0 0 820 350" xmlns="http://www.w3.org/2000/svg">
+        <!-- 构筑物轮廓 -->
+        <rect fill="#f1f5f9" height="170" stroke="#111827" stroke-width="2.6" width="560" x="200" y="140"/>
+        <text fill="#94a3b8" font-family="Microsoft YaHei" font-size="14" text-anchor="middle" x="480" y="232">构筑物轮廓（被标注的对象）</text>
+
+        <!-- 尺寸界线 (细) -->
+        <g stroke="#111827" stroke-width="0.9">
+          <line x1="200" x2="200" y1="134" y2="70"/>
+          <line x1="536" x2="536" y1="134" y2="104"/>
+          <line x1="760" x2="760" y1="134" y2="70"/>
+          <!-- 竖向 -->
+          <line x1="196" x2="152" y1="140" y2="140"/>
+          <line x1="196" x2="152" y1="310" y2="310"/>
+        </g>
+
+        <!-- 尺寸线 (细) -->
+        <g stroke="#111827" stroke-width="0.9">
+          <line x1="200" x2="536" y1="110" y2="110"/>
+          <line x1="536" x2="760" y1="110" y2="110"/>
+          <line x1="200" x2="760" y1="72" y2="72"/>
+          <line x1="160" x2="160" y1="140" y2="310"/>
+        </g>
+
+        <!-- 起止符号：45度中粗斜短线 -->
+        <g stroke="#111827" stroke-linecap="round" stroke-width="2">
+          <line x1="194" x2="206" y1="116" y2="104"/>
+          <line x1="530" x2="542" y1="116" y2="104"/>
+          <line x1="536" x2="548" y1="116" y2="104"/>
+          <line x1="754" x2="766" y1="116" y2="104"/>
+          <line x1="194" x2="206" y1="78" y2="66"/>
+          <line x1="754" x2="766" y1="78" y2="66"/>
+          <line x1="154" x2="166" y1="146" y2="134"/>
+          <line x1="154" x2="166" y1="316" y2="304"/>
+        </g>
+
+        <!-- 尺寸数字 -->
+        <g fill="#111827" font-family="Consolas, monospace" font-size="15" text-anchor="middle">
+          <text x="368" y="105">2400</text>
+          <text x="648" y="105">1600</text>
+          <text x="480" y="67">4000</text>
+          <text transform="rotate(-90 148 225)" x="148" y="225">1700</text>
+        </g>
+
+        <!-- 编号气泡 -->
+        <g font-family="Microsoft YaHei" font-size="12" font-weight="700">
+          <line stroke="#1c4e80" stroke-width="0.9" x1="537" x2="560" y1="126" y2="126"/>
+          <circle cx="571" cy="126" fill="#1c4e80" r="10"/><text fill="#fff" text-anchor="middle" x="571" y="130">1</text>
+
+          <line stroke="#1c4e80" stroke-width="0.9" x1="330" x2="330" y1="110" y2="117"/>
+          <circle cx="330" cy="128" fill="#1c4e80" r="10"/><text fill="#fff" text-anchor="middle" x="330" y="132">2</text>
+
+          <line stroke="#1c4e80" stroke-width="0.9" x1="195" x2="172" y1="107" y2="88"/>
+          <circle cx="162" cy="80" fill="#1c4e80" r="10"/><text fill="#fff" text-anchor="middle" x="162" y="84">3</text>
+
+          <line stroke="#1c4e80" stroke-width="0.9" x1="497" x2="524" y1="63" y2="42"/>
+          <circle cx="535" cy="34" fill="#1c4e80" r="10"/><text fill="#fff" text-anchor="middle" x="535" y="38">4</text>
+        </g>
+      </svg>
+
+      <div class="legend">
+        <div class="lg"><span class="num">1</span><div><b>尺寸界线</b>——从被标注的轮廓线上引出来的细实线。一头要<em>离开轮廓线至少 2mm</em>（不能贴死），另一头要<em>超出尺寸线 2~3mm</em>。</div></div>
+        <div class="lg"><span class="num">2</span><div><b>尺寸线</b>——细实线，跟被量的那一段平行。图上原来的任何线（轮廓线、中心线）都<em>不能拿来当尺寸线用</em>。</div></div>
+        <div class="lg"><span class="num">3</span><div><b>起止符号</b>——环境工程图用水处理/建筑那套，用<em>中粗斜短线</em>：跟尺寸界线成顺时针 45°，长 2~3mm。标半径、直径、角度、弧长时改用箭头。</div></div>
+        <div class="lg"><span class="num">4</span><div><b>尺寸数字</b>——写在尺寸线<em>上方、居中</em>，字高 3.5mm。单位毫米，<em>数字后面不写 mm</em>。水平尺寸从左往右读，竖直尺寸从下往上读。</div></div>
+      </div>
+
+      <div class="warn">
+        图上「2400 / 1600」那道和「4000」那道，两条尺寸线的间距国标要求 7~10mm，并且<b>小尺寸靠里、大尺寸靠外</b>，几条间距还得保持一致。图示为了看清楚做了放大。
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 图 02 ============ -->
+  <div class="fig">
+    <div class="fig-head">
+      <span class="fig-no">图 02</span>
+      <h2>文字样式对话框 —— 六个格子，照着填</h2>
+      <span class="tag">命令：STYLE ／ 快捷键 ST ／ 菜单：格式 → 文字样式</span>
+    </div>
+    <div class="fig-body">
+      <div class="dlg-row">
+        <div class="dlg">
+          <div class="dlg-t">文字样式</div>
+          <div class="dlg-b">
+            <div style="font-size:11.5px; color:#6b7d8e; margin-bottom:8px">当前文字样式：Standard</div>
+
+            <div class="grp">
+              <div class="gt">样式(S)</div>
+              <div class="row">
+                <div class="ctl sel" style="flex:1">GB-仿宋</div>
+                <div class="btn">新建(N)...</div>
+                <div class="btn">删除(D)</div>
+              </div>
+            </div>
+
+            <div class="grp">
+              <div class="gt">字体</div>
+              <div class="row"><label>字体名(F)：</label><div class="ctl sel">gbenor.shx</div></div>
+              <div class="row"><label>字体样式(Y)：</label><div class="ctl sel">常规</div></div>
+              <div class="row" style="padding-left:82px"><span class="chk on"><i>✓</i>使用大字体(U)</span></div>
+              <div class="row"><label>大字体(B)：</label><div class="ctl sel">gbcbig.shx</div></div>
+            </div>
+
+            <div class="grp">
+              <div class="gt">大小</div>
+              <div class="row" style="align-items:center; gap:14px">
+                <span class="chk"><i></i>注释性(A)</span>
+                <label style="width:auto; flex:none; margin-left:8px">高度(H)：</label>
+                <div class="ctl" style="flex:1; max-width:96px">0.0000</div>
+              </div>
+            </div>
+
+            <div class="grp">
+              <div class="gt">效果</div>
+              <div class="row" style="gap:16px; padding-left:0">
+                <span class="chk"><i></i>颠倒</span>
+                <span class="chk"><i></i>反向</span>
+                <span class="chk"><i></i>垂直</span>
+              </div>
+              <div class="row" style="margin-top:7px"><label>宽度因子(W)：</label><div class="ctl" style="max-width:96px">1.0000</div></div>
+              <div class="row"><label>倾斜角度(O)：</label><div class="ctl" style="max-width:96px">0</div></div>
+            </div>
+
+            <div class="grp" style="margin-bottom:0">
+              <div class="gt">预览</div>
+              <div class="prev"><span class="fx">曝气池 AaBb</span></div>
+            </div>
+
+            <div class="btn-row">
+              <div class="btn">置为当前(C)</div>
+              <div class="btn pri">应用(A)</div>
+              <div class="btn">取消</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="notes">
+          <div class="note"><span class="n">①</span><div><b>样式名</b>：别在 Standard 上改，点「新建」自己起个名，比如 <span class="val">GB-标注</span>。以后图纸用哪个样式，就在上面这个下拉框里选。</div></div>
+          <div class="note"><span class="n">②</span><div><b>字体名</b>：填 <span class="val">gbenor.shx</span>。这是国标的西文/数字字体，画出来的数字是长仿宋味道、笔画统一。</div></div>
+          <div class="note"><span class="n">③</span><div><b>使用大字体 + 大字体</b>：两个都得管。先勾上「使用大字体」，下面那格才会亮，填 <span class="val">gbcbig.shx</span>。这一格是专门管汉字的<b>长仿宋体</b>。不勾，图里的中文就会变成一堆 <b>???</b>。</div></div>
+          <div class="note"><span class="n">④</span><div><b>高度</b>：<span class="val">0.0000</span>，必须填 0。填 0 的意思是「字高每次现定」；你一填 3.5，以后所有文字全被锁死在 3.5，标注里的字高怎么改都改不动（这是最常见的坑）。</div></div>
+          <div class="note"><span class="n">⑤</span><div><b>宽度因子</b>：<span class="val">1.0000</span>。因为 gbcbig.shx 本身就是长仿宋（字宽≈0.7×字高），不用再压。要是换成 TrueType 的「仿宋」字体，这里才填 <span class="val">0.7</span>。</div></div>
+          <div class="note"><span class="n">⑥</span><div><b>倾斜角度</b>：<span class="val">0</span>。汉字不能斜。数字要斜体是另说的（国标斜体是 75°，这里一般也不填）。</div></div>
+          <div class="warn">填完先点「应用」，再点「置为当前」，最后关闭。少点「置为当前」这一步，新建的样式只是躺在列表里，实际没生效。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 图 03 ============ -->
+  <div class="fig">
+    <div class="fig-head">
+      <span class="fig-no">图 03</span>
+      <h2>标注样式管理器 + 新建标注样式</h2>
+      <span class="tag">命令：DIMSTYLE ／ 快捷键 D ／ 菜单：标注 → 标注样式</span>
+    </div>
+    <div class="fig-body">
+      <div class="dlg-row">
+        <!-- 管理器 -->
+        <div class="dlg" style="width:360px">
+          <div class="dlg-t">标注样式管理器</div>
+          <div class="dlg-b">
+            <div style="font-size:11.5px; color:#6b7d8e; margin-bottom:8px">当前标注样式：GB-1-100</div>
+            <div class="row" style="align-items:flex-start">
+              <div style="flex:1; border:1px solid #a8b4bf; background:#fff; border-radius:2px; padding:5px 6px; height:118px; font-size:12px; line-height:1.85">
+                <div style="color:#8c99a5">标注样式:</div>
+                <div style="padding-left:4px; color:#55657a">Annotative</div>
+                <div style="padding-left:4px; background:#d6e4f2; color:#143d63; font-weight:700">GB-1-100</div>
+                <div style="padding-left:4px; color:#55657a">ISO-25</div>
+                <div style="padding-left:4px; color:#55657a">Standard</div>
+              </div>
+            </div>
+            <div class="grp" style="margin-top:10px">
+              <div class="gt">预览(P)</div>
+              <div class="prev" style="height:74px; font-size:13px; letter-spacing:0">
+                <svg height="60" viewBox="0 0 260 60" width="100%" xmlns="http://www.w3.org/2000/svg">
+                  <line stroke="#111" stroke-width="0.8" x1="30" x2="30" y1="42" y2="14"/>
+                  <line stroke="#111" stroke-width="0.8" x1="210" x2="210" y1="42" y2="14"/>
+                  <line stroke="#111" stroke-width="0.8" x1="30" x2="210" y1="24" y2="24"/>
+                  <line stroke="#111" stroke-width="1.6" x1="26" x2="34" y1="30" y2="20"/>
+                  <line stroke="#111" stroke-width="1.6" x1="206" x2="214" y1="30" y2="20"/>
+                  <text fill="#111" font-family="Consolas,monospace" font-size="11" text-anchor="middle" x="120" y="19">3600</text>
+                </svg>
+              </div>
+            </div>
+            <div class="btn-row" style="justify-content:flex-start; flex-wrap:wrap; gap:6px">
+              <div class="btn pri">置为当前(S)</div>
+              <div class="btn">新建(N)...</div>
+              <div class="btn">修改(M)...</div>
+            </div>
+            <div class="btn-row" style="justify-content:flex-start; flex-wrap:wrap; gap:6px; margin-top:6px">
+              <div class="btn">替代(O)...</div>
+              <div class="btn">比较(C)...</div>
+              <div class="btn">关闭</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 新建对话框 -->
+        <div class="dlg wide" style="flex:1; min-width:0; width:auto">
+          <div class="dlg-t">新建标注样式：GB-1-100</div>
+          <div class="dlg-b">
+            <div class="tabs">
+              <div class="tab on">线</div>
+              <div class="tab">符号和箭头</div>
+              <div class="tab">文字</div>
+              <div class="tab">调整</div>
+              <div class="tab">主单位</div>
+              <div class="tab">换算单位</div>
+              <div class="tab">公差</div>
+            </div>
+
+            <div class="tabpage">
+              <div class="grp">
+                <div class="gt">尺寸线</div>
+                <div class="row"><label>颜色(C)：</label><div class="ctl sel plain">ByLayer（随层）</div><label class="w2">线宽：</label><div class="ctl sel plain">ByLayer</div></div>
+                <div class="row"><label>基线间距(B)：</label><div class="ctl" style="max-width:96px">7.0000</div><span style="font-size:11.5px; color:#6b7d8e; margin-left:6px">← 平行尺寸线之间留多宽</span></div>
+              </div>
+              <div class="grp" style="margin-bottom:0">
+                <div class="gt">尺寸界线</div>
+                <div class="row"><label>颜色(E)：</label><div class="ctl sel plain">ByLayer（随层）</div><label class="w2">线宽：</label><div class="ctl sel plain">ByLayer</div></div>
+                <div class="row"><label>超出尺寸线(X)：</label><div class="ctl" style="max-width:96px">2.0000</div><label class="w2">起点偏移量(F)：</label><div class="ctl" style="max-width:96px">2.0000</div></div>
+                <div class="row" style="padding-left:82px"><span style="font-size:11.5px; color:#6b7d8e">↑ 这两格是国标最容易扣分的地方，见下面第 1、2 号卡</span></div>
+              </div>
+            </div>
+
+            <div class="btn-row" style="margin-top:14px">
+              <div class="btn pri">确定</div>
+              <div class="btn">取消</div>
+              <div class="btn">帮助</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-h"><span class="idx">1</span>符号和箭头</div>
+          <div class="card-b">
+            <div class="kv"><span>第一个 / 第二个</span><b>建筑标记</b></div>
+            <div class="kv"><span>引线</span><b>点</b></div>
+            <div class="kv"><span>箭头大小</span><b>2.5 ~ 3</b></div>
+            <div class="kv"><span>圆心标记</span><b>无</b></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><span class="idx">2</span>文字</div>
+          <div class="card-b">
+            <div class="kv"><span>文字样式</span><b>GB-仿宋</b></div>
+            <div class="kv"><span>文字高度</span><b>3.5</b></div>
+            <div class="kv"><span>垂直 / 水平</span><b>上方 / 居中</b></div>
+            <div class="kv"><span>从尺寸线偏移</span><b>0.6 ~ 1</b></div>
+            <div class="kv"><span>文字对齐</span><b>与尺寸线对齐</b></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><span class="idx">3</span>调整</div>
+          <div class="card-b">
+            <div class="kv"><span>调整选项</span><b>文字或箭头</b></div>
+            <div class="kv"><span>文字位置</span><b>尺寸线上方，不带引线</b></div>
+            <div class="kv"><span>全局比例</span><b>= 出图比例分母</b></div>
+            <div class="kv"><span>标注特征比例</span><b>不是「注释性」</b></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><span class="idx">4</span>主单位</div>
+          <div class="card-b">
+            <div class="kv"><span>单位格式</span><b>小数</b></div>
+            <div class="kv"><span>精度</span><b>0</b></div>
+            <div class="kv"><span>小数分隔符</span><b>句点</b></div>
+            <div class="kv"><span>测量单位比例因子</span><b>1</b></div>
+            <div class="kv"><span>消零</span><b>后续</b></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><span class="idx">5</span>公差</div>
+          <div class="card-b">
+            <div class="kv"><span>方式</span><b>无</b></div>
+            <div class="kv"><span>精度</span><b>0</b></div>
+            <div class="kv"><span>换算单位</span><b>不勾</b></div>
+          </div>
+        </div>
+        <div class="card" style="background:#f8fafc">
+          <div class="card-h" style="background:#5b7fa3"><span class="idx">!</span>一句话记住</div>
+          <div class="card-b" style="font-size:12.5px; color:#3d4d5c">
+            新建时「基础样式」选 <b style="color:#b8442a">ISO-25</b>，别选 Standard —— ISO-25 的起点偏移量、箭头逻辑本来就接近国标，改起来省事。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 图 04 ============ -->
+  <div class="fig">
+    <div class="fig-head">
+      <span class="fig-no">图 04</span>
+      <h2>国标数值对照表 —— 参数不要自己估</h2>
+      <span class="tag">左边是国标要求，右边是 CAD 里填哪一格</span>
+    </div>
+    <div class="fig-body">
+      <table>
+        <thead>
+          <tr><th style="width:170px">项目</th><th style="width:300px">国标怎么规定</th><th>AutoCAD 里填哪里</th><th class="src" style="width:150px">依据</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>汉字字高</td><td>不小于 <b>3.5mm</b>；字高系列 1.8 / 2.5 / 3.5 / 5 / 7 / 10 / 14 / 20</td><td>标注样式 → 文字 → 文字高度 <span class="n">3.5</span></td><td class="src">GB/T 14691-1993</td></tr>
+          <tr><td>汉字字宽</td><td>约为字高的 <b>0.7 倍</b>（h/√2），长仿宋体</td><td>文字样式 → 宽度因子 <span class="n">1</span>（gbcbig.shx 已自带）；换 TrueType 仿宋才填 0.7</td><td class="src">GB/T 14691-1993</td></tr>
+          <tr><td>尺寸界线起点</td><td>离图样轮廓线<b>不小于 2mm</b></td><td>线 → 起点偏移量 <span class="n">2</span></td><td class="src">GB/T 50001-2017 第11.1.2条</td></tr>
+          <tr><td>尺寸界线出头</td><td>另一端宜<b>超出尺寸线 2~3mm</b></td><td>线 → 超出尺寸线 <span class="n">2</span></td><td class="src">GB/T 50001-2017 第11.1.2条</td></tr>
+          <tr><td>起止符号</td><td><b>中粗斜短线</b>，与尺寸界线成顺时针 45°，长 <b>2~3mm</b></td><td>符号和箭头 → 建筑标记，箭头大小 <span class="n">2.5~3</span></td><td class="src">GB/T 50001-2017 第11.1.4条</td></tr>
+          <tr><td>半径/直径/角度/弧长</td><td>起止符号<b>改用箭头</b>，箭头宽不小于 1mm</td><td>这几类标注单独建一个样式，符号选「实心闭合」</td><td class="src">GB/T 50001-2017 第11.1.4条</td></tr>
+          <tr><td>平行尺寸线间距</td><td>宜为 <b>7~10mm</b>，且保持一致</td><td>线 → 基线间距 <span class="n">7~8</span></td><td class="src">GB/T 50001-2017 第11.3.3条</td></tr>
+          <tr><td>尺寸单位</td><td><b>毫米</b>，数字后面不注单位（标高和总平面用米）</td><td>主单位 → 精度 <span class="n">0</span>，不加后缀</td><td class="src">GB/T 50001-2017 第11.2.2条</td></tr>
+          <tr><td>尺寸线离轮廓</td><td>图样轮廓线以外的尺寸界线，距最外轮廓<b>不小于 10mm</b></td><td>没有参数管，标注时手动拉开位置</td><td class="src">GB/T 50001-2017 第11.3.3条</td></tr>
+        </tbody>
+      </table>
+      <p class="tbl-cap">说明：GB/T 50001-2017 里尺寸标注是第 11 章。环境工程的水处理构筑物图、厂区平面图都按这套建筑制图标准走；只有画泵、阀这类设备零件图（机械图）时才换成「实心闭合箭头」。</p>
+    </div>
+  </div>
+
+  <!-- ============ 图 05 ============ -->
+  <div class="fig">
+    <div class="fig-head">
+      <span class="fig-no">图 05</span>
+      <h2>全局比例 —— 为什么你的标注要么看不见要么糊成一团</h2>
+      <span class="tag">位置：标注样式 → 调整 → 使用全局比例</span>
+    </div>
+    <div class="fig-body">
+      <div class="dlg-row">
+        <div style="flex:1; min-width:300px">
+          <table>
+            <thead><tr><th style="width:150px">图纸出图比例</th><th style="width:170px">全局比例填</th><th>打印出来的效果</th></tr></thead>
+            <tbody>
+              <tr><td>1:20</td><td class="n">20</td><td>字高正好 3.5mm</td></tr>
+              <tr><td>1:50</td><td class="n">50</td><td>字高正好 3.5mm</td></tr>
+              <tr><td>1:100</td><td class="n">100</td><td>字高正好 3.5mm</td></tr>
+              <tr><td>1:200</td><td class="n">200</td><td>字高正好 3.5mm</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="flex:1; min-width:300px">
+          <div class="warn" style="margin-top:0; background:#f2f7fb; border-left-color:#1c4e80; color:#2b4157">
+            <b>大白话讲清楚：</b><br>
+            你在电脑上按真实尺寸画图（1 米就画 1000 个单位），但打印的时候整张图要缩到 1/100 才塞得进 A3 纸。<br>
+            缩完以后，原本 3.5 高的字就只剩 0.035，肉眼看不见了。<br>
+            所以<b>先在样式里按「最终打出来多大」把字高填 3.5</b>，再让「全局比例 100」把它预先放大 100 倍 —— 缩回去刚好 3.5mm。
+          </div>
+          <div class="warn">
+            <b>换比例怎么办：</b>别去改字高。复制一份样式，命名 <span class="val">GB-1-50</span>，只改「全局比例」这一格，其它一个都不动。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 图 06 ============ -->
+  <div class="fig">
+    <div class="fig-head">
+      <span class="fig-no">图 06</span>
+      <h2>新建一个尺寸标注的完整流程</h2>
+      <span class="tag">从零到图上出现第一道尺寸</span>
+    </div>
+    <div class="fig-body">
+      <div class="flow">
+        <div class="step"><div class="sn">STEP 1</div><div class="st">建文字样式</div><div class="sd">gbenor.shx + 大字体 gbcbig.shx，高度填 0</div><div class="cmd">ST</div></div>
+        <div class="step"><div class="sn">STEP 2</div><div class="st">打开标注管理器</div><div class="sd">看左下角列表，确认当前样式</div><div class="cmd">D</div></div>
+        <div class="step"><div class="sn">STEP 3</div><div class="st">新建样式</div><div class="sd">基础样式选 ISO-25，命名 GB-1-100</div><div class="cmd">新建</div></div>
+        <div class="step"><div class="sn">STEP 4</div><div class="st">填五个选项卡</div><div class="sd">照图 03 的卡片 1~5 抄数字</div><div class="cmd">确定</div></div>
+        <div class="step"><div class="sn">STEP 5</div><div class="st">置为当前</div><div class="sd">回管理器点「置为当前」，再关闭</div><div class="cmd">置为当前</div></div>
+        <div class="step"><div class="sn">STEP 6</div><div class="st">打标注</div><div class="sd">点两点 → 往外一拉 → 点一下落下</div><div class="cmd">DLI</div></div>
+      </div>
+
+      <table style="margin-top:18px">
+        <thead><tr><th style="width:110px">命令</th><th style="width:150px">快捷键</th><th style="width:150px">叫什么</th><th>什么时候用</th></tr></thead>
+        <tbody>
+          <tr><td>DIMLINEAR</td><td class="n">DLI</td><td>线性标注</td><td>标水平或竖直的距离，用得最多，八成标注都是它</td></tr>
+          <tr><td>DIMALIGNED</td><td class="n">DAL</td><td>对齐标注</td><td>量斜的、歪的那段距离（比如斜管、斜坡）</td></tr>
+          <tr><td>DIMRADIUS</td><td class="n">DRA</td><td>半径标注</td><td>圆角、圆弧，数字前自动带 R</td></tr>
+          <tr><td>DIMDIAMETER</td><td class="n">DDI</td><td>直径标注</td><td>圆管、圆孔，数字前自动带 Φ</td></tr>
+          <tr><td>DIMANGULAR</td><td class="n">DAN</td><td>角度标注</td><td>管道转角、坡度以外的夹角</td></tr>
+          <tr><td>DIMCONTINUE</td><td class="n">DCO</td><td>连续标注</td><td>接着上一个标，一路标下去，间距自动对齐</td></tr>
+          <tr><td>DIMBASELINE</td><td class="n">DBA</td><td>基线标注</td><td>几道尺寸共用一条基准线时用（比如池体分格）</td></tr>
+        </tbody>
+      </table>
+      <p class="tbl-cap">打完发现数字不对，别删了重画 —— 双击那个尺寸数字，弹出来的框里可以直接改覆盖值；或者用 <b>DIMEDIT（DED）</b> 统一改。</p>
+    </div>
+  </div>
+
+  <!-- ============ 图 07 ============ -->
+  <div class="fig">
+    <div class="fig-head">
+      <span class="fig-no">图 07</span>
+      <h2>四个一踩就中的坑</h2>
+      <span class="tag">出问题先对号入座</span>
+    </div>
+    <div class="fig-body">
+      <div class="pits">
+        <div class="pit">
+          <div class="p-t">坑 1：标注里的字高改不动</div>
+          <div class="p-d">原因：<b>文字样式里「高度」填了 3.5</b>。那一格一填数字，字高就锁死了。<br>解法：回文字样式，把高度改回 <b>0</b>，再回标注样式里设文字高度。</div>
+        </div>
+        <div class="pit">
+          <div class="p-t">坑 2：中文全变成「???」</div>
+          <div class="p-d">原因：只设了 gbenor.shx，<b>没勾「使用大字体」也没选 gbcbig.shx</b>。<br>解法：勾上「使用大字体」，大字体下拉里选 gbcbig.shx。</div>
+        </div>
+        <div class="pit">
+          <div class="p-t">坑 3：字和箭头小得像蚂蚁</div>
+          <div class="p-d">原因：<b>全局比例还停在 1</b>，图是按 1:100 出。<br>解法：调整选项卡里，使用全局比例填 <b>100</b>。</div>
+        </div>
+        <div class="pit">
+          <div class="p-t">坑 4：斜短线（起止符号）不见了</div>
+          <div class="p-d">原因：符号选了「建筑标记」后，<b>「超出标记」填了 0 或负数</b>，短线被尺寸线吃掉。<br>解法：线选项卡里「超出标记」填 <b>2</b>，让尺寸线从短线里穿出去一点。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 页脚 ============ -->
+  <div class="foot">
+    <h3>出处</h3>
+    <ol>
+      <li>张晶, 潘立卫, 王嘉斌. 环境工程制图与CAD[M]. 2 版. 北京: 化学工业出版社, 2022. ISBN 978-7-122-38763-9.（271 页，以 AutoCAD 2018 为平台，全书 14 章，第 8 章为「文本和尺寸标注」，含 8.1 文字样式、8.2 尺寸样式两个小节）<br>—— 书目信息核对自西南石油大学图书馆馆藏记录（lib.swpu.edu.cn/1857.8080/opac/book/787430）、国家出版发行信息公共服务平台（book.cppinfo.cn）。</li>
+      <li>GB/T 50001-2017《房屋建筑制图统一标准》第 11 章 尺寸标注：11.1.2（尺寸界线 2mm / 2~3mm）、11.1.4（起止符号 45° 斜短线 2~3mm）、11.2.2（单位毫米）、11.3.3（平行尺寸线间距 7~10mm、距轮廓不小于 10mm）。</li>
+      <li>GB/T 14691-1993《技术制图 字体》：字高系列 1.8/2.5/3.5/5/7/10/14/20mm，汉字不小于 3.5mm，字宽约 0.7h，长仿宋体。</li>
+      <li>对话框字段、选项卡名称、快捷键均按 AutoCAD 2018 中文版界面写。</li>
+    </ol>
+    <p style="margin:0">待核项：教材第 8 章的具体页码和插图编号，我这边只查到章节标题级目录，没查到页码，用之前建议翻书对一下。</p>
+  </div>
+
+</div>
+</body>
+</html>

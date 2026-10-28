@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>图块使用</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 60px;
+    background: #eef1f4;
+    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    color: #1f2937; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  .backbar { max-width: 1200px; margin: 0 auto 14px; }
+  .backbar a { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: #1c4e80; text-decoration: none; background: #fff; border: 1px solid #dbe1e8; border-radius: 20px; padding: 6px 16px; transition: .18s; }
+  .backbar a:hover { background: #1c4e80; color: #fff; border-color: #1c4e80; }
+
+  .head { background: #fff; border: 1px solid #dbe1e8; border-radius: 12px; padding: 28px 32px; margin-bottom: 22px; border-top: 5px solid #1c4e80; }
+  .head h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: 1px; color: #143d63; }
+  .head .sub { margin: 0 0 18px; font-size: 14px; color: #5b6b7c; }
+  .meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 28px; font-size: 13.5px; }
+  .meta b { color: #143d63; display: inline-block; min-width: 76px; }
+  .meta span { color: #3d4d5c; }
+
+  .fig { background: #fff; border: 1px solid #dbe1e8; border-radius: 12px; margin-bottom: 22px; overflow: hidden; }
+  .fig-head { display: flex; align-items: center; gap: 14px; padding: 16px 26px; border-bottom: 1px solid #e7ecf1; background: #f8fafc; }
+  .fig-no { flex: none; font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #fff; background: #1c4e80; padding: 4px 9px; border-radius: 4px; }
+  .fig-head h2 { margin: 0; font-size: 17px; color: #143d63; font-weight: 600; }
+  .fig-head .tag { margin-left: auto; font-size: 12px; color: #7a8b9c; }
+  .fig-body { padding: 24px 26px 28px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { border: 1px solid #e0e6ec; padding: 9px 11px; text-align: left; vertical-align: top; line-height: 1.65; }
+  th { background: #eef3f7; color: #143d63; font-weight: 600; font-size: 12.5px; }
+  tr:nth-child(even) td { background: #fafcfd; }
+  td.k { font-family: Consolas, "Courier New", monospace; color: #b8442a; font-weight: 700; white-space: nowrap; }
+  td.c { font-family: Consolas, monospace; color: #143d63; font-weight: 700; white-space: nowrap; }
+  .tbl-cap { font-size: 12.5px; color: #6b7d8e; margin-top: 10px; line-height: 1.7; }
+
+  .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .cmp-box { border: 1px solid #e0e7ee; border-radius: 9px; overflow: hidden; }
+  .cmp-h { background: #f2f6fa; border-bottom: 1px solid #e0e7ee; padding: 9px 14px; font-size: 14px; font-weight: 700; color: #143d63; display: flex; align-items: center; gap: 8px; }
+  .cmp-h .badge-a, .cmp-h .badge-b { font-size: 11px; padding: 1px 7px; border-radius: 3px; color: #fff; font-weight: 700; }
+  .badge-a { background: #1c4e80; }
+  .badge-b { background: #d9480f; }
+  .cmp-b { padding: 14px; }
+  .cmp-b svg { display: block; width: 100%; height: auto; }
+  .cmp-b p { margin: 10px 0 0; font-size: 13px; line-height: 1.75; color: #37474f; }
+  .cmp-b p b { color: #143d63; }
+  .cmp-b .warn { background: #fdf4f2; border-left: 3px solid #c1502e; padding: 8px 11px; font-size: 12.5px; color: #8a3a20; margin-top: 10px; border-radius: 0 4px 4px 0; }
+
+  .six { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .m { border: 1px solid #e0e7ee; border-radius: 9px; padding: 14px; text-align: center; background: #fafcfd; }
+  .m svg { display: block; margin: 0 auto 10px; }
+  .m .mt { font-size: 13.5px; font-weight: 700; color: #143d63; }
+  .m .md { font-size: 12.5px; color: #55657a; line-height: 1.7; margin-top: 5px; }
+  .m .mk { font-family: Consolas, monospace; font-size: 11.5px; color: #b8442a; font-weight: 700; margin-top: 6px; }
+
+  .steps { display: flex; flex-wrap: wrap; }
+  .step { flex: 1; min-width: 160px; border: 1px solid #dbe1e8; border-radius: 8px; background: #fafcfd; padding: 12px 14px; position: relative; margin-right: 22px; margin-bottom: 10px; }
+  .step:last-child { margin-right: 0; }
+  .step::after { content: "▶"; position: absolute; right: -17px; top: 50%; transform: translateY(-50%); color: #a8b8c8; font-size: 11px; }
+  .step:last-child::after { display: none; }
+  .step .sn { font-size: 11px; font-weight: 700; color: #1c4e80; letter-spacing: 1px; }
+  .step .st { font-size: 13.5px; font-weight: 600; color: #143d63; margin: 3px 0 5px; }
+  .step .sd { font-size: 12.5px; color: #55657a; line-height: 1.7; }
+  .step .cmd { display: inline-block; margin-top: 6px; font-family: Consolas, monospace; background: #143d63; color: #fff; font-size: 11.5px; padding: 1px 7px; border-radius: 3px; }
+
+  .tipbox { background: #f2f7fb; border-left: 3px solid #1c4e80; padding: 12px 15px; font-size: 13px; color: #2b4157; line-height: 1.8; border-radius: 0 4px 4px 0; margin-top: 14px; }
+  .tipbox b { color: #143d63; }
+
+  /* ---------- 命令框（仿真命令行） ---------- */
+  .cmdg { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .cmdp { border: 1px solid #dbe1e8; border-radius: 9px; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+  .cmdp-h { padding: 10px 13px; background: #f2f6fa; border-bottom: 1px solid #e0e7ee; font-size: 14px; font-weight: 700; color: #143d63; display: flex; align-items: center; gap: 9px; }
+  .ckey { font-family: Consolas, monospace; background: #143d63; color: #fff; font-size: 12px; padding: 2px 9px; border-radius: 3px; font-weight: 700; flex: none; }
+  .cname { font-size: 12px; color: #7a8b9c; font-weight: 400; }
+  .cmdw-t { background: #2b3a48; color: #9fb3c6; font-size: 10.5px; padding: 4px 12px; letter-spacing: 1.5px; }
+  .cmdbox { background: #1e2b38; padding: 11px 13px; font-family: Consolas, "Courier New", monospace; font-size: 12px; line-height: 1.85; color: #cfd9e2; flex: 1; }
+  .cmdbox .p { color: #7ee0a0; }
+  .cmdbox .o { color: #f5c185; }
+  .cmdbox .n { color: #8fb4d4; }
+  .cmdp-note { padding: 10px 13px 12px; font-size: 12.5px; color: #37474f; line-height: 1.75; border-top: 1px solid #eef2f6; }
+  .cmdp-note b { color: #143d63; }
+  .cmdp-note .k { font-family: Consolas, monospace; background: #fff5e8; border: 1px solid #f0c88f; color: #a5560c; border-radius: 3px; padding: 0 5px; font-weight: 700; font-size: 12px; }
+
+  .foot { background: #fff; border: 1px solid #dbe1e8; border-radius: 12px; padding: 22px 28px; font-size: 12.5px; color: #55657a; line-height: 1.9; }
+  .foot h3 { margin: 0 0 10px; font-size: 14px; color: #143d63; }
+  .foot ol { margin: 0 0 12px; padding-left: 20px; }
+  .foot li { margin-bottom: 5px; }
+  .foot .todo { color: #c1502e; font-weight: 700; }
+
+  @media (max-width: 1000px) {
+    .cmp, .six, .meta { grid-template-columns: 1fr; }
+  }
+  @media print { body { background: #fff; padding: 0; } .fig, .head, .foot { break-inside: avoid; } }
+
+  .fh3 { font-size: 15.5px; font-weight: 700; color: #143d63; margin: 20px 0 8px; padding-left: 11px; border-left: 3px solid #1c4e80; line-height: 1.6; }
+  .fh4 { font-size: 14px; font-weight: 700; color: #37474f; margin: 15px 0 6px; line-height: 1.6; }
+  .figbox { text-align: center; margin: 14px 0; }
+  .figbox svg { max-width: 100%; height: auto; }
+  .fig-body p { margin: 0 0 10px; font-size: 13.5px; line-height: 1.85; color: #37474f; }
+  .fig-body p:last-child { margin-bottom: 0; }
+  .fig-body code { font-family: Consolas, "Courier New", monospace; background: #eef3f7; border: 1px solid #dbe4ec; color: #143d63; border-radius: 3px; padding: 1px 6px; font-size: 12.5px; font-weight: 700; }
+  .fig-body b { color: #143d63; }
+  .fig-body ol, .fig-body ul { margin: 0 0 12px; padding-left: 22px; font-size: 13.5px; line-height: 1.85; color: #37474f; }
+  .fig-body li { margin-bottom: 5px; }
+  .fig-body svg { max-width: 100%; height: auto; display: block; margin: 12px auto; }
+
+  /* ===== 对话框：对齐 AutoCAD / Windows 原生控件观感 ===== */
+  .dlg-row { display: flex; gap: 26px; align-items: flex-start; flex-wrap: wrap; }
+  .dlg {
+    width: 430px; flex: none;
+    border: 1px solid #97a1ab; border-top-color: #808c97;
+    border-radius: 6px;
+    background: #f0f0f0;
+    font-size: 12px; line-height: 1.6; color: #1a1a1a;
+    box-shadow: 0 14px 30px -16px rgba(16,32,48,.42), 0 0 0 1px rgba(255,255,255,.6);
+    overflow: hidden;
+  }
+  .dlg.wide { width: 700px; }
+  .dlg-t {
+    position: relative;
+    background: linear-gradient(#fcfdfe, #e3e9f1);
+    border-bottom: 1px solid #bcc6d1;
+    padding: 6px 28px 6px 10px;
+    font-size: 12.5px; font-weight: 600; letter-spacing: .2px; color: #1b2b3a;
+    border-radius: 5px 5px 0 0;
+  }
+  .dlg-t::after {
+    content: "✕"; position: absolute; right: 8px; top: 50%;
+    transform: translateY(-50%); font-size: 10px; font-weight: 400; color: #6a7580;
+  }
+  .dlg-b { padding: 12px 13px 13px; }
+  .grp {
+    position: relative;
+    border: 1px solid #c6ccd4; border-radius: 3px;
+    padding: 13px 10px 10px; margin: 0 0 15px;
+    background: #f1f1f1;
+  }
+  .grp > .gt {
+    position: absolute; top: -8px; left: 8px;
+    background: #f0f0f0; padding: 0 4px;
+    font-size: 11px; line-height: 1.5; letter-spacing: 0; color: #333;
+  }
+  .row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+  .row:last-child { margin-bottom: 0; }
+  .row label { flex: 0 0 auto; min-width: 76px; text-align: right; white-space: nowrap; color: #232323; font-size: 11.5px; }
+  .row label.w2 { min-width: 52px; }
+  .ctl {
+    flex: 1; min-width: 0; height: 21px;
+    border: 1px solid #8e98a3; background: #fff; border-radius: 2px;
+    padding: 0 5px; font-size: 11.5px; font-weight: 400; color: #111;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.07);
+  }
+  .row .ctl { min-width: 48px; }
+  .dlg-b p { margin: 0 0 6px; font-size: 11.5px; line-height: 1.65; color: #333; }
+  .ctl.sel::after { content: "▾"; color: #4a5561; font-size: 9px; margin-left: 4px; }
+  .ctl.plain { color: #333; }
+  .btn {
+    border: 1px solid #8e98a3; border-radius: 3px;
+    background: linear-gradient(#ffffff, #e6eaef);
+    height: 23px; line-height: 21px; padding: 0 12px;
+    font-size: 11.5px; color: #1a1a1a; white-space: nowrap;
+    box-shadow: 0 1px 0 rgba(0,0,0,.04);
+  }
+  .btn.pri { border-color: #6f93c0; background: linear-gradient(#ffffff, #dbe8f7); color: #10365c; font-weight: 600; }
+  .btn-row { display: flex; gap: 7px; justify-content: flex-end; margin-top: 13px; padding-top: 10px; border-top: 1px solid #dcdfe4; }
+  .chk { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: #232323; white-space: nowrap; }
+  .chk i {
+    width: 12px; height: 12px; border: 1px solid #7f8b97; background: #fff; border-radius: 2px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-style: normal; font-size: 9px; color: #12457f; line-height: 1;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.06);
+  }
+  .chk.on i { background: #fff; }
+  .prev {
+    border: 1px solid #8e98a3; background: #fff; border-radius: 2px;
+    height: 62px; display: flex; align-items: center; justify-content: center;
+    font-size: 17px; color: #111; letter-spacing: 2px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.06);
+  }
+  .prev .fx { font-family: "FangSong", "STFangsong", serif; }
+  .notes { flex: 1; min-width: 340px; }
+  .note { display: flex; gap: 11px; margin-bottom: 13px; font-size: 13.5px; line-height: 1.8; color: #37474f; }
+  .note:last-child { margin-bottom: 0; }
+  .note .n {
+    flex: none; width: 21px; height: 21px; border-radius: 4px;
+    background: #e8eef4; color: #1c4e80; border: 1px solid #c3d2e0;
+    font-size: 11.5px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .note b { color: #143d63; }
+  .note .val {
+    display: inline-block; background: #fff5e8; border: 1px solid #f0c88f;
+    color: #a5560c; border-radius: 3px; padding: 0 5px; font-weight: 700;
+    font-family: Consolas, "Courier New", monospace; font-size: 12.5px;
+  }
+  .warn {
+    background: #fdf4f2; border-left: 3px solid #c1502e;
+    padding: 9px 12px; font-size: 13px; color: #8a3a20; line-height: 1.7;
+    margin-top: 12px; border-radius: 0 4px 4px 0;
+  }
+  .tabs { display: flex; gap: 2px; border-bottom: 1px solid #b9c0c8; margin: -12px -13px 12px; padding: 6px 8px 0; background: #eceff3; }
+  .tab {
+    padding: 5px 12px; font-size: 11.5px; color: #3a4550;
+    border: 1px solid transparent; border-bottom: none;
+    border-radius: 3px 3px 0 0; margin-bottom: -1px;
+  }
+  .tab.on { background: #fbfbfb; border-color: #b9c0c8; color: #1a1a1a; font-weight: 600; }
+  .tabpage { padding: 0; }
+  .dlg, .dlg.wide { width: 100%; }
+  .dlg { box-shadow: 0 12px 26px -16px rgba(16,32,48,.38), 0 0 0 1px rgba(255,255,255,.6); }
+  .dlggrid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 16px; }
+  .dlggrid .dlg { width: 100%; }
+  .dlgwrap { padding: 14px; }
+  @media (max-width: 1000px) { .dlggrid { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) {
+    .dlgwrap { padding: 10px; }
+    .dlg-b { padding: 10px 10px 11px; }
+    .grp { padding: 12px 8px 9px; }
+    .row label { min-width: 62px; font-size: 11px; }
+    .row .ctl { flex: 1 1 110px; }
+    .btn { padding: 0 10px; }
+  }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="backbar">
+    <a href="../index.html">
+      <svg fill="none" height="14" viewBox="0 0 24 24" width="14"><path d="M19 12H6M12 6l-6 6 6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/></svg>
+      返回总入口
+    </a>
+  </div>
+
+  <div class="head">
+    <h1>图块使用</h1>
+    <p class="sub">一次画好，处处调用 —— 对应教材第 7 章</p>
+    <div class="meta">
+      <div><b>书名</b><span>《环境工程制图与CAD》（第 2 版）</span></div>
+      <div><b>主编</b><span>张晶、潘立卫、王嘉斌</span></div>
+      <div><b>出版</b><span>化学工业出版社，2022 年 1 月</span></div>
+      <div><b>ISBN</b><span>978-7-122-38763-9</span></div>
+      <div><b>软件平台</b><span>AutoCAD 2018</span></div>
+      <div><b>依据</b><span>教材 7.1「图块」～7.2.2「编辑块属性」</span></div>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 01</span><h2>一句话讲透：块到底解决什么问题</h2><span class="tag">WHOLE OBJECT, ONE DEFINITION</span></div>
+    <div class="fig-body">
+      <p>块（Block）是把若干线条、文字、填充<b>打包成一个整体对象</b>。图形里只存一份“块定义”，其余地方全是“块参照”——像同一个母版印出来的许多张，改母版，全部跟着变。</p>
+      <div class="fh4">体积小</div>
+      <p>重复图形只存一次定义，几十个门、上百个轴号也不明显撑大文件。</p>
+      <div class="fh4">插入快</div>
+      <p>选一次、点一下，比框选复制少一半操作；还能带基点精准落位。</p>
+      <div class="fh4">改一处全改</div>
+      <p>重定义块后，图内所有参照同步更新，不会漏改某一扇门。</p>
+      <div class="fh3">普通复制 vs 块：差别就在“以后改不改”</div>
+      <div class="figbox"><svg aria-label="复制与图块修改效果对比示意图" role="img" viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg">
+    <rect fill="#fbfcfd" height="250" rx="12" width="900" x="0" y="0"/>
+    
+    <text fill="#8a3b12" font-size="13" font-weight="700" x="30" y="30">复制粘贴 × 8</text>
+    <text fill="#7a8794" font-size="11.5" x="30" y="49">改尺寸要一个个改，漏一个就是错图</text>
+    <g fill="#fdf0e9" stroke="#c05621" stroke-width="1.6">
+      <g transform="translate(40,70)"><path d="M0,0 h20 v34 h-20 z"/><path d="M20,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(100,70)"><path d="M0,0 h20 v34 h-20 z"/><path d="M20,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(160,70)"><path d="M0,0 h20 v34 h-20 z"/><path d="M20,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(220,70)"><path d="M0,0 h20 v34 h-20 z"/><path d="M20,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(40,150)"><path d="M0,0 h32 v34 h-32 z"/><path d="M32,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(100,150)"><path d="M0,0 h20 v34 h-20 z"/><path d="M20,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(160,150)"><path d="M0,0 h20 v34 h-20 z"/><path d="M20,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(220,150)"><path d="M0,0 h20 v34 h-20 z"/><path d="M20,2 a16,16 0 0 1 0,30" fill="none"/></g>
+    </g>
+    <text fill="#a0522d" font-size="11" text-anchor="middle" x="160" y="215">有一个尺寸忘了改</text>
+    <path d="M272 120 h30" stroke="#c3cbd4" stroke-dasharray="4 4" stroke-width="1.2"/>
+
+    
+    <text fill="#0b4f6c" font-size="13" font-weight="700" x="340" y="30">同一块 × 8</text>
+    <text fill="#7a8794" font-size="11.5" x="340" y="49">改一次块定义，8 个参照同时更新</text>
+    <g fill="#e8f5f2" stroke="#0e7490" stroke-width="1.6">
+      <g transform="translate(350,70)"><path d="M0,0 h32 v34 h-32 z"/><path d="M32,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(410,70)"><path d="M0,0 h32 v34 h-32 z"/><path d="M32,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(470,70)"><path d="M0,0 h32 v34 h-32 z"/><path d="M32,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(530,70)"><path d="M0,0 h32 v34 h-32 z"/><path d="M32,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(350,150)"><path d="M0,0 h32 v34 h-32 z"/><path d="M32,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(410,150)"><path d="M0,0 h32 v34 h-32 z"/><path d="M32,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(470,150)"><path d="M0,0 h32 v34 h-32 z"/><path d="M32,2 a16,16 0 0 1 0,30" fill="none"/></g>
+      <g transform="translate(530,150)"><path d="M0,0 h32 v34 h-32 z"/><path d="M32,2 a16,16 0 0 1 0,30" fill="none"/></g>
+    </g>
+    <text fill="#0f766e" font-size="11" text-anchor="middle" x="470" y="215">8 个全对</text>
+
+    
+    <g transform="translate(680,68)">
+      <rect fill="#fff" height="118" rx="8" stroke="#12457f" stroke-dasharray="5 4" stroke-width="1.4" width="180" x="0" y="0"/>
+      <text fill="#12457f" font-size="11.5" font-weight="700" text-anchor="middle" x="90" y="22">块定义（母版）</text>
+      <path d="M30,44 h40 v34 h-40 z" fill="#dbe9f8" stroke="#12457f" stroke-width="1.5"/>
+      <path d="M70,46 a16,16 0 0 1 0,30" fill="none" stroke="#12457f" stroke-width="1.5"/>
+      <text fill="#6b7785" font-size="10.5" x="126" y="66">只此一份</text>
+      <text fill="#d9480f" font-size="10.5" text-anchor="middle" x="90" y="100">改这里 → 全部同步</text>
+    </g>
+    <path d="M676 127 h-40" stroke="#12457f" stroke-dasharray="4 4" stroke-width="1.2"/>
+  </svg></div>
+      <p><b>图 1</b>　复制的图形彼此独立；块参照共享同一个定义</p>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 02</span><h2>六种“块”，先分清再动手</h2><span class="tag">DON'T MIX THEM UP</span></div>
+    <div class="fig-body">
+      <p>新手最容易混的是“内部块 / 外部块 / 属性块 / 动态块”——它们不是并列的四种东西，而是<b>按“存在哪”和“带不带数据”两个维度交叉</b>出来的。先看这张表。</p>
+      <table>
+    <thead><tr><th>类型</th><th>命令</th><th>存在哪里</th><th>典型用途</th></tr></thead>
+    <tbody>
+      <tr><td><b>内部块</b>（临时块）</td><td><code>B</code> / BLOCK</td><td>只存在当前 DWG 里，换文件就没有</td><td>本图专用的门、窗、轴号、图框</td></tr>
+      <tr><td><b>外部块</b>（写块）</td><td><code>W</code> / WBLOCK</td><td>单独存成 .dwg 文件，可跨图纸调用</td><td>企业图库、标准图例、重复使用的图框</td></tr>
+      <tr><td><b>插入块</b></td><td><code>I</code> / INSERT</td><td>不产生新块，只是“摆放”已有块</td><td>把上面两种放到图中</td></tr>
+      <tr><td><b>属性块</b></td><td><code>ATT</code> + <code>B</code></td><td>块内嵌可填写的文字字段</td><td>轴号、门窗编号、标高、图签栏</td></tr>
+      <tr><td><b>动态块</b></td><td><code>BE</code> / BEDIT</td><td>块内带参数与动作，可拉伸/翻转/切换</td><td>一扇门搞定 750/900/1000 三种宽度</td></tr>
+      <tr><td><b>外部参照</b>（不是块）</td><td><code>XR</code> / XREF</td><td>引用别的 dwg 文件，本体不在本图</td><td>建筑底图套结构图，底图改了自动跟着变</td></tr>
+    </tbody>
+  </table>
+      <p>记忆法：<b>B 是“存进本图”，W 是“存成文件”，I 是“拿出来摆”，ATT 是“给它装个输入框”。</b></p>
+      <div class="fh3">块与外部参照，一句话区分</div>
+      <div class="fh4">块 = 影印件</div>
+      <p>内容已经印进本图。源文件改了，本图<b>不会</b>自动变，得重新插入覆盖。适合小对象、图例。</p>
+      <div class="fh4">外部参照 = 玻璃窗</div>
+      <p>只是“看向”另一个文件。对方一存盘，本图重开就同步。适合整张底图，且不会把对方内容吞进本图。</p>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 03</span><h2>全流程图：从画线到出表</h2><span class="tag">THE WHOLE LOOP</span></div>
+    <div class="fig-body">
+      <p>无论是做一个门、一个轴号还是一整张图框，走的都是这 6 步。其中<b>第 2 步（定属性）只有需要填不同文字时才做</b>，其余五步是通用主线。</p>
+      <div class="figbox"><svg aria-label="图块使用全流程图" role="img" viewBox="0 0 900 248" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker markerHeight="9" markerWidth="9" orient="auto" refX="7" refY="3.2">
+        <path d="M0,0 L7,3.2 L0,6.4 z" fill="#8fa6bd"/>
+      </marker>
+      <marker markerHeight="9" markerWidth="9" orient="auto" refX="7" refY="3.2">
+        <path d="M0,0 L7,3.2 L0,6.4 z" fill="#d9480f"/>
+      </marker>
+      <marker markerHeight="9" markerWidth="9" orient="auto" refX="3.2" refY="0">
+        <path d="M0,7 L3.2,0 L6.4,7 z" fill="#d9480f"/>
+      </marker>
+    </defs>
+    <rect fill="#fbfcfd" height="248" rx="12" width="900" x="0" y="0"/>
+    <g font-family="PingFang SC,Microsoft YaHei,sans-serif">
+      
+      <rect fill="#fff" height="86" rx="9" stroke="#c7d6e6" width="126" x="18" y="26"/>
+      <text fill="#12457f" font-size="13" font-weight="700" text-anchor="middle" x="81" y="54">① 画几何</text>
+      <text fill="#6b7785" font-size="10.8" text-anchor="middle" x="81" y="74">线条 / 圆弧 / 文字</text>
+      <text fill="#6b7785" font-size="10.8" text-anchor="middle" x="81" y="91">画在 0 层，颜色随层</text>
+
+      
+      <rect fill="#fdf0e9" height="86" rx="9" stroke="#e9b79b" width="126" x="178" y="26"/>
+      <text fill="#b8430c" font-size="13" font-weight="700" text-anchor="middle" x="241" y="54">② 定属性</text>
+      <text fill="#8a5a3a" font-size="10.8" text-anchor="middle" x="241" y="74">ATTDEF 设标记与提示</text>
+      <text fill="#8a5a3a" font-size="10.8" text-anchor="middle" x="241" y="91">要填不同值时才做</text>
+
+      
+      <rect fill="#fff" height="86" rx="9" stroke="#c7d6e6" width="126" x="338" y="26"/>
+      <text fill="#12457f" font-size="13" font-weight="700" text-anchor="middle" x="401" y="54">③ 定义块</text>
+      <text fill="#6b7785" font-size="10.8" text-anchor="middle" x="401" y="74">B 建内部块</text>
+      <text fill="#6b7785" font-size="10.8" text-anchor="middle" x="401" y="91">W 存外部 dwg</text>
+
+      
+      <rect fill="#fff" height="86" rx="9" stroke="#c7d6e6" width="126" x="498" y="26"/>
+      <text fill="#12457f" font-size="13" font-weight="700" text-anchor="middle" x="561" y="54">④ 插入</text>
+      <text fill="#6b7785" font-size="10.8" text-anchor="middle" x="561" y="74">I 选块 → 定点</text>
+      <text fill="#6b7785" font-size="10.8" text-anchor="middle" x="561" y="91">定比例 / 角度</text>
+
+      
+      <rect fill="#fff" height="86" rx="9" stroke="#c7d6e6" width="126" x="658" y="26"/>
+      <text fill="#12457f" font-size="13" font-weight="700" text-anchor="middle" x="721" y="54">⑤ 填值 / 微调</text>
+      <text fill="#6b7785" font-size="10.8" text-anchor="middle" x="721" y="74">双击块改属性值</text>
+      <text fill="#6b7785" font-size="10.8" text-anchor="middle" x="721" y="91">夹点调动态块</text>
+
+      
+      <rect fill="#e8f5f2" height="74" rx="9" stroke="#9dd3c9" width="126" x="658" y="150"/>
+      <text fill="#0f766e" font-size="13" font-weight="700" text-anchor="middle" x="721" y="174">⑥ 统计 / 出表</text>
+      <text fill="#3f6f68" font-size="10.5" text-anchor="middle" x="721" y="193">COUNT 计数</text>
+      <text fill="#3f6f68" font-size="10.5" text-anchor="middle" x="721" y="209">数据提取 → 门窗表</text>
+
+      
+      <g fill="none" marker-end="url(#ar)" stroke="#8fa6bd" stroke-width="1.4">
+        <path d="M144 69 H172"/>
+        <path d="M304 69 H332"/>
+        <path d="M464 69 H492"/>
+        <path d="M624 69 H652"/>
+        <path d="M721 112 V144"/>
+      </g>
+
+      
+      <path d="M658 187 H401 V118" fill="none" marker-end="url(#arU)" stroke="#d9480f" stroke-dasharray="5 4" stroke-width="1.3"/>
+      <text fill="#b8430c" font-size="10.6" text-anchor="middle" x="530" y="203">需要改图：BEDIT 改定义，全图参照一起变</text>
+
+      
+    </g>
+  </svg></div>
+      <p><b>图 2</b>　六步主线 + 一条回流（改块定义）</p>
+      <div class="fh4">铁律一 · 画在 0 层</div>
+      <p>块内几何放在 0 层、颜色随层，插到哪层就显哪层颜色。否则插进灰色图层它还是黄的。</p>
+      <div class="fh4">铁律二 · 基点选功能点</div>
+      <p>基点是插入时“捏住”的那个点：门轴、圆心、图框右下角。选在图形外，每次插都要挪。</p>
+      <div class="fh4">铁律三 · 改定义不炸开</div>
+      <p>要改就 <code>BEDIT</code> 改定义，全图同步；炸开只改一个，等于断了与母版的联系。</p>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 04</span><h2>对话框实况：五个对话框逐项拆解</h2><span class="tag">绿色勾选=建议勾上的</span></div>
+    <div class="fig-body">
+      <div class="tipbox" style="margin-top:0">
+        <b>块这一章的操作全在对话框里</b>，命令只是把对话框叫出来。下面五个框是 AutoCAD 2018 的真实字段，照着填就能做出来。
+      </div>
+      <div class="dlggrid">
+    <div class="cmdp">
+      <div class="cmdp-h"><span class="ckey">B</span>块定义<span class="cname">BLOCK</span></div>
+      <div class="dlgwrap">
+        <div class="dlg">
+          <div class="dlg-t">块定义</div>
+          <div class="dlg-b">
+            <div class="grp">
+              <div class="gt">名称</div>
+              <div class="row"><label>名称(N)：</label><div class="ctl sel">轴号</div></div>
+            </div>
+            <div class="grp">
+              <div class="gt">基点</div>
+              <div class="row" style="padding-left:0"><span class="chk on"><i>✓</i>在屏幕上指定(S)</span></div>
+              <div class="row"><label>拾取点(P)：</label><div class="btn">拾取点</div></div>
+              <div class="row"><label>X：</label><div class="ctl plain" style="max-width:110px">0.0000</div><label class="w2">Y：</label><div class="ctl plain" style="max-width:110px">0.0000</div></div>
+            </div>
+            <div class="grp">
+              <div class="gt">对象</div>
+              <div class="row" style="padding-left:0"><span class="chk on"><i>✓</i>在屏幕上指定(O)</span></div>
+              <div class="row"><label>选择对象(T)：</label><div class="btn">选择对象</div></div>
+              <div class="row" style="padding-left:0; gap:14px">
+                <span class="chk"><i></i>保留(R)</span>
+                <span class="chk on"><i>✓</i>转换为块(C)</span>
+                <span class="chk"><i></i>删除(D)</span>
+              </div>
+            </div>
+            <div class="grp">
+              <div class="gt">方式</div>
+              <div class="row" style="padding-left:0; gap:14px">
+                <span class="chk"><i></i>注释性(A)</span>
+                <span class="chk on"><i>✓</i>按统一比例缩放(S)</span>
+                <span class="chk on"><i>✓</i>允许分解(E)</span>
+              </div>
+            </div>
+            <div class="grp" style="margin-bottom:0">
+              <div class="gt">设置</div>
+              <div class="row"><label>块单位(U)：</label><div class="ctl sel">毫米</div></div>
+              <div class="row"><label>说明(E)：</label><div class="ctl plain">轴号属性块</div></div>
+            </div>
+            <div class="btn-row">
+              <div class="btn pri">确定</div>
+              <div class="btn">取消</div>
+              <div class="btn">帮助</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cmdp-note"><b>四步走</b>：起名字 → 指定基点（<b>基点决定插入时抓哪一点</b>，画轴号就选圆心）→ 选对象 → 选「转换为块」。<b>「保留」</b>=原图形还在、另外存一份块定义；<b>「转换为块」</b>=原图形直接变成块（常用）；<b>「删除」</b>=原图形删掉。</div>
+    </div>
+    <div class="cmdp">
+      <div class="cmdp-h"><span class="ckey">W</span>写块<span class="cname">WBLOCK</span></div>
+      <div class="dlgwrap">
+        <div class="dlg">
+          <div class="dlg-t">写块</div>
+          <div class="dlg-b">
+            <div class="grp">
+              <div class="gt">源</div>
+              <div class="row" style="padding-left:0; gap:14px">
+                <span class="chk"><i></i>块(B)</span>
+                <span class="chk"><i></i>整个图形(E)</span>
+                <span class="chk on"><i>✓</i>对象(O)</span>
+              </div>
+              <div class="row"><label>拾取点(P)：</label><div class="btn">拾取点</div></div>
+              <div class="row"><label>选择对象(T)：</label><div class="btn">选择对象</div></div>
+              <div class="row" style="padding-left:0; gap:14px">
+                <span class="chk on"><i>✓</i>保留(R)</span>
+                <span class="chk"><i></i>转换为块(C)</span>
+                <span class="chk"><i></i>删除(D)</span>
+              </div>
+            </div>
+            <div class="grp" style="margin-bottom:0">
+              <div class="gt">目标</div>
+              <div class="row"><label>文件名和路径(F)：</label><div class="ctl plain">D://图库//轴号.dwg</div><div class="btn">浏览...</div></div>
+              <div class="row"><label>插入单位(U)：</label><div class="ctl sel">毫米</div></div>
+            </div>
+            <div class="btn-row">
+              <div class="btn pri">确定</div>
+              <div class="btn">取消</div>
+              <div class="btn">帮助</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cmdp-note">把块<b>单独存成一个 .dwg 文件</b>，别的图纸也能用。跟 B 的区别：<b>B 只在当前图纸里有效，W 存成文件可以跨图调用</b>。做企业图库、标准图例就要用 W。</div>
+    </div>
+    <div class="cmdp">
+      <div class="cmdp-h"><span class="ckey">I</span>插入<span class="cname">INSERT</span></div>
+      <div class="dlgwrap">
+        <div class="dlg">
+          <div class="dlg-t">插入</div>
+          <div class="dlg-b">
+            <div class="grp">
+              <div class="gt">名称</div>
+              <div class="row"><label>名称(N)：</label><div class="ctl sel">轴号</div><div class="btn">浏览(B)...</div></div>
+            </div>
+            <div class="grp">
+              <div class="gt">插入点</div>
+              <div class="row" style="padding-left:0"><span class="chk on"><i>✓</i>在屏幕上指定(S)</span></div>
+              <div class="row"><label>X：</label><div class="ctl plain" style="max-width:110px">0.0000</div><label class="w2">Y：</label><div class="ctl plain" style="max-width:110px">0.0000</div></div>
+            </div>
+            <div class="grp">
+              <div class="gt">比例</div>
+              <div class="row" style="padding-left:0"><span class="chk"><i></i>在屏幕上指定(E)</span></div>
+              <div class="row"><label>X：</label><div class="ctl" style="max-width:80px">1</div><label class="w2">Y：</label><div class="ctl" style="max-width:80px">1</div><label class="w2">Z：</label><div class="ctl" style="max-width:80px">1</div></div>
+              <div class="row" style="padding-left:0"><span class="chk on"><i>✓</i>统一比例(U)</span></div>
+            </div>
+            <div class="grp">
+              <div class="gt">旋转</div>
+              <div class="row" style="padding-left:0"><span class="chk"><i></i>在屏幕上指定(R)</span></div>
+              <div class="row"><label>角度(A)：</label><div class="ctl" style="max-width:110px">0</div></div>
+            </div>
+            <div class="grp" style="margin-bottom:0">
+              <div class="gt">块单位</div>
+              <div class="row"><label>单位：</label><div class="ctl plain">毫米</div><label class="w2">比例：</label><div class="ctl plain">1.0000</div></div>
+              <div class="row" style="padding-left:0"><span class="chk"><i></i>分解(D)</span></div>
+            </div>
+            <div class="btn-row">
+              <div class="btn pri">确定</div>
+              <div class="btn">取消</div>
+              <div class="btn">帮助</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cmdp-note">把块<b>摆到图上</b>。勾「在屏幕上指定」就是自己点位置；不勾就按 X/Y 坐标摆。勾<b>「统一比例」</b>后 X 改了 Y 跟着变，不会把块拉歪。<b>「分解」</b>勾上就是插进来直接炸开成散线。</div>
+    </div>
+    <div class="cmdp">
+      <div class="cmdp-h"><span class="ckey">ATT</span>属性定义<span class="cname">ATTDEF</span></div>
+      <div class="dlgwrap">
+        <div class="dlg">
+          <div class="dlg-t">属性定义</div>
+          <div class="dlg-b">
+            <div class="grp">
+              <div class="gt">模式</div>
+              <div class="row" style="padding-left:0; gap:12px">
+                <span class="chk"><i></i>不可见(I)</span>
+                <span class="chk"><i></i>固定(C)</span>
+                <span class="chk"><i></i>验证(V)</span>
+              </div>
+              <div class="row" style="padding-left:0; gap:12px; margin-top:6px">
+                <span class="chk"><i></i>预设(P)</span>
+                <span class="chk on"><i>✓</i>锁定位置(K)</span>
+                <span class="chk"><i></i>多行(M)</span>
+              </div>
+            </div>
+            <div class="grp">
+              <div class="gt">属性</div>
+              <div class="row"><label>标记(T)：</label><div class="ctl">轴号</div></div>
+              <div class="row"><label>提示(M)：</label><div class="ctl">请输入轴号:</div></div>
+              <div class="row"><label>默认(L)：</label><div class="ctl">1</div></div>
+            </div>
+            <div class="grp">
+              <div class="gt">插入点</div>
+              <div class="row" style="padding-left:0"><span class="chk on"><i>✓</i>在屏幕上指定(O)</span></div>
+            </div>
+            <div class="grp" style="margin-bottom:0">
+              <div class="gt">文字设置</div>
+              <div class="row"><label>对正(J)：</label><div class="ctl sel">居中</div></div>
+              <div class="row"><label>文字样式(S)：</label><div class="ctl sel">GB-仿宋</div></div>
+              <div class="row"><label>文字高度(E)：</label><div class="ctl" style="max-width:96px">3.5</div><label class="w2">旋转(R)：</label><div class="ctl" style="max-width:96px">0</div></div>
+            </div>
+            <div class="btn-row">
+              <div class="btn pri">确定</div>
+              <div class="btn">取消</div>
+              <div class="btn">帮助</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cmdp-note">给块<b>装一个能填字的字段</b>。<b>标记</b>=字段名（如"轴号"）；<b>提示</b>=插入时命令行问你的话；<b>默认</b>=不填时的默认值。<b>「锁定位置」</b>要勾，不然块一移动属性就跑偏。</div>
+    </div>
+    <div class="cmdp">
+      <div class="cmdp-h"><span class="ckey">EATTEDIT</span>增强属性编辑器<span class="cname">EATTEDIT</span></div>
+      <div class="dlgwrap">
+        <div class="dlg">
+          <div class="dlg-t">增强属性编辑器</div>
+          <div class="dlg-b">
+            <div class="tabs">
+              <div class="tab on">属性</div>
+              <div class="tab">文字选项</div>
+              <div class="tab">特性</div>
+            </div>
+            <div class="tabpage">
+              <div class="grp">
+                <div class="gt">属性值</div>
+                <div class="row"><label>标记：</label><div class="ctl plain">轴号</div></div>
+                <div class="row"><label>提示：</label><div class="ctl plain">请输入轴号:</div></div>
+                <div class="row"><label>值(V)：</label><div class="ctl" style="font-weight:700; color:#b8442a">3</div></div>
+              </div>
+              <div class="grp" style="margin-bottom:0">
+                <div class="gt">说明</div>
+                <div class="row" style="font-size:11.5px; color:#6b7d8e; padding-left:0">改完「值」这一格，块上显示的文字立刻跟着变</div>
+              </div>
+            </div>
+            <div class="btn-row">
+              <div class="btn pri">应用(A)</div>
+              <div class="btn">确定</div>
+              <div class="btn">取消</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cmdp-note"><b>改已有块的属性值</b>用的。双击属性块也能打开它。「属性」页改数值，「文字选项」页改字高对正，「特性」页改图层颜色。</div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 05</span><h2>建内部块：B 块定义对话框逐项拆解</h2><span class="tag">BLOCK · 7.1.1.1</span></div>
+    <div class="fig-body">
+      <p>三种启动方式，任选：<span>命令行 B</span> <span>绘图 → 块 → 创建</span> <span>功能区 插入 → 块定义 → 创建块</span>。</p>
+      <p><b>图 3</b>　块定义对话框（对应教材 图 7-1）</p>
+      <div class="fh3">三个“对象”选项，到底选哪个</div>
+      <table>
+    <thead><tr><th>选项</th><th>定义后原图形</th><th>什么时候用</th></tr></thead>
+    <tbody>
+      <tr><td>保留</td><td>原样留在图上，另生成一个块定义</td><td>原图形还要单独用；或准备做“块 + 参照”两套</td></tr>
+      <tr><td><b>转换为块</b>（默认推荐）</td><td>就地变成块参照</td><td>99% 的情况。图形直接成了可重复调用的块</td></tr>
+      <tr><td>删除</td><td>从图中清掉，只留块定义</td><td>只想入库、暂不摆放</td></tr>
+    </tbody>
+  </table>
+      <div class="fh3">名称与基点：两条能省下大量返工的习惯</div>
+      <p><b>命名用“类别-规格”三段式</b>：<code>DOOR-900</code>、<code>WIN-C1518</code>、<code>GRID-A</code>、<code>TB-A3</code>。中文名虽然合法，但跨版本、跨插件、脚本调用时容易出问题；中英混排还容易多打空格——空格是<b>合法</b>的，但会让后续查找很痛苦。</p>
+      <p><b>基点就选“功能定位点”</b>：</p>
+      <div class="fh4">门 / 窗</div>
+      <p>门放<b>门轴</b>，窗放<b>洞口边中点</b>。插入时直接点洞口端点，不用再移。</p>
+      <div class="fh4">轴号 / 标高</div>
+      <p>放<b>圆心</b>或<b>符号尖端</b>，正好落在轴网交点、标高线上。</p>
+      <div class="fh4">图框 / 图签</div>
+      <p>放<b>内框右下角</b>，与图纸边界对齐，套图时一键落位。</p>
+      <div class="fh4">家具 / 设备</div>
+      <p>放<b>靠墙面中点</b>或<b>中心</b>，方便贴墙、居中布置。</p>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 06</span><h2>写块：W 把块变成能带走的 .dwg</h2><span class="tag">WBLOCK · 7.1.1.2</span></div>
+    <div class="fig-body">
+      <p>WBLOCK 的本质是<b>“另存一个只含这块图形的 dwg 文件”</b>。它既是“存块”，也是“把当前图形的一部分单独导出”的利器。命令：<span>W</span> <span>WBLOCK</span>。</p>
+      <p><b>图 4</b>　写块对话框（对应教材 图 7-3）</p>
+      <div class="fh3">“源”的三个选项怎么选</div>
+      <table>
+    <thead><tr><th>源</th><th>含义</th><th>典型场景</th></tr></thead>
+    <tbody>
+      <tr><td><b>块</b></td><td>把图中已有块定义原样导出为新文件</td><td>整理图库：把本图攒下的块逐个 W 出去</td></tr>
+      <tr><td><b>整个图形</b></td><td>整张模型空间存成一个 dwg（含未使用的块定义）</td><td>拆图、导出单张平面、做“底图”</td></tr>
+      <tr><td><b>对象</b></td><td>临时框选一部分图形，存成文件</td><td>从大图里抠一个节点详图/一个符号</td></tr>
+    </tbody>
+  </table>
+      <div class="fh3">和“另存为 / 导出”的区别</div>
+      <p>另存为会把整张图连同布局、图层、标注样式一起带走；W 只带走“这一个对象 + 它必需的图层/线型/文字样式”，文件往往只有几十 KB。做图库用 W，做备份用另存为。</p>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 07</span><h2>插入块：I 定点、定比例、定角度</h2><span class="tag">INSERT · 7.1.2</span></div>
+    <div class="fig-body">
+      <p><b>图 5</b>　插入对话框（对应教材 图 7-4）</p>
+      <div class="fh3">三个比例技巧，绝大多数教程没讲</div>
+      <div class="fh4">负数 = 镜像</div>
+      <p>比例填 <code>-1</code> 得到左右镜像的块，<code>X=-1 Y=1</code> 水平翻，<code>X=1 Y=-1</code> 垂直翻。比先插入再 MIRROR 快。</p>
+      <div class="fh4">非等比 = 变形</div>
+      <p>X=1、Y=0.5 会把块压扁。只有图例符号（如阀门、箭头）可以这么干；门、家具千万别。</p>
+      <div class="fh4">命令行更快</div>
+      <p>插入后不回对话框，直接敲 <code>S</code> 改比例、<code>R</code> 改角度、<code>B</code> 换基点，连点带敲一气呵成。</p>
+      <div class="fh3">重复插入：别一遍遍点</div>
+      <p>插入对话框底部有<b>“重复放置”</b>，勾上后可连点多个位置；老版本可在插入后直接按回车重复上一个命令。要按规律排（柱、灯具、轴线号），用 <b>ARRAY（阵列）</b>选“块参照”最快，改一个全排跟着变。</p>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 08</span><h2>属性块：让同一个块“每处写不同字”</h2><span class="tag">ATTDEF · EATTEDIT · 7.2</span></div>
+    <div class="fig-body">
+      <p>普通块里的文字是死的——十个轴号插进去全是“A”。<b>属性（Attribute）是块里的“可填写字段”</b>：几何一样，每次插入可以填不同值，之后还能改、能被统计。</p>
+      <div class="fh4">标记 Tag</div>
+      <p>字段的“内部名”，相当于数据库列名。不能有空格，字母会自动转大写。如 <code>NUM</code>、<code>DWG_NO</code>。</p>
+      <div class="fh4">提示 Prompt</div>
+      <p>插入时问你的那句话，给人看的。如“请输入轴号”。留空则直接用标记当提示。</p>
+      <div class="fh4">默认值 Value</div>
+      <p>不填时用什么。常填最常见的规格，如 <code>900</code>、<code>A</code>，能省大量回车。</p>
+      <div class="fh3">第 1 步：<span>ATT</span> 定义属性</div>
+      <p><b>图 6</b>　属性定义对话框（对应教材 图 7-5）</p>
+      <div class="fh3">四种“模式”，决定填写时的手感</div>
+      <table>
+    <thead><tr><th>模式</th><th>插入时</th><th>用在哪</th></tr></thead>
+    <tbody>
+      <tr><td><b>不可见</b></td><td>不显示、不打印，但值仍存在、可提取</td><td>造价、材料代号、供应商等“看得见没用”的信息</td></tr>
+      <tr><td><b>固定</b></td><td>不提示，永远是第一次设的值</td><td>图号前缀、单位名称等全图统一的文字</td></tr>
+      <tr><td><b>验证</b></td><td>填完再确认一次，可改</td><td>关键数据：标高、管径、防火等级</td></tr>
+      <tr><td><b>预设</b></td><td>不提示，直接落默认值，事后可改</td><td>大批量插入、先占位后统一填</td></tr>
+    </tbody>
+  </table>
+      <p>四个都不勾（默认）＝插入时正常问你一句，最常用。想临时关掉所有提示，把系统变量 <code>ATTREQ</code> 设为 0。</p>
+      <div class="fh3">第 2 步：打包成块（这一步最容易漏）</div>
+      <p>框选<b>图形 + 所有属性定义</b>，一起 <span>B</span> 定义成块。漏选属性，插出来就是一堆死文字，之后再也改不了值。</p>
+      <div class="fh3">第 3 步：填值与改值</div>
+      <p><b>插入时</b>：命令行会逐条问你，如 <code>请输入轴号 &lt;A&gt;:</code>，直接回车取默认，或输入 <code>B</code>。</p>
+      <p><b>插入后</b>：<b>双击块</b>，或 <span>EATTEDIT</span>（菜单：修改 → 对象 → 属性 → 单个），弹出增强属性编辑器。</p>
+      <table>
+          <thead>
+            <tr>
+              <th>标记</th>
+              <th>提示</th>
+              <th>值</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>NUM</td>
+              <td>请输入轴号</td>
+              <td>B</td>
+            </tr>
+          </tbody>
+        </table>
+      <p><b>图 7</b>　增强属性编辑器（对应教材 图 7-6），三个选项卡：属性 / 文字选项 / 特性</p>
+      <div class="fh3">属性真正的价值：能出表</div>
+      <p>因为属性是可读数据，所以能把图“算”成一张表：</p>
+      <table>
+    <thead><tr><th>需求</th><th>命令</th><th>产出</th></tr></thead>
+    <tbody>
+      <tr><td>数一数图上有多少扇门</td><td><code>COUNT</code>（2022+）</td><td>数量列表，并高亮每一处</td></tr>
+      <tr><td>门窗表 / 材料表 / 设备清单</td><td><code>DATAEXTRACTION</code>（EATTEXT）</td><td>可插入图面的表格，或导出 Excel/CSV</td></tr>
+      <tr><td>批量改所有块的某个属性值</td><td><code>BATTMAN</code></td><td>全图统一，无需逐个双击</td></tr>
+      <tr><td>新增属性后让旧块也显示</td><td><code>ATTSYNC</code></td><td>把新属性同步进已插入的参照</td></tr>
+    </tbody>
+  </table>
+      <p>“数据提取” wizard 里记得勾 <b>Count</b> 列，相同块会自动合并计数——这是手绘门窗表和软件出表的区别。</p>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 09</span><h2>改块三把刀：改定义、在位改、同名重定义</h2><span class="tag">BEDIT / REFEDIT / REDEFINE</span></div>
+    <div class="fig-body">
+      <p>块做好后总要改。三种方式影响范围不同，选错会把图改乱：</p>
+      <table>
+    <thead><tr><th>方式</th><th>命令 / 入口</th><th>影响范围</th><th>适合</th></tr></thead>
+    <tbody>
+      <tr><td><b>块编辑器</b>（首选）</td><td><code>BE</code> / BEDIT，或右键块 → 块编辑器</td><td>改定义，<b>全图所有参照</b>同步更新</td><td>统一改尺寸、加线条、加属性、做动态块</td></tr>
+      <tr><td><b>在位编辑</b></td><td><code>REFEDIT</code>，或右键 → 在位编辑块</td><td>也在改定义，但能看到周边图形作参照</td><td>改的时候需要对齐旁边的墙、轴线</td></tr>
+      <tr><td><b>同名重定义</b></td><td>画好新图形 → <code>B</code> → 输入<b>已有块名</b></td><td>覆盖原定义，全图更新</td><td>块要整体换掉、旧定义已乱</td></tr>
+    </tbody>
+  </table>
+      <div class="fh3">顺带把动态块做了：<span>BE</span></div>
+      <p>动态块 = 块 + 参数（夹点）+ 动作（夹点拉动时发生什么）。最小可用案例，做一扇能调宽、能左右翻的门：</p>
+      <ol>
+    <li><b>先有普通块</b><p>画门（门扇 + 开启弧），<code>B</code> 定义成 <code>DOOR-900</code>，基点放<b>门轴</b>。</p></li>
+    <li><b>进块编辑器</b><p>双击块，或 <code>BE</code> 选该块。界面变灰，出现“块编写选项板”。</p></li>
+    <li><b>加线性参数</b><p>选项板 → 参数 → 线性，从门轴拉到门扇外沿，命名为“门宽”。</p></li>
+    <li><b>加拉伸动作</b><p>选项板 → 动作 → 拉伸，选“门宽”参数 → 选参数点 → 框住门扇右端 → 回车。此时拉夹点，门扇会跟着变长。</p></li>
+    <li><b>加翻转参数</b><p>参数 → 翻转，沿门扇中线放一条翻转轴；动作 → 翻转，选该参数 → 框选全部门图形。</p></li>
+    <li><b>限定可选宽度（可选）</b><p>选中“门宽”参数 → 特性面板 → 值集 → 列表，填入 750 / 900 / 1000，夹点就只能停在这三档。</p></li>
+    <li><b>测试并保存</b><p>点“测试块”试拉、试翻；没问题后“关闭块编辑器”→ 保存更改，全图该块立即获得夹点。</p></li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 10</span><h2>实战：10 分钟做一个“轴号”属性块</h2><span class="tag">WALKTHROUGH · 圆 + 属性 → 块 → 插入 → 改值</span></div>
+    <div class="fig-body">
+      <p>选它是因为它把“画几何 → 定属性 → 建块 → 插入 → 编辑属性”整条链走了一遍，而且出图立刻能用。假设 1:100 出图，圆直径 800，字高 500。</p>
+      <ol>
+    <li><b>画圆</b><p>在 0 层画 <code>C</code> 圆，直径 800。若要双线圈，再 <code>O</code> 偏移 100。</p></li>
+    <li><b>定属性</b><p><code>ATT</code> → 标记 <code>NUM</code>、提示“请输入轴号”、默认 <code>A</code>；对正选<b>正中</b>，字高 500；插入点点圆心。</p></li>
+    <li><b>检查</b><p>图上应出现一个 <code>NUM</code> 字样（这就是属性定义本体，尚未成为块的一部分）。</p></li>
+    <li><b>建块</b><p><code>B</code> → 名称 <code>GRID-A</code> → 拾取基点＝<b>圆心</b> → 框选“圆 + NUM” → 选“转换为块” → 确定。</p></li>
+    <li><b>插入</b><p><code>I</code> → 选 <code>GRID-A</code> → 勾“在屏幕上指定” → 在轴网端点点击 → 命令行提示“请输入轴号 &lt;A&gt;:”，输入 <code>1</code>。</p></li>
+    <li><b>继续排</b><p>同一命令连点其余轴线端点，依次填 2、3、4；竖向用 <code>I</code> 后 <code>R</code> 旋转 90°，或插入后夹点旋转。</p></li>
+    <li><b>改值</b><p>填错了？双击该轴号 → 属性选项卡 → 值改为 <code>B</code> → 确定。只影响这一处，其他轴号不动。</p></li>
+    <li><b>入库</b><p><code>W</code> → 源选“块” → 选 <code>GRID-A</code> → 存成 <code>D:\图库\GRID-A.dwg</code>，单位毫米。以后任何图纸 <code>I</code> → 浏览即可用。</p></li>
+    <li><b>出表（可选）</b><p><code>DATAEXTRACTION</code> → 选本图 → 勾 <code>GRID-A</code> 与 <code>NUM</code> → 输出表格，得到“轴号清单”，改图后重跑一次即可更新。</p></li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 11</span><h2>速查：命令、变量、鼠标操作</h2><span class="tag">CHEAT SHEET</span></div>
+    <div class="fig-body">
+      <div class="fh3">命令</div>
+      <table>
+    <thead><tr><th>快捷键</th><th>命令</th><th>作用</th><th>记法</th></tr></thead>
+    <tbody>
+      <tr><td><b>B</b></td><td>BLOCK</td><td>建内部块</td><td>Block</td></tr>
+      <tr><td><b>W</b></td><td>WBLOCK</td><td>写块为 dwg 文件</td><td>Write block</td></tr>
+      <tr><td><b>I</b></td><td>INSERT</td><td>插入块 / 图形</td><td>Insert</td></tr>
+      <tr><td><b>ATT</b></td><td>ATTDEF</td><td>定义属性</td><td>ATTribute DEFinition</td></tr>
+      <tr><td><b>—</b></td><td>EATTEDIT</td><td>改单个块属性（双击块同效）</td><td>Enhanced ATTribute EDIT</td></tr>
+      <tr><td><b>BE</b></td><td>BEDIT</td><td>块编辑器（含动态块）</td><td>Block EDIT</td></tr>
+      <tr><td><b>—</b></td><td>REFEDIT</td><td>在位编辑块</td><td>REFerence EDIT</td></tr>
+      <tr><td><b>X</b></td><td>EXPLODE</td><td>分解块</td><td>——</td></tr>
+      <tr><td><b>—</b></td><td>BATTMAN</td><td>块属性管理器（批量改值）</td><td>Block ATTribute MANager</td></tr>
+      <tr><td><b>—</b></td><td>ATTSYNC</td><td>把新属性同步到旧块</td><td>ATTribute SYNChronize</td></tr>
+      <tr><td><b>—</b></td><td>DATAEXTRACTION</td><td>数据提取（出门窗表）</td><td>EATTEXT 旧名</td></tr>
+      <tr><td><b>—</b></td><td>COUNT</td><td>统计块数量（2022+）</td><td>——</td></tr>
+      <tr><td><b>PU</b></td><td>PURGE</td><td>清理未使用的块定义</td><td>Purge</td></tr>
+      <tr><td><b>REN</b></td><td>RENAME</td><td>重命名块</td><td>Rename</td></tr>
+      <tr><td><b>XR</b></td><td>XREF</td><td>外部参照（非块）</td><td>eXternal REFerence</td></tr>
+      <tr><td><b>Ctrl+2</b></td><td>ADCENTER</td><td>设计中心，跨图取块</td><td>——</td></tr>
+      <tr><td><b>Ctrl+Shift+C</b></td><td>COPYBASE</td><td>带基点复制（粘贴即成块）</td><td>——</td></tr>
+    </tbody>
+  </table>
+      <div class="fh3">系统变量</div>
+      <table>
+    <thead><tr><th>变量</th><th>取值</th><th>作用</th></tr></thead>
+    <tbody>
+      <tr><td><code>INSUNITS</code></td><td>0 无单位 / 1 英寸 / 4 毫米 / 5 厘米 / 6 米</td><td>图形插入单位，国内<b>设 4</b>；设错会出现块巨大或极小</td></tr>
+      <tr><td><code>ATTREQ</code></td><td>1 提示（默认） / 0 不提示取默认</td><td>批量插入属性块时先设 0，事后统一填</td></tr>
+      <tr><td><code>ATTDIA</code></td><td>1 弹对话框 / 0 只在命令行问</td><td>嫌弹窗打断连点时可设 0</td></tr>
+      <tr><td><code>ATTMODE</code></td><td>0 全关 / 1 正常 / 2 全开</td><td>检查“不可见”属性里到底藏了什么</td></tr>
+      <tr><td><code>BLOCKEDITLOCK</code></td><td>0 允许 / 1 禁止</td><td>1 时双击块不会进编辑器，防误改</td></tr>
+    </tbody>
+  </table>
+      <div class="fh3">三个“不记命令也能干”的操作</div>
+      <div class="fh4">双击块</div>
+      <p>普通块 → 块编辑器；属性块 → 增强属性编辑器。这是最高频的入口。</p>
+      <div class="fh4">右键拖动</div>
+      <p>选中图形，<b>右键</b>拖到别处松手 → “粘贴为块”。临时用、不想命名的场合很快。</p>
+      <div class="fh4">特性面板</div>
+      <p><code>Ctrl+1</code> 选中块，可直接改 X/Y 比例、旋转、图层，以及“允许分解”。</p>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 12</span><h2>8 个高频坑，附对症解法</h2><span class="tag">TROUBLESHOOTING</span></div>
+    <div class="fig-body">
+      <table>
+    <thead><tr><th>#</th><th>现象</th><th>真正原因</th><th>解法</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>块插到某图层后，颜色不跟着图层变</td><td>块内对象被设成了具体图层/具体颜色，而不是 0 层 + ByLayer</td><td>进 <code>BE</code>，把块内几何全部改到 <b>0 层</b>、颜色 <b>ByBlock/ByLayer</b>；批量可用 <code>SETBYLAYER</code></td></tr>
+      <tr><td>2</td><td>块插进来特别大或特别小（差 25.4 倍）</td><td>源图与目标图 <code>INSUNITS</code> 不一致（英寸 vs 毫米）</td><td>两边都设 <code>INSUNITS=4</code>；已插入的用 <code>SCALE</code> 按 25.4 或 1/25.4 修正</td></tr>
+      <tr><td>3</td><td>给块加了新属性，旧的地方不显示</td><td>旧参照还停在旧定义</td><td><code>ATTSYNC</code> → 选该块名 → 是；或 <code>BATTMAN</code> 里“同步”</td></tr>
+      <tr><td>4</td><td>插入属性块不弹输入提示，直接落默认值</td><td><code>ATTREQ=0</code> 或属性被设成了“固定/预设”</td><td><code>ATTREQ</code> 设 1；检查属性模式</td></tr>
+      <tr><td>5</td><td>块改不动、夹点拉不动、炸不开</td><td>块被设为“不允许分解”，或图层被锁定/冻结</td><td><code>Ctrl+1</code> 看“允许分解”；解冻解锁图层</td></tr>
+      <tr><td>6</td><td>块名删不掉，PU 也清不掉</td><td>图里还有参照（可能藏在别的块里，或被冻结图层上）</td><td>用 <code>QSELECT</code>/<code>COUNT</code> 找全，删净后再 <code>PU</code>（可试 <code>-PURGE</code> → 块）</td></tr>
+      <tr><td>7</td><td>炸开后属性文字变成普通文字，改不了值</td><td>炸开即脱离定义，属性退化为 ATTDEF/TEXT</td><td>撤销；改用 <code>BEDIT</code> 改定义，或用 <code>EATTEDIT</code> 改值</td></tr>
+      <tr><td>8</td><td>本图块明明改了，同事的图打开还是旧样</td><td>块不跨文件同步，外部块文件也没重新导出</td><td>重新 <code>W</code> 覆盖图库文件；对方插入时选“重定义”</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 13</span><h2>最后一页：30 秒选对块</h2><span class="tag">DECISION MAP</span></div>
+    <div class="fig-body">
+      <div class="figbox"><svg aria-label="图块类型选择阶梯图" role="img" viewBox="0 0 900 212" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker markerHeight="9" markerWidth="9" orient="auto" refX="7" refY="3.2">
+        <path d="M0,0 L7,3.2 L0,6.4 z" fill="#8fa6bd"/>
+      </marker>
+    </defs>
+    <rect fill="#fbfcfd" height="212" rx="12" width="900" x="0" y="0"/>
+    <g font-family="PingFang SC,Microsoft YaHei,sans-serif">
+      <rect fill="#fff" height="92" rx="10" stroke="#c7d6e6" width="150" x="14" y="34"/>
+      <text fill="#96a3b1" font-size="9.5" letter-spacing="1.5" text-anchor="middle" x="89" y="54">准备</text>
+      <text fill="#33414f" font-size="14" font-weight="700" text-anchor="middle" x="89" y="78">画好图形</text>
+      <text fill="#7a8794" font-size="10.5" text-anchor="middle" x="89" y="98">0 层 · 颜色随层</text>
+      <text fill="#7a8794" font-size="10.5" text-anchor="middle" x="89" y="115">定好基点</text>
+
+      <rect fill="#eaf1fa" height="92" rx="10" stroke="#a9c4e2" width="150" x="186" y="34"/>
+      <text fill="#7a97b6" font-size="9.5" letter-spacing="1.5" text-anchor="middle" x="261" y="54">第一步</text>
+      <text fill="#12457f" font-size="14" font-weight="700" text-anchor="middle" x="261" y="78">B 普通块</text>
+      <text fill="#4d6a86" font-size="10.5" text-anchor="middle" x="261" y="98">本图复用</text>
+      <text fill="#4d6a86" font-size="10.5" text-anchor="middle" x="261" y="115">改定义全图更新</text>
+
+      <rect fill="#e8f5f2" height="92" rx="10" stroke="#9dd3c9" width="150" x="358" y="34"/>
+      <text fill="#7ba9a1" font-size="9.5" letter-spacing="1.5" text-anchor="middle" x="433" y="54">升级 一</text>
+      <text fill="#0b5d55" font-size="14" font-weight="700" text-anchor="middle" x="433" y="78">W 写块</text>
+      <text fill="#3f6f68" font-size="10.5" text-anchor="middle" x="433" y="98">跨图纸调用</text>
+      <text fill="#3f6f68" font-size="10.5" text-anchor="middle" x="433" y="115">存成独立 .dwg</text>
+
+      <rect fill="#fdf0e9" height="92" rx="10" stroke="#e9b79b" width="150" x="530" y="34"/>
+      <text fill="#c08a6a" font-size="9.5" letter-spacing="1.5" text-anchor="middle" x="605" y="54">升级 二</text>
+      <text fill="#b8430c" font-size="14" font-weight="700" text-anchor="middle" x="605" y="78">ATT 属性块</text>
+      <text fill="#8a5a3a" font-size="10.5" text-anchor="middle" x="605" y="98">每处填不同文字</text>
+      <text fill="#8a5a3a" font-size="10.5" text-anchor="middle" x="605" y="115">可统计、可出表</text>
+
+      <rect fill="#fff" height="92" rx="10" stroke="#c7d6e6" width="150" x="702" y="34"/>
+      <text fill="#96a3b1" font-size="9.5" letter-spacing="1.5" text-anchor="middle" x="777" y="54">升级 三</text>
+      <text fill="#12457f" font-size="14" font-weight="700" text-anchor="middle" x="777" y="78">BE 动态块</text>
+      <text fill="#7a8794" font-size="10.5" text-anchor="middle" x="777" y="98">尺寸 / 方向可调</text>
+      <text fill="#7a8794" font-size="10.5" text-anchor="middle" x="777" y="115">参数 + 动作 + 夹点</text>
+
+      <g fill="none" marker-end="url(#ar3)" stroke="#8fa6bd" stroke-width="1.4">
+        <path d="M164 80 H182"/>
+        <path d="M336 80 H354"/>
+        <path d="M508 80 H526"/>
+        <path d="M680 80 H698"/>
+      </g>
+
+      <path d="M89 126 V154" fill="none" stroke="#c3cbd4" stroke-dasharray="4 4" stroke-width="1.2"/>
+      <rect fill="#fff" height="44" rx="7" stroke="#d7dde4" stroke-dasharray="4 4" width="238" x="14" y="156"/>
+      <text fill="#6b7785" font-size="10.8" text-anchor="middle" x="133" y="175">只用这一次 → 直接复制</text>
+      <text fill="#6b7785" font-size="10.8" text-anchor="middle" x="133" y="191">不必建块，也不占块表</text>
+    </g>
+  </svg></div>
+      <p><b>图 8</b>　四级叠加：从普通块一路升到动态属性块</p>
+      <p>每升一级都是<b>加一层能力</b>，不是换一种块：只在本图用，可以停在 ②；不需要填字，跳过 ④；尺寸固定，跳过 ⑤。任意组合都成立。唯一不该做的，是为了“就改这一处”把块炸开——那等于退回复制粘贴，统计和联动全部失效。</p>
+      <div class="fh4">记住这一句</div>
+      <p>块的本质是<b>用一个定义管住许多实例</b>。凡是要重复、要统一、要统计的图形，都该做成块。</p>
+      <div class="fh4">记住这一条</div>
+      <p>要改就改<b>定义</b>，不要炸开改单个。炸开等于退回到“复制粘贴”。</p>
+      <div class="fh4">记住这一步</div>
+      <p>做好的块一定 <b>W</b> 出去存档。只存在图里的块，换台电脑就等于没做过。</p>
+      <p><b>资料说明</b>　本图解的对话框结构、选项释义与命令流程，依据所给教材《环境工程制图与 CAD（第二版）》第 7 章“图块与属性”7.1～7.2.2 整理；操作细节、系统变量与常见问题对策，参考 Autodesk 官方知识库及主流 CAD 教学资料核校。不同 AutoCAD 版本（2016 / 2020 / 2024）的对话框布局略有差异，命令与选项含义一致。</p>
+      <p>图中对话框为按教材截图<b>重绘的示意图</b>，用于标注各区域含义，非软件截图。</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <h3>出处</h3>
+    <ol>
+      <li>张晶, 潘立卫, 王嘉斌. 环境工程制图与CAD[M]. 2 版. 北京: 化学工业出版社, 2022. ISBN 978-7-122-38763-9.（第 7 章 图块与属性）</li>
+      <li>命令名与快捷键按 Autodesk 官方《AutoCAD 快捷键手册》与 AutoCAD 2018 中文版界面。</li>
+    </ol>
+    <p style="margin:0">待核项：教材第 7 章的具体页码未查到，用前建议翻书核对。</p>
+  </div>
+
+</div>
+</body>
+</html>

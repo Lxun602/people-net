@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>绘图命令</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 60px;
+    background: #eef1f4;
+    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    color: #1f2937; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  .backbar { max-width: 1200px; margin: 0 auto 14px; }
+  .backbar a { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: #1c4e80; text-decoration: none; background: #fff; border: 1px solid #dbe1e8; border-radius: 20px; padding: 6px 16px; transition: .18s; }
+  .backbar a:hover { background: #1c4e80; color: #fff; border-color: #1c4e80; }
+
+  .head { background: #fff; border: 1px solid #dbe1e8; border-radius: 12px; padding: 28px 32px; margin-bottom: 22px; border-top: 5px solid #1c4e80; }
+  .head h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: 1px; color: #143d63; }
+  .head .sub { margin: 0 0 18px; font-size: 14px; color: #5b6b7c; }
+  .meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 28px; font-size: 13.5px; }
+  .meta b { color: #143d63; display: inline-block; min-width: 76px; }
+  .meta span { color: #3d4d5c; }
+
+  .fig { background: #fff; border: 1px solid #dbe1e8; border-radius: 12px; margin-bottom: 22px; overflow: hidden; }
+  .fig-head { display: flex; align-items: center; gap: 14px; padding: 16px 26px; border-bottom: 1px solid #e7ecf1; background: #f8fafc; }
+  .fig-no { flex: none; font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #fff; background: #1c4e80; padding: 4px 9px; border-radius: 4px; }
+  .fig-head h2 { margin: 0; font-size: 17px; color: #143d63; font-weight: 600; }
+  .fig-head .tag { margin-left: auto; font-size: 12px; color: #7a8b9c; }
+  .fig-body { padding: 24px 26px 28px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { border: 1px solid #e0e6ec; padding: 9px 11px; text-align: left; vertical-align: top; line-height: 1.65; }
+  th { background: #eef3f7; color: #143d63; font-weight: 600; font-size: 12.5px; }
+  tr:nth-child(even) td { background: #fafcfd; }
+  td.k { font-family: Consolas, "Courier New", monospace; color: #b8442a; font-weight: 700; white-space: nowrap; }
+  td.c { font-family: Consolas, monospace; color: #143d63; font-weight: 700; white-space: nowrap; }
+  .tbl-cap { font-size: 12.5px; color: #6b7d8e; margin-top: 10px; line-height: 1.7; }
+
+  .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .cmp-box { border: 1px solid #e0e7ee; border-radius: 9px; overflow: hidden; }
+  .cmp-h { background: #f2f6fa; border-bottom: 1px solid #e0e7ee; padding: 9px 14px; font-size: 14px; font-weight: 700; color: #143d63; display: flex; align-items: center; gap: 8px; }
+  .cmp-h .badge-a, .cmp-h .badge-b { font-size: 11px; padding: 1px 7px; border-radius: 3px; color: #fff; font-weight: 700; }
+  .badge-a { background: #1c4e80; }
+  .badge-b { background: #d9480f; }
+  .cmp-b { padding: 14px; }
+  .cmp-b svg { display: block; width: 100%; height: auto; }
+  .cmp-b p { margin: 10px 0 0; font-size: 13px; line-height: 1.75; color: #37474f; }
+  .cmp-b p b { color: #143d63; }
+  .cmp-b .warn { background: #fdf4f2; border-left: 3px solid #c1502e; padding: 8px 11px; font-size: 12.5px; color: #8a3a20; margin-top: 10px; border-radius: 0 4px 4px 0; }
+
+  .six { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .m { border: 1px solid #e0e7ee; border-radius: 9px; padding: 14px; text-align: center; background: #fafcfd; }
+  .m svg { display: block; margin: 0 auto 10px; }
+  .m .mt { font-size: 13.5px; font-weight: 700; color: #143d63; }
+  .m .md { font-size: 12.5px; color: #55657a; line-height: 1.7; margin-top: 5px; }
+  .m .mk { font-family: Consolas, monospace; font-size: 11.5px; color: #b8442a; font-weight: 700; margin-top: 6px; }
+
+  .steps { display: flex; flex-wrap: wrap; }
+  .step { flex: 1; min-width: 160px; border: 1px solid #dbe1e8; border-radius: 8px; background: #fafcfd; padding: 12px 14px; position: relative; margin-right: 22px; margin-bottom: 10px; }
+  .step:last-child { margin-right: 0; }
+  .step::after { content: "▶"; position: absolute; right: -17px; top: 50%; transform: translateY(-50%); color: #a8b8c8; font-size: 11px; }
+  .step:last-child::after { display: none; }
+  .step .sn { font-size: 11px; font-weight: 700; color: #1c4e80; letter-spacing: 1px; }
+  .step .st { font-size: 13.5px; font-weight: 600; color: #143d63; margin: 3px 0 5px; }
+  .step .sd { font-size: 12.5px; color: #55657a; line-height: 1.7; }
+  .step .cmd { display: inline-block; margin-top: 6px; font-family: Consolas, monospace; background: #143d63; color: #fff; font-size: 11.5px; padding: 1px 7px; border-radius: 3px; }
+
+  .tipbox { background: #f2f7fb; border-left: 3px solid #1c4e80; padding: 12px 15px; font-size: 13px; color: #2b4157; line-height: 1.8; border-radius: 0 4px 4px 0; margin-top: 14px; }
+  .tipbox b { color: #143d63; }
+
+  /* ---------- 命令框（仿真命令行） ---------- */
+  .cmdg { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .cmdp { border: 1px solid #dbe1e8; border-radius: 9px; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+  .cmdp-h { padding: 10px 13px; background: #f2f6fa; border-bottom: 1px solid #e0e7ee; font-size: 14px; font-weight: 700; color: #143d63; display: flex; align-items: center; gap: 9px; }
+  .ckey { font-family: Consolas, monospace; background: #143d63; color: #fff; font-size: 12px; padding: 2px 9px; border-radius: 3px; font-weight: 700; flex: none; }
+  .cname { font-size: 12px; color: #7a8b9c; font-weight: 400; }
+  .cmdw-t { background: #2b3a48; color: #9fb3c6; font-size: 10.5px; padding: 4px 12px; letter-spacing: 1.5px; }
+  .cmdbox { background: #1e2b38; padding: 11px 13px; font-family: Consolas, "Courier New", monospace; font-size: 12px; line-height: 1.85; color: #cfd9e2; flex: 1; }
+  .cmdbox .p { color: #7ee0a0; }
+  .cmdbox .o { color: #f5c185; }
+  .cmdbox .n { color: #8fb4d4; }
+  .cmdp-note { padding: 10px 13px 12px; font-size: 12.5px; color: #37474f; line-height: 1.75; border-top: 1px solid #eef2f6; }
+  .cmdp-note b { color: #143d63; }
+  .cmdp-note .k { font-family: Consolas, monospace; background: #fff5e8; border: 1px solid #f0c88f; color: #a5560c; border-radius: 3px; padding: 0 5px; font-weight: 700; font-size: 12px; }
+
+  .foot { background: #fff; border: 1px solid #dbe1e8; border-radius: 12px; padding: 22px 28px; font-size: 12.5px; color: #55657a; line-height: 1.9; }
+  .foot h3 { margin: 0 0 10px; font-size: 14px; color: #143d63; }
+  .foot ol { margin: 0 0 12px; padding-left: 20px; }
+  .foot li { margin-bottom: 5px; }
+  .foot .todo { color: #c1502e; font-weight: 700; }
+
+  @media (max-width: 1000px) {
+    .cmp, .six, .meta { grid-template-columns: 1fr; }
+  }
+  @media print { body { background: #fff; padding: 0; } .fig, .head, .foot { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="backbar">
+    <a href="../index.html">
+      <svg fill="none" height="14" viewBox="0 0 24 24" width="14"><path d="M19 12H6M12 6l-6 6 6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/></svg>
+      返回总入口
+    </a>
+  </div>
+
+
+  <div class="head">
+    <h1>绘图命令</h1>
+    <p class="sub">把东西「从无到有」画出来的那些命令 —— 对应教材第 5 章</p>
+    <div class="meta">
+      <div><b>书名</b><span>《环境工程制图与CAD》（第 2 版）</span></div>
+      <div><b>主编</b><span>张晶、潘立卫、王嘉斌</span></div>
+      <div><b>出版</b><span>化学工业出版社，2022 年 1 月</span></div>
+      <div><b>ISBN</b><span>978-7-122-38763-9</span></div>
+      <div><b>软件平台</b><span>AutoCAD 2018</span></div>
+      <div><b>依据</b><span>Autodesk 官方《AutoCAD 快捷键手册》</span></div>
+    </div>
+  </div>
+
+  <!-- 图 01 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 01</span><h2>绘图命令速查表</h2><span class="tag">18 个，按用得多少排的</span></div>
+    <div class="fig-body">
+      <table>
+        <thead><tr><th style="width:130px">命令</th><th style="width:90px">快捷键</th><th style="width:200px">画出来是什么</th><th>什么时候用它</th></tr></thead>
+        <tbody>
+          <tr><td class="c">LINE</td><td class="k">L</td><td>一条直线段</td><td>用得最多。画池体轮廓、管线、图框</td></tr>
+          <tr><td class="c">PLINE</td><td class="k">PL</td><td>连成一整条的多段线</td><td>要整体偏移、算面积、改线宽时用。画工艺流程图管线、箭头</td></tr>
+          <tr><td class="c">CIRCLE</td><td class="k">C</td><td>圆</td><td>圆形沉淀池、检查井、法兰、风机</td></tr>
+          <tr><td class="c">ARC</td><td class="k">A</td><td>圆弧</td><td>弯头、池体圆角过渡、池底坡度线</td></tr>
+          <tr><td class="c">RECTANG</td><td class="k">REC</td><td>矩形（整体）</td><td>设备基础、池体矩形平面、图框、标题栏</td></tr>
+          <tr><td class="c">POLYGON</td><td class="k">POL</td><td>正多边形</td><td>六角螺栓头、人孔、阀门手轮</td></tr>
+          <tr><td class="c">ELLIPSE</td><td class="k">EL</td><td>椭圆</td><td>斜看过去的圆管口、示意性设备</td></tr>
+          <tr><td class="c">HATCH</td><td class="k">H</td><td>图案填充（剖面线）</td><td>剖面图里填混凝土、填土、保温层</td></tr>
+          <tr><td class="c">SPLINE</td><td class="k">SPL</td><td>光滑的样条曲线</td><td>地形等高线、水面线、不规则边界</td></tr>
+          <tr><td class="c">XLINE</td><td class="k">XL</td><td>两端无限长的构造线</td><td>当辅助线用，画完删掉。定位中心线、对齐基准</td></tr>
+          <tr><td class="c">MLINE</td><td class="k">ML</td><td>多条平行线</td><td>画双线墙体、双线道路</td></tr>
+          <tr><td class="c">DONUT</td><td class="k">DO</td><td>圆环（实心圈）</td><td>画粗点、节点标记、管道断点</td></tr>
+          <tr><td class="c">POINT</td><td class="k">PO</td><td>一个点</td><td>定位标记、等分的落脚点</td></tr>
+          <tr><td class="c">DIVIDE</td><td class="k">DIV</td><td>按「段数」平分</td><td>把一段线等分成 N 段（比如 8 格格栅）</td></tr>
+          <tr><td class="c">MEASURE</td><td class="k">ME</td><td>按「固定长度」分</td><td>每隔固定距离放一个（比如每 2m 一个检查井）</td></tr>
+          <tr><td class="c">REVCLOUD</td><td class="k">REVCLOUD</td><td>云线（一圈波浪）</td><td>圈出要修改的地方、标注问题区域</td></tr>
+          <tr><td class="c">SOLID</td><td class="k">SO</td><td>实心三角形/四边形</td><td>填实心块、做箭头</td></tr>
+          <tr><td class="c">RAY</td><td class="k">—</td><td>一端无限长的射线</td><td>辅助线，用得比构造线少</td></tr>
+        </tbody>
+      </table>
+      <p class="tbl-cap">快捷键按 Autodesk 官方《AutoCAD 快捷键手册》与 AutoCAD 2018 中文版界面。RAY（射线）没有默认快捷键，要在命令行打全名。</p>
+    </div>
+  </div>
+
+  <!-- 图 02 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 02</span><h2>命令框实况：每个命令到底在跟你说什么</h2><span class="tag">绿字=你输入的，橙字=可以选的选项</span></div>
+    <div class="fig-body">
+      <div class="tipbox" style="margin-top:0">
+        <b>先学会看命令行：</b><span style="font-family:Consolas,monospace">命令:</span> 后面是你敲的；<b>方括号 [ ] 里的字母</b>是可以选的选项，敲那个字母回车就切换；尖括号 <span style="font-family:Consolas,monospace">&lt; &gt;</span> 里是默认值，直接回车就用它。
+      </div>
+
+      <div class="cmdg">
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">L</span>直线<span class="cname">LINE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">L</span></div>
+            <div>LINE 指定第一点: <span class="n">（点起点）</span></div>
+            <div>指定下一点或 <span class="o">[放弃(U)]</span>: <span class="n">（点第二点）</span></div>
+            <div>指定下一点或 <span class="o">[放弃(U)]</span>: <span class="n">（点第三点）</span></div>
+            <div>指定下一点或 <span class="o">[闭合(C)/放弃(U)]</span>: <span class="p">C</span></div>
+          </div>
+          <div class="cmdp-note"><b>U</b> = 撤掉刚画的那一段；<b>C</b> = 自动连回起点，画闭合图形用它收尾。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">PL</span>多段线<span class="cname">PLINE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">PL</span></div>
+            <div>PLINE 指定起点: <span class="n">（点一下）</span></div>
+            <div>当前线宽为 <span class="n">0.0000</span></div>
+            <div>指定下一个点或 <span class="o">[圆弧(A)/半宽(H)/长度(L)/放弃(U)/宽度(W)]</span>: <span class="p">W</span></div>
+            <div>指定起点宽度 &lt;0.0000&gt;: <span class="p">0.5</span></div>
+            <div>指定端点宽度 &lt;0.5000&gt;: <span class="p">回车</span></div>
+          </div>
+          <div class="cmdp-note"><b>W</b> 是设线宽（画粗管线、箭头全靠它）；<b>A</b> 切到画圆弧；<b>U</b> 撤一段。首尾宽度不一样就是箭头。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">C</span>圆<span class="cname">CIRCLE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">C</span></div>
+            <div>CIRCLE 指定圆的圆心或 <span class="o">[三点(3P)/两点(2P)/切点、切点、半径(T)]</span>: <span class="n">（点圆心）</span></div>
+            <div>指定圆的半径或 <span class="o">[直径(D)]</span>: <span class="p">D</span></div>
+            <div>指定圆的直径: <span class="p">8000</span></div>
+          </div>
+          <div class="cmdp-note">直接输数字 = 半径；先敲 <b>D</b> 再输数字 = 直径。图纸标的是 <span class="k">Ø8000</span> 就用 D，别自己除以 2。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">A</span>圆弧<span class="cname">ARC</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">A</span></div>
+            <div>ARC 指定圆弧的起点或 <span class="o">[圆心(C)]</span>: <span class="n">（点起点）</span></div>
+            <div>指定圆弧的第二个点或 <span class="o">[圆心(C)/端点(E)]</span>: <span class="p">E</span></div>
+            <div>指定圆弧的端点: <span class="n">（点端点）</span></div>
+            <div>指定圆弧的圆心或 <span class="o">[角度(A)/方向(D)/半径(R)]</span>: <span class="p">R</span></div>
+            <div>指定圆弧的半径: <span class="p">1500</span></div>
+          </div>
+          <div class="cmdp-note">默认是「三点画弧」。敲 <b>C</b> 就是先定圆心再画，画管道弯头顺手得多。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">REC</span>矩形<span class="cname">RECTANG</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">REC</span></div>
+            <div>指定第一个角点或 <span class="o">[倒角(C)/标高(E)/圆角(F)/厚度(T)/宽度(W)]</span>: <span class="p">F</span></div>
+            <div>指定矩形的圆角半径 &lt;0.0000&gt;: <span class="p">200</span></div>
+            <div>指定第一个角点: <span class="n">（点一下）</span></div>
+            <div>指定另一个角点或 <span class="o">[面积(A)/尺寸(D)/旋转(R)]</span>: <span class="p">D</span></div>
+            <div>指定矩形的长度 &lt;10.0000&gt;: <span class="p">5000</span></div>
+            <div>指定矩形的宽度 &lt;10.0000&gt;: <span class="p">3000</span></div>
+          </div>
+          <div class="cmdp-note">先敲 <b>F</b> 给圆角 → 画出来直接是圆角矩形；敲 <b>D</b> 直接输长宽，不用数格子。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">POL</span>正多边形<span class="cname">POLYGON</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">POL</span></div>
+            <div>POLYGON 输入边的数目 &lt;4&gt;: <span class="p">6</span></div>
+            <div>指定正多边形的中心点或 <span class="o">[边(E)]</span>: <span class="n">（点中心）</span></div>
+            <div>输入选项 <span class="o">[内接于圆(I)/外切于圆(C)]</span> &lt;I&gt;: <span class="p">C</span></div>
+            <div>指定圆的半径: <span class="p">20</span></div>
+          </div>
+          <div class="cmdp-note"><b>I</b> = 顶点落在圆上；<b>C</b> = 边贴着圆。已知「对边距离」（如六角螺栓）选 <b>C</b>。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">EL</span>椭圆<span class="cname">ELLIPSE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">EL</span></div>
+            <div>ELLIPSE 指定椭圆的轴端点或 <span class="o">[圆弧(A)/中心点(C)]</span>: <span class="n">（点一端）</span></div>
+            <div>指定轴的另一个端点: <span class="n">（点另一端）</span></div>
+            <div>指定另一条半轴长度或 <span class="o">[旋转(R)]</span>: <span class="p">800</span></div>
+          </div>
+          <div class="cmdp-note">先定长轴两头，再给短轴的<b>一半</b>长度。注意是半轴，不是全长。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">H</span>图案填充<span class="cname">HATCH</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">H</span></div>
+            <div><span class="n">（弹出「图案填充和渐变色」对话框）</span></div>
+            <div><span class="n">选图案 → 设比例 → 点「添加：拾取点」</span></div>
+            <div>拾取内部点或 <span class="o">[选择对象(S)/删除边界(B)]</span>: <span class="n">（在闭合区域里点一下）</span></div>
+            <div><span class="n">回车 → 确定</span></div>
+          </div>
+          <div class="cmdp-note">区域必须<b>严丝合缝闭合</b>，有一条缝就会报「边界未闭合」，这是填充失败的头号原因。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">XL</span>构造线<span class="cname">XLINE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">XL</span></div>
+            <div>XLINE 指定点或 <span class="o">[水平(H)/垂直(V)/角度(A)/二等分(B)/偏移(O)]</span>: <span class="p">H</span></div>
+            <div>指定通过点: <span class="n">（点一下）</span></div>
+            <div>指定通过点: <span class="n">（再点一下，或回车结束）</span></div>
+          </div>
+          <div class="cmdp-note">两端无限长的辅助线。<b>用完记得删掉</b>（E），不然打印时会满纸都是。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">SPL</span>样条曲线<span class="cname">SPLINE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">SPL</span></div>
+            <div>SPLINE 当前设置: 方式=拟合 节点=弦</div>
+            <div>指定第一个点或 <span class="o">[方式(M)/节点(K)/对象(O)]</span>: <span class="n">（点起点）</span></div>
+            <div>指定下一点: <span class="n">（连着点几个点）</span></div>
+            <div>指定下一点或 <span class="o">[端点相切(T)/公差(L)/放弃(U)]</span>: <span class="p">回车</span></div>
+          </div>
+          <div class="cmdp-note">点几个点位，软件自动穿成光滑曲线。画等高线、水面线、不规则边界。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">DO</span>圆环<span class="cname">DONUT</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">DO</span></div>
+            <div>DONUT 指定圆环的内径 &lt;0.5000&gt;: <span class="p">0</span></div>
+            <div>指定圆环的外径 &lt;1.0000&gt;: <span class="p">300</span></div>
+            <div>指定圆环的中心点或 &lt;退出&gt;: <span class="n">（点一下）</span></div>
+            <div>指定圆环的中心点或 &lt;退出&gt;: <span class="p">回车</span></div>
+          </div>
+          <div class="cmdp-note">内径填 <b>0</b> = 实心圆点。可以做节点标记、粗点。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">ML</span>多线<span class="cname">MLINE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">ML</span></div>
+            <div>MLINE 当前设置: 对正 = 上，比例 = 20.00，样式 = STANDARD</div>
+            <div>指定起点或 <span class="o">[对正(J)/比例(S)/样式(ST)]</span>: <span class="p">S</span></div>
+            <div>输入多线比例 &lt;20.00&gt;: <span class="p">240</span></div>
+            <div>指定起点: <span class="n">（点一下）</span></div>
+          </div>
+          <div class="cmdp-note"><b>比例</b>就是两条平行线的间距，画 240 墙就输 240。<b>J</b> 决定你点的位置是墙的哪一边。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">DIV</span>定数等分<span class="cname">DIVIDE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">DIV</span></div>
+            <div>DIVIDE 选择要定数等分的对象: <span class="n">（选那条线）</span></div>
+            <div>输入线段数目或 <span class="o">[块(B)]</span>: <span class="p">8</span></div>
+          </div>
+          <div class="cmdp-note">输 8 = 均分成 8 段，落下 <b>7 个</b>点（点比分线段数少一个）。敲 <b>B</b> 可以把「点」换成「图块」。</div>
+        </div>
+
+        <div class="cmdp">
+          <div class="cmdp-h"><span class="ckey">ME</span>定距等分<span class="cname">MEASURE</span></div>
+          <div class="cmdw-t">命令行</div>
+          <div class="cmdbox">
+            <div><span class="n">命令:</span> <span class="p">ME</span></div>
+            <div>MEASURE 选择要定距等分的对象: <span class="n">（选那条线）</span></div>
+            <div>指定线段长度或 <span class="o">[块(B)]</span>: <span class="p">30000</span></div>
+          </div>
+          <div class="cmdp-note">每隔 30000（30 米）放一个。<b>最后不够一段就不放</b>，所以点数跟总长有关。</div>
+        </div>
+      </div>
+
+      <div class="tipbox">
+        <b>等分出来的点看不见？</b>默认点样式就一个小点，几乎找不着。先输 <b>DDPTYPE</b>（点样式）换个十字或圆点，再等分就能看见了。
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 03 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 03</span><h2>最容易搞混的一对：直线 vs 多段线</h2><span class="tag">选错就白画</span></div>
+    <div class="fig-body">
+      <div class="cmp">
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="badge-a">L</span>直线 LINE</div>
+          <div class="cmp-b">
+            <svg height="120" viewBox="0 0 300 120" width="300" xmlns="http://www.w3.org/2000/svg">
+              <line stroke="#111827" stroke-width="2.4" x1="40" x2="110" y1="80" y2="80"/>
+              <line stroke="#111827" stroke-width="2.4" x1="118" x2="182" y1="80" y2="45"/>
+              <line stroke="#111827" stroke-width="2.4" x1="190" x2="260" y1="45" y2="45"/>
+              <circle cx="40" cy="80" fill="#d9480f" r="3.5"/><circle cx="110" cy="80" fill="#d9480f" r="3.5"/>
+              <circle cx="182" cy="45" fill="#d9480f" r="3.5"/><circle cx="260" cy="45" fill="#d9480f" r="3.5"/>
+              <text fill="#8a3a20" font-family="Microsoft YaHei" font-size="12" text-anchor="middle" x="150" y="110">3 根各自独立的线</text>
+            </svg>
+            <p>每一段都是<b>单独的对象</b>。点一下只选中一根，偏移要一根一根来，算面积算不出来。</p>
+          </div>
+        </div>
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="badge-b">PL</span>多段线 PLINE</div>
+          <div class="cmp-b">
+            <svg height="120" viewBox="0 0 300 120" width="300" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40 80 H110 L182 45 H260" fill="none" stroke="#1c4e80" stroke-linejoin="round" stroke-width="3"/>
+              <circle cx="40" cy="80" fill="#1c4e80" r="3.5"/><circle cx="110" cy="80" fill="#1c4e80" r="3.5"/>
+              <circle cx="182" cy="45" fill="#1c4e80" r="3.5"/><circle cx="260" cy="45" fill="#1c4e80" r="3.5"/>
+              <text fill="#1c4e80" font-family="Microsoft YaHei" font-size="12" text-anchor="middle" x="150" y="110">1 个整体，点哪都全选中</text>
+            </svg>
+            <p>整条是<b>一个对象</b>。一次偏移就整体挪，能直接算周长和面积，能整体改线宽。</p>
+          </div>
+        </div>
+      </div>
+      <div class="tipbox">
+        <b>什么时候必须用 PL：</b>画工艺管线的走向箭头（要粗线宽）、画要填图案的闭合区域、画完要算面积的池体轮廓。<br>
+        <b>已经用 L 画错了怎么办：</b>输入 <b>PE（PEDIT 多段线编辑）</b> → 选其中一根 → 输入 J（合并）→ 框选全部 → 回车，就能把散线接成一条多段线。
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 04 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 04</span><h2>圆的六种画法</h2><span class="tag">环境工程画圆形池子必会</span></div>
+    <div class="fig-body">
+      <div class="six">
+        <div class="m">
+          <svg height="110" viewBox="0 0 150 110" width="150" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="75" cy="55" fill="none" r="38" stroke="#1c4e80" stroke-width="2"/>
+            <line stroke="#d9480f" stroke-width="1.8" x1="75" x2="113" y1="55" y2="55"/>
+            <circle cx="75" cy="55" fill="#d9480f" r="3.5"/><circle cx="113" cy="55" fill="#d9480f" r="3.5"/>
+            <text fill="#d9480f" font-family="Consolas" font-size="11" x="94" y="48">R</text>
+          </svg>
+          <div class="mt">圆心 + 半径</div>
+          <div class="md">已知圆心位置和半径。默认方式，最常用</div>
+          <div class="mk">C → 点圆心 → 输半径</div>
+        </div>
+        <div class="m">
+          <svg height="110" viewBox="0 0 150 110" width="150" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="75" cy="55" fill="none" r="38" stroke="#1c4e80" stroke-width="2"/>
+            <line stroke="#d9480f" stroke-width="1.8" x1="37" x2="113" y1="55" y2="55"/>
+            <circle cx="37" cy="55" fill="#d9480f" r="3.5"/><circle cx="113" cy="55" fill="#d9480f" r="3.5"/>
+            <text fill="#d9480f" font-family="Consolas" font-size="11" x="62" y="48">D</text>
+          </svg>
+          <div class="mt">圆心 + 直径</div>
+          <div class="md">图纸标的是直径时用（比如池内径 Ø8000）</div>
+          <div class="mk">C → 点圆心 → 输 D → 输直径</div>
+        </div>
+        <div class="m">
+          <svg height="110" viewBox="0 0 150 110" width="150" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="75" cy="55" fill="none" r="38" stroke="#1c4e80" stroke-width="2"/>
+            <line stroke="#d9480f" stroke-width="1.8" x1="37" x2="113" y1="55" y2="55"/>
+            <circle cx="37" cy="55" fill="#d9480f" r="3.5"/><circle cx="113" cy="55" fill="#d9480f" r="3.5"/>
+          </svg>
+          <div class="mt">两点</div>
+          <div class="md">两点当直径的两端。用在「这段就是直径」的时候</div>
+          <div class="mk">C → 输 2P → 点两头</div>
+        </div>
+        <div class="m">
+          <svg height="110" viewBox="0 0 150 110" width="150" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 78 A40 40 0 0 1 110 40" fill="none" stroke="#1c4e80" stroke-width="2"/>
+            <circle cx="40" cy="78" fill="#d9480f" r="3.5"/><circle cx="75" cy="30" fill="#d9480f" r="3.5"/><circle cx="110" cy="40" fill="#d9480f" r="3.5"/>
+          </svg>
+          <div class="mt">三点</div>
+          <div class="md">圆过三个已知点。定圆心麻烦时用它</div>
+          <div class="mk">C → 输 3P → 点三点</div>
+        </div>
+        <div class="m">
+          <svg height="110" viewBox="0 0 150 110" width="150" xmlns="http://www.w3.org/2000/svg">
+            <line stroke="#55657a" stroke-width="1.6" x1="25" x2="125" y1="55" y2="55"/>
+            <line stroke="#55657a" stroke-width="1.6" x1="60" x2="60" y1="20" y2="95"/>
+            <circle cx="75" cy="42" fill="none" r="16" stroke="#1c4e80" stroke-width="2"/>
+            <circle cx="75" cy="42" fill="#d9480f" r="2.5"/>
+          </svg>
+          <div class="mt">相切 + 相切 + 半径</div>
+          <div class="md">圆要同时贴着两条线（或圆），给定半径。画管道弯头、池体切角</div>
+          <div class="mk">C → 输 T → 选两条 → 输半径</div>
+        </div>
+        <div class="m">
+          <svg height="110" viewBox="0 0 150 110" width="150" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="52" cy="55" fill="none" r="26" stroke="#55657a" stroke-width="1.6"/>
+            <circle cx="92" cy="40" fill="none" r="20" stroke="#55657a" stroke-width="1.6"/>
+            <circle cx="105" cy="72" fill="none" r="18" stroke="#55657a" stroke-width="1.6"/>
+            <path d="M56 30 A30 30 0 0 1 82 74" fill="none" stroke="#1c4e80" stroke-width="2.2"/>
+          </svg>
+          <div class="mt">相切 + 相切 + 相切</div>
+          <div class="md">圆卡在三个对象中间，半径不用给，软件算</div>
+          <div class="mk">C → 输 3P → 再输 T → 逐个选</div>
+        </div>
+      </div>
+      <div class="tipbox">
+        <b>画圆形沉淀池平面：</b>一般用「圆心 + 直径」，因为图纸上标的都是 Ø（直径）。输入 <b>C</b> → 点池中心 → 输 <b>D</b> → 输 <b>8000</b> → 回车，一个内径 8 米的池子圆就出来了。
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 05 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 05</span><h2>矩形 与 正多边形</h2><span class="tag">内接还是外切，别选反</span></div>
+    <div class="fig-body">
+      <div class="cmp">
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="badge-a">REC</span>矩形 RECTANG</div>
+          <div class="cmp-b">
+            <svg height="130" viewBox="0 0 300 130" width="300" xmlns="http://www.w3.org/2000/svg">
+              <rect fill="#eef4fa" height="70" stroke="#1c4e80" stroke-width="2.6" width="180" x="60" y="30"/>
+              <circle cx="60" cy="100" fill="#d9480f" r="3.5"/><circle cx="240" cy="30" fill="#d9480f" r="3.5"/>
+              <path d="M60 112 H240" stroke="#d9480f" stroke-width="1.4"/>
+              <path d="M56 112 l0 -6 M56 106 h8 M240 112 l0 -6 M240 106 h-8" stroke="#d9480f" stroke-width="1.4"/>
+              <text fill="#d9480f" font-family="Microsoft YaHei" font-size="11.5" text-anchor="middle" x="150" y="126">点两个对角，一次成型</text>
+            </svg>
+            <p><b>整体对象</b>（本质是闭合多段线）：能直接偏移、倒角、圆角、算面积。画池体矩形平面、设备基础都用它，别用 L 画四根线。</p>
+          </div>
+        </div>
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="badge-b">POL</span>正多边形 POLYGON</div>
+          <div class="cmp-b">
+            <svg height="130" viewBox="0 0 300 130" width="300" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="85" cy="65" fill="none" r="52" stroke="#9aa8b6" stroke-dasharray="4 3" stroke-width="1.2"/>
+              <polygon fill="#eef4fa" points="85,18 130,40 130,90 85,112 40,90 40,40" stroke="#1c4e80" stroke-width="2.4"/>
+              <line stroke="#d9480f" stroke-width="1.4" x1="85" x2="85" y1="65" y2="18"/>
+              <text fill="#d9480f" font-family="Consolas" font-size="10.5" x="92" y="45">R</text>
+              <circle cx="85" cy="65" fill="#1c4e80" r="3"/>
+              <circle cx="215" cy="65" fill="none" r="52" stroke="#9aa8b6" stroke-dasharray="4 3" stroke-width="1.2"/>
+              <polygon fill="none" points="215,13 260,39 260,91 215,117 170,91 170,39" stroke="#55657a" stroke-width="2"/>
+              <text fill="#1c4e80" font-family="Microsoft YaHei" font-size="11.5" text-anchor="middle" x="85" y="126">内接于圆（顶点在圆上）</text>
+              <text fill="#55657a" font-family="Microsoft YaHei" font-size="11.5" text-anchor="middle" x="215" y="126">外切于圆（边贴圆）</text>
+            </svg>
+            <p>输边数（3~1024）→ 点中心 → 选「内接于圆 I」还是「外切于圆 C」→ 给半径。</p>
+            <div class="warn"><b>六角螺栓头</b>要的是「对边距离」= 外切圆直径，选 <b>C（外切）</b>；才知道外接圆大小时选 <b>I（内接）</b>。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 06 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 06</span><h2>定数等分 与 定距等分</h2><span class="tag">名字像，干的活不一样</span></div>
+    <div class="fig-body">
+      <div class="cmp">
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="badge-a">DIV</span>定数等分 DIVIDE</div>
+          <div class="cmp-b">
+            <svg height="100" viewBox="0 0 300 100" width="300" xmlns="http://www.w3.org/2000/svg">
+              <line stroke="#111827" stroke-width="2.4" x1="30" x2="270" y1="50" y2="50"/>
+              <g fill="#d9480f"><circle cx="78" cy="50" r="4"/><circle cx="126" cy="50" r="4"/><circle cx="174" cy="50" r="4"/><circle cx="222" cy="50" r="4"/></g>
+              <text fill="#8a3a20" font-family="Microsoft YaHei" font-size="12" text-anchor="middle" x="150" y="82">我说分成几段，你就分几段</text>
+            </svg>
+            <p>你告诉它<b>「分成 6 段」</b>，它就把这条线均匀切成 6 份，落下 5 个点。<b>每段多长它自己算。</b></p>
+            <div class="warn">例：格栅渠要均布 8 根栅条 → DIV → 选渠边线 → 输 8</div>
+          </div>
+        </div>
+        <div class="cmp-box">
+          <div class="cmp-h"><span class="badge-b">ME</span>定距等分 MEASURE</div>
+          <div class="cmp-b">
+            <svg height="100" viewBox="0 0 300 100" width="300" xmlns="http://www.w3.org/2000/svg">
+              <line stroke="#111827" stroke-width="2.4" x1="30" x2="270" y1="50" y2="50"/>
+              <g fill="#1c4e80"><circle cx="78" cy="50" r="4"/><circle cx="126" cy="50" r="4"/><circle cx="174" cy="50" r="4"/><circle cx="222" cy="50" r="4"/><circle cx="264" cy="50" r="4"/></g>
+              <path d="M78 66 h48" stroke="#1c4e80" stroke-width="1.2"/>
+              <text fill="#1c4e80" font-family="Consolas" font-size="11" text-anchor="middle" x="102" y="82">固定 2000</text>
+              <text fill="#1c4e80" font-family="Microsoft YaHei" font-size="12" text-anchor="middle" x="150" y="96">我给固定间距，剩多少算多少</text>
+            </svg>
+            <p>你告诉它<b>「每隔 2000 放一个」</b>，它就按这个间距摆点。<b>最后不够一段的，就不放。</b></p>
+            <div class="warn">例：管线每 30 米一个检查井 → ME → 选管线 → 输 30000</div>
+          </div>
+        </div>
+      </div>
+      <div class="tipbox">
+        <b>等分出来的点看不见？</b>默认的点样式就一个小点，几乎找不着。先输 <b>DDPTYPE</b>（点样式）换个十字或圆点样式，再等分就能看见了。
+      </div>
+    </div>
+  </div>
+
+  <!-- 图 07 -->
+  <div class="fig">
+    <div class="fig-head"><span class="fig-no">图 07</span><h2>串一遍：画一个圆形沉淀池平面</h2><span class="tag">把命令连起来用</span></div>
+    <div class="fig-body">
+      <div class="steps">
+        <div class="step"><div class="sn">STEP 1</div><div class="st">画池壁外圈</div><div class="sd">圆心 + 直径，输内径 8000</div><div class="cmd">C → D</div></div>
+        <div class="step"><div class="sn">STEP 2</div><div class="st">偏移出壁厚</div><div class="sd">向外偏 240（池壁厚），同心圆</div><div class="cmd">O 偏移</div></div>
+        <div class="step"><div class="sn">STEP 3</div><div class="st">画中心筒</div><div class="sd">再画一个小圆，直径 1500</div><div class="cmd">C</div></div>
+        <div class="step"><div class="sn">STEP 4</div><div class="st">画走道板分格</div><div class="sd">把外圈按 8 段等分落点</div><div class="cmd">DIV</div></div>
+        <div class="step"><div class="sn">STEP 5</div><div class="st">填混凝土剖面</div><div class="sd">选中池壁环，填图案</div><div class="cmd">H</div></div>
+      </div>
+      <div class="tipbox">
+        <b>关键顺序：</b>先画主体圆，再偏移出壁厚（比画两个同心圆快得多），最后填充。很多人习惯先画两个圆再算差，多一步还容易错。
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <h3>出处</h3>
+    <ol>
+      <li>张晶, 潘立卫, 王嘉斌. 环境工程制图与CAD[M]. 2 版. 北京: 化学工业出版社, 2022. ISBN 978-7-122-38763-9.（第 5 章 绘图命令）</li>
+      <li>命令名与快捷键：Autodesk 官方《AutoCAD 快捷键手册》（autodesk.com.cn/shortcuts/autocad），并与 AutoCAD 2018 中文版界面对照。</li>
+      <li>命令的调用方式（命令行输入 / 功能区面板 / 工具栏）按 AutoCAD 2018 中文版默认设置。</li>
+    </ol>
+    <p style="margin:0">待核项：教材第 5 章的具体页码未查到，用前建议翻书核对。</p>
+  </div>
+
+</div>
+</body>
+</html>
