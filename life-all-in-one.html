@@ -11,7 +11,7 @@
 :root{
   --paper:#f3f7fc;--card:#ffffff;--ink:#17395c;--muted:#6a7f98;--line:#d8e3f0;--plum:#1a5fb4;--plum-soft:#e2edfb;--terra:#2f7ec9;--terra-soft:#dcecf9;--sage:#2e8f7a;--sage-soft:#dcf0ea;--sand:#5b90c4;--sand-soft:#e4eef9;--red:#c2554d;--green:#2f8a6b;--shadow:0 16px 40px rgba(36, 52, 63, .07);--radius:22px;--sidebar:248px;
 }
-*{box-sizing:border-box}html{background:var(--paper);scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--paper);font:15px/1.55 Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}.svg-sprite{position:absolute;width:0;height:0;overflow:hidden}button,input,select{font:inherit;color:inherit}button{cursor:pointer}svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.app-shell{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar);padding:28px 20px 22px;background:#dce6ed;border-right:1px solid rgba(68, 89, 104, .12);display:flex;flex-direction:column;z-index:20;overflow-y:auto}.brand{position:relative;width:100%;display:flex;flex-direction:column;gap:0;padding:0 4px 20px 8px;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}.brand-inner{display:flex;align-items:center;gap:12px}.brand-edit{display:block;color:#858f9b;font-size:9px;font-style:normal;opacity:0;transition:.2s;white-space:nowrap;background:rgba(247, 252, 255, .85);padding:2px 8px;border-radius:6px;border:1px solid rgba(133, 143, 155, .2);margin-top:6px;text-align:center;align-self:flex-start}.brand:hover .brand-edit{opacity:1}.brand:hover .brand-edit{opacity:1}.brand-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--plum);color:white;font:700 19px/1 "Songti SC",serif;box-shadow:0 7px 18px rgba(48, 62, 77, .2)}.brand strong{display:block;font:700 19px/1.2 "Songti SC",serif;letter-spacing:.05em}.brand span{display:block;margin-top:4px;color:var(--muted);font-size:11px;letter-spacing:.12em}.side-nav{display:flex;flex-direction:column;gap:4px}.nav-item{display:flex;align-items:center;gap:12px;width:100%;height:44px;padding:0 13px;border:0;border-radius:12px;background:transparent;color:#4d555f;text-align:left;transition:.2s}.nav-item:hover{background:rgba(255, 255, 255, .48);color:var(--ink)}.nav-item.active{background:var(--card);color:var(--plum);box-shadow:0 5px 16px rgba(43, 62, 75, .05);font-weight:700}.nav-item svg{width:18px}.nav-label{margin:16px 13px 6px;color:#858f9b;font-size:10px;font-weight:700;letter-spacing:.18em}.local-card{margin-top:auto;padding:16px;border:1px solid #c0cfd9;border-radius:16px;background:rgba(247, 252, 255, .58)}.local-status{font-size:12px;font-weight:700}.status-dot{display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;background:#6d7e92;box-shadow:0 0 0 4px rgba(109, 126, 146, .12)}.local-card p{margin:9px 0 12px;color:var(--muted);font-size:11px;line-height:1.6}.backup-meter{height:4px;border-radius:9px;background:#c7d4dd;overflow:hidden}.backup-meter span{display:block;width:0;height:100%;background:var(--terra);transition:.3s}.local-card small{display:block;margin-top:7px;color:#788390;font-size:10px}.main-content{min-height:100vh;margin-left:var(--sidebar);padding:0 42px 56px}.topbar{position:sticky;top:0;z-index:15;min-height:104px;padding:25px 0 18px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;background:linear-gradient(180deg,var(--paper) 78%,rgba(232, 240, 245, 0))}.eyebrow{margin:0 0 4px;color:#798695;font-size:10px;font-weight:750;letter-spacing:.18em;text-transform:uppercase}.eyebrow.light{color:rgba(255, 255, 255, .68)}h1,h2,h3,p{margin-top:0}h1{margin:0;font:700 clamp(24px,2.2vw,34px)/1.2 "Songti SC",serif;letter-spacing:.02em}h2{margin:0;font:700 20px/1.35 "Songti SC",serif}.top-actions,.section-actions{display:flex;align-items:center;gap:8px}.section-actions{justify-content:flex-end;margin:-2px 0 16px}.save-state{display:flex;align-items:center;gap:7px;margin-right:5px;color:#69737f;font-size:11px;white-space:nowrap}.save-state span{width:7px;height:7px;border-radius:50%;background:#6e7a87}.save-state b{font-weight:500}.save-state.error span{background:var(--red)}.btn{min-height:42px;padding:0 15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:12px;font-size:13px;font-weight:700;transition:transform .15s,box-shadow .15s,background .15s}.btn:hover{transform:translateY(-1px)}.btn svg{width:16px}.btn.primary{background:var(--plum);color:#ffffff;box-shadow:0 8px 20px rgba(48, 62, 77, .16)}.btn.ghost{border-color:var(--line);background:rgba(247, 252, 255, .8)}.btn.ink{background:var(--ink);color:#ffffff}.btn.full{width:100%;min-height:48px;margin-top:6px}.text-btn{padding:7px 0;border:0;background:transparent;color:var(--terra);font-size:12px;font-weight:700}.system-alert,.module-alert{margin-bottom:16px;padding:14px 17px;border:1px solid #8fbbdb;border-radius:15px;background:#d2e6f5;display:flex;align-items:center;justify-content:space-between;gap:16px}.system-alert[hidden],.module-alert:empty{display:none}.system-alert strong,.system-alert span,.module-alert strong,.module-alert span{display:block}.system-alert span,.module-alert span{margin-top:2px;color:#4d6576;font-size:12px}.system-alert.danger{border-color:#d68f87;background:#f5dcd8}.module-alert.good{border-color:#bccecb;background:#e3ebea}.module-alert.good span{color:#5a6571}.view{display:none}.view.active{display:block;animation:reveal .28s ease}@keyframes reveal{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}.panel,.hero-card{border:1px solid rgba(67, 93, 111, .08);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow)}.panel{padding:22px}.dashboard-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.hero-card{position:relative;overflow:hidden;min-height:220px;padding:30px;background:var(--plum);color:#ffffff}.hero-card:after{content:"";position:absolute;width:190px;height:190px;right:-70px;bottom:-95px;border:1px solid rgba(255, 255, 255, .18);border-radius:50%}.hero-card h2{margin:12px 0 9px;font:700 64px/1 "Songti SC",serif}.hero-card h2 small{font:500 16px/1 sans-serif;color:rgba(255, 255, 255, .6)}.hero-card p:last-child{max-width:190px;margin:0;color:rgba(255, 255, 255, .72);font-size:12px}.score-orbit{position:absolute;right:27px;top:33px;width:92px;height:92px;border:1px solid rgba(255, 255, 255, .14);border-radius:50%}.score-orbit:before,.score-orbit:after{content:"";position:absolute;border:1px solid rgba(255, 255, 255, .09);border-radius:50%}.score-orbit:before{inset:14px}.score-orbit:after{inset:29px}.score-orbit span,.score-orbit i,.score-orbit b{position:absolute;width:7px;height:7px;border-radius:50%;background:#91bfe0}.score-orbit span{top:9px;left:18px}.score-orbit i{right:3px;top:50%;background:#b3bcc7}.score-orbit b{left:25px;bottom:3px;background:#c6d9e6}.quick-panel{grid-column:span 2}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:18px}.mini-note,.draft-status{color:#7f8b98;font-size:10px}.quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.quick-action{position:relative;min-width:0;min-height:108px;padding:17px 13px;border:0;border-radius:16px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left;transition:.2s}.quick-action:hover{transform:translateY(-2px)}.quick-action>svg{width:21px;height:21px}.quick-action span strong,.quick-action span small{display:block}.quick-action span strong{font-size:13px}.quick-action span small{margin-top:2px;color:rgba(30, 36, 42, .58);font-size:10px}.quick-action i{position:absolute;right:12px;top:11px;font-style:normal;font-size:17px}.terracotta{background:var(--terra-soft);color:#8d442e}.plum{background:var(--plum-soft);color:var(--plum)}.sage{background:var(--sage-soft);color:#4e5a68}.sand{background:var(--sand-soft);color:#316183}.stat-card{display:flex;align-items:center;gap:15px;min-height:105px}.stat-icon{flex:0 0 auto;width:48px;height:48px;border-radius:15px;display:grid;place-items:center}.stat-card span,.stat-card strong,.stat-card small{display:block}.stat-card span{color:var(--muted);font-size:11px}.stat-card strong{margin:1px 0;font-size:21px}.stat-card small{color:#828d9a;font-size:10px}.span-2{grid-column:span 2}.clean-list,.habit-stack,.timeline,.record-list,.date-groups,.archive-list,.shopping-list{display:flex;flex-direction:column}.clean-list{gap:7px}.task-row{display:grid;grid-template-columns:26px 1fr auto auto;align-items:center;gap:11px;min-height:48px;padding:6px 7px;border-radius:11px}.task-row:hover{background:#ebf2f7}.check-btn{flex:0 0 auto;width:25px;height:25px;padding:0;display:grid;place-items:center;border:1px solid #b7c5cf;border-radius:8px;background:transparent;color:white}.check-btn svg{width:14px}.check-btn.checked,.task-row.done .check-btn{background:var(--sage);border-color:var(--sage)}.task-row.done .task-title{text-decoration:line-through;color:#87919c}.task-title{font-size:13px}.task-title small{display:block;color:#7d8996;font-size:10px;font-weight:400;text-decoration:none}.task-time{color:#7d8996;font-size:11px}.priority-flag{width:6px;height:6px;border-radius:50%;background:#a2acb8}.priority-flag.high{background:var(--red)}.habit-stack{gap:10px}.habit-pill{display:flex;align-items:center;gap:12px}.habit-dot{width:10px;height:10px;border-radius:50%}.habit-pill strong{flex:1;font-size:12px}.habit-pill small{color:var(--muted)}.timeline{gap:0}.timeline-item{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:10px;padding:10px 0}.timeline-item:not(:last-child){border-bottom:1px solid #dee7ee}.record-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center}.record-icon svg{width:16px}.timeline-item strong,.timeline-item small{display:block}.timeline-item strong{font-size:12px}.timeline-item small{color:#7d8997;font-size:10px}.record-value{font-size:12px;font-weight:700}.insight-card{display:flex;flex-direction:column;justify-content:space-between;background:#d1dee8}.insight-card blockquote{margin:10px 0 25px;font:600 19px/1.7 "Songti SC",serif}.insight-card>span{color:#6d7b8b;font-size:10px}.empty-state{padding:24px 12px;text-align:center;color:#85909c;font-size:12px}.module-layout{display:grid;grid-template-columns:minmax(290px,360px) minmax(0,1fr);gap:18px;align-items:start}.form-panel{position:sticky;top:122px}.form-panel.static{position:static}.sticky-stack{position:sticky;top:122px;display:flex;flex-direction:column;gap:16px}.form-panel form{display:flex;flex-direction:column;gap:14px}.segmented{display:grid;grid-template-columns:1fr 1fr;padding:3px;border-radius:12px;background:#dfe8ee}.segmented input{position:absolute;opacity:0}.segmented span{height:36px;display:grid;place-items:center;border-radius:9px;color:#6a747f;font-size:12px;font-weight:700}.segmented input:checked+span{background:var(--card);color:var(--plum);box-shadow:0 3px 10px rgba(39, 54, 65, .07)}.field{display:flex;flex-direction:column;gap:7px}.field>span{color:#606a75;font-size:11px;font-weight:700}.field input,.field select,.compact-select{width:100%;height:44px;padding:0 12px;border:1px solid #c8d4dd;border-radius:11px;outline:0;background:#f3f8fb;transition:.2s}.field input:focus,.field select:focus,.compact-select:focus{border-color:#728293;box-shadow:0 0 0 3px rgba(48, 62, 77, .07);background:white}.compact-select{width:auto;height:36px;font-size:11px}.amount-field>div{display:flex;align-items:center;border-bottom:1px solid #bfccd6}.amount-field b{font:600 22px/1 serif}.amount-field input{height:58px;border:0;background:transparent;font-size:32px;font-weight:700}.amount-field input:focus{box-shadow:none}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.switch-row{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}.switch-row input{width:18px;height:18px;accent-color:var(--plum)}.module-main{display:flex;flex-direction:column;gap:18px;min-width:0}.metric-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{min-height:102px;padding:20px;border:1px solid rgba(67, 93, 111, .12);border-radius:18px;background:#dde7ee}.metric:nth-child(2){background:#e4eae9}.metric:nth-child(3){background:#e1e5e9}.metric.income{background:#e1ebe9}.metric.expense{background:#d6e6f1}.metric span,.metric strong{display:block}.metric span{color:#636d78;font-size:11px}.metric strong{margin-top:8px;font-size:23px}.inline-budget{color:var(--muted);font-size:11px}.inline-budget input{width:90px;padding:5px 2px;border:0;border-bottom:1px solid var(--line);background:transparent;font-weight:700;outline:0}.large-progress{height:10px;border-radius:20px;background:#dfe8ee;overflow:hidden}.large-progress span{display:block;width:0;height:100%;border-radius:inherit;background:var(--terra);transition:.35s}.large-progress.sage-bar span{background:var(--sage)}.progress-label{display:flex;justify-content:space-between;margin-top:9px;color:var(--muted);font-size:10px}.compare-card{display:flex;align-items:center;justify-content:space-between;gap:20px;background:#dfe9f0}.compare-card>span{color:var(--muted);font-size:12px}.split-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:18px;min-width:0}.split-grid>.panel{min-width:0;overflow:hidden}.pie-wrap{display:grid;grid-template-columns:minmax(150px,210px) minmax(110px,1fr);align-items:center;gap:18px;min-width:0}.pie-wrap svg{display:block;width:100%;height:auto;max-width:210px;overflow:visible}.chart-legend{min-width:0;display:flex;flex-direction:column;gap:9px}.legend-item{min-width:0;display:grid;grid-template-columns:9px minmax(0,1fr) auto;align-items:center;gap:7px;font-size:11px}.legend-item i{width:9px;height:9px;border-radius:50%}.legend-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.legend-item b{font-size:11px;white-space:nowrap}.record-list{gap:2px;max-height:520px;overflow:auto}.record-row{display:grid;grid-template-columns:42px 1fr auto 32px;gap:12px;align-items:center;min-height:62px;padding:8px 6px;border-bottom:1px solid #dfe8ee}.record-row:last-child{border-bottom:0}.record-main strong,.record-main small{display:block}.record-main strong{font-size:13px}.record-main small{margin-top:2px;color:#7d8996;font-size:10px}.record-amount{font-weight:750}.record-amount.expense{color:var(--red)}.record-amount.income{color:var(--green)}.delete-btn{width:32px;height:32px;padding:0;border:0;border-radius:9px;background:transparent;color:#959fab;opacity:0}.record-row:hover .delete-btn,.shopping-row:hover .delete-btn{opacity:1}.delete-btn:hover{background:#dce9f3;color:var(--terra)}.habit-layout{display:flex;flex-direction:column;gap:18px}.daily-habits{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px}.panel-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}.btn.compact{min-height:36px;padding:0 11px;font-size:11px}.daily-habit{position:relative;min-width:0;min-height:156px;padding:17px;border:1px solid var(--line);border-radius:17px;background:#f2f7fa;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}.habit-card-delete{position:absolute;right:9px;top:9px;width:28px;height:28px;padding:0;border:0;border-radius:9px;background:rgba(255, 255, 255, .75);color:#838f9c;opacity:0}.daily-habit:hover .habit-card-delete{opacity:1}.daily-habit>div:first-of-type{padding-right:25px}.daily-habit.done{border-color:#b0c3bf;background:var(--sage-soft)}.daily-habit.pulse{animation:gentlePulse 2.2s infinite}@keyframes gentlePulse{50%{box-shadow:0 0 0 5px rgba(66, 134, 182, .09);border-color:#9abdd6}}.daily-habit h3{margin:0;font:700 15px/1.35 Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.daily-habit p{margin:5px 0 0;color:var(--muted);font-size:10px;white-space:nowrap}.habit-action{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px}.habit-state{flex:0 0 auto;font-size:12px;font-weight:700;white-space:nowrap}.habit-action>button,.habit-action>.counter-control,.habit-action>.sleep-control{flex:0 0 auto;margin-left:auto}.habit-action .habit-check{width:42px;height:42px;padding:0;border:1px solid #bac7d0;border-radius:13px;background:white}.habit-action .habit-check.checked{background:var(--sage);border-color:var(--sage);color:white}.counter-control{display:flex;align-items:center;gap:7px}.counter-control button{width:34px;height:34px;padding:0;border:1px solid var(--line);border-radius:10px;background:white}.counter-control strong{min-width:28px;text-align:center}.sleep-control{display:flex;align-items:center;gap:5px}.sleep-control input{width:62px;height:38px;border:1px solid var(--line);border-radius:10px;background:white;text-align:center}.heatmap-panel{overflow:hidden}.heatmap-scroll{overflow-x:auto;padding-bottom:7px}.habit-heatmap{min-width:850px}.heatmap-header,.heatmap-row{display:grid;grid-template-columns:110px repeat(30,18px);gap:5px;align-items:center;margin-bottom:7px}.heatmap-header span{color:#84909d;font-size:8px;text-align:center}.heatmap-name{font-size:11px;font-weight:700;white-space:nowrap}.heat-cell{width:18px;height:18px;border-radius:5px;background:#dce6ed}.heat-cell.done{background:#6e7c8d}.heat-cell.partial{background:#b6bfc9}.streak-badge{margin-left:8px;color:var(--sage);font-size:10px}.profile-card{box-shadow:none}.target-progress{background:#dfe9f0}.target-progress .panel-head>span{font-size:22px;font-weight:700}.health-note{margin:14px 0 0;padding:11px 13px;border-radius:11px;background:rgba(255, 255, 255, .45);color:var(--muted);font-size:11px}.health-note.warning{background:#f2ddd7;color:#874b3b}.line-chart-wrap{width:100%;overflow-x:auto}.line-chart{display:block;width:100%;min-width:660px;height:auto;aspect-ratio:760/280;font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;shape-rendering:geometricPrecision;text-rendering:geometricPrecision}.line-chart text{stroke:none!important;paint-order:normal}.line-chart line,.line-chart path,.line-chart circle{stroke-linecap:round;stroke-linejoin:round}.legend-inline{display:flex;gap:12px;color:var(--muted);font-size:10px}.legend-inline span{display:flex;align-items:center;gap:5px}.legend-inline i{width:14px;height:3px;border-radius:2px}.dot-weight{background:var(--plum)}.dot-average{background:var(--terra)}.weekly-plan{display:grid;grid-template-columns:1fr 1fr;gap:10px}.plan-item{display:flex;align-items:flex-start;gap:11px;padding:13px;border:1px solid var(--line);border-radius:13px;background:#f2f7fa}.plan-item.done{opacity:.65}.plan-item.done strong{text-decoration:line-through}.plan-item button{margin-top:1px}.plan-item strong,.plan-item small{display:block}.plan-item>span{min-width:0;flex:1}.plan-item strong{font-size:12px}.plan-delete{flex:0 0 auto;width:30px;height:30px;padding:0;border:0;border-radius:9px;background:transparent;color:#8f9ba8;opacity:0}.plan-item:hover .plan-delete{opacity:1}.plan-delete:hover,.habit-card-delete:hover{background:#dce9f3;color:var(--terra)}.plan-item small{margin-top:3px;color:var(--muted);font-size:10px}.date-groups,.archive-list{gap:10px}.date-group,.archive-day{border:1px solid #d0dbe3;border-radius:15px;overflow:hidden}.date-group summary,.archive-day summary{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;background:#f2f7fa}.date-group summary::-webkit-details-marker,.archive-day summary::-webkit-details-marker{display:none}.date-group summary strong,.archive-day summary strong{font-size:13px}.date-group summary span,.archive-day summary span{color:#7f8a96;font-size:10px}.group-body{padding:3px 12px 10px}.week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.week-day{min-height:92px;padding:11px 7px;border:1px solid var(--line);border-radius:13px;background:#f2f7fa;text-align:center}.week-day.today{background:var(--plum);border-color:var(--plum);color:white}.week-day span,.week-day strong,.week-day small{display:block}.week-day span{font-size:10px}.week-day strong{margin:4px 0;font-size:20px}.week-day small{color:var(--muted);font-size:9px}.week-day.today small{color:rgba(255, 255, 255, .7)}.overdue .task-title{color:var(--red)}.list-tag{display:inline-block;margin-left:5px;padding:2px 6px;border-radius:5px;background:#d8e3eb;color:#616f7f;font-size:8px}.shopping-list{gap:7px}.shopping-row{display:grid;grid-template-columns:30px 1fr auto 32px;align-items:center;gap:12px;min-height:68px;padding:9px 8px;border-bottom:1px solid #dfe8ee}.shopping-row.bought{opacity:.58}.shopping-row.bought .shopping-main strong{text-decoration:line-through}.shopping-main strong,.shopping-main small{display:block}.shopping-main strong{font-size:13px}.shopping-main small{color:var(--muted);font-size:10px}.shopping-price{text-align:right}.shopping-price strong,.shopping-price small{display:block}.shopping-price small{color:var(--muted);font-size:9px}.urgent-dot{display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:var(--red)}.archive-head{margin:6px 0 22px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}.archive-head h2{font-size:26px}.filter-chips{display:flex;gap:7px;flex-wrap:wrap}.filter-chips button{height:34px;padding:0 13px;border:1px solid var(--line);border-radius:20px;background:transparent;color:#5e6873;font-size:11px}.filter-chips button.active{background:var(--ink);border-color:var(--ink);color:white}.archive-day{background:var(--card)}.archive-record{display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center;min-height:54px;padding:7px 5px;border-bottom:1px solid #dfe8ee}.archive-record:last-child{border-bottom:0}.type-tag{width:max-content;padding:4px 8px;border-radius:7px;background:#dee7ee;color:#5c6875;font-size:10px}.archive-record strong{font-size:12px}.archive-record small{display:block;color:#7e8996;font-size:10px}.media-layout{grid-template-columns:minmax(290px,340px) minmax(0,1fr)}.cover-upload{display:block;cursor:pointer}.cover-upload input{position:absolute;opacity:0;pointer-events:none}.cover-upload>span{min-height:92px;padding:14px;border:1px dashed #c1c8d1;border-radius:14px;background:#f7f9fb;display:grid;grid-template-columns:34px 1fr;grid-template-rows:auto auto;align-items:center;column-gap:10px;color:var(--plum)}.cover-upload svg{grid-row:1/3;width:24px}.cover-upload b,.cover-upload small{display:block}.cover-upload b{font-size:12px}.cover-upload small{color:var(--muted);font-size:10px}.cover-upload.has-cover>span{min-height:160px;background-size:cover;background-position:center;border-style:solid}.cover-upload.has-cover>span>*{display:none}.annual-card{background:linear-gradient(135deg,var(--plum),#536376);color:white}.annual-card .eyebrow,.annual-card .mini-note{color:rgba(255, 255, 255, .68)}.rating-distribution{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;gap:12px;height:110px}.rating-bar{height:100%;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;text-align:center}.rating-bar span{display:block;min-height:4px;height:var(--h);border-radius:8px 8px 3px 3px;background:rgba(255, 255, 255, .78)}.rating-bar b,.rating-bar small{font-size:9px}.rating-bar small{color:rgba(255, 255, 255, .7)}.media-toolbar{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:20px}.media-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.view-toggle{display:flex;padding:3px;border-radius:11px;background:#dfe8ee}.view-toggle button{height:30px;padding:0 11px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:10px}.view-toggle button.active{background:white;color:var(--plum);box-shadow:0 2px 8px rgba(28, 41, 50, .08)}.media-wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:24px 18px}.media-card{position:relative;min-width:0}.media-cover{aspect-ratio:3/4;border-radius:13px;overflow:hidden;background:linear-gradient(145deg,var(--plum-soft),#e5ebf0);display:flex;align-items:center;justify-content:center;color:var(--plum);box-shadow:0 10px 24px rgba(42, 49, 58, .08)}.media-cover img{width:100%;height:100%;object-fit:cover}.media-placeholder{padding:18px;text-align:center;font:700 20px/1.35 "Songti SC",serif;word-break:break-word}.media-card-body{padding:10px 3px 0}.media-card h3{margin:0;font:700 13px/1.4 Inter,-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.media-meta{margin-top:3px;display:flex;align-items:center;justify-content:space-between;gap:6px;color:var(--muted);font-size:9px}.stars{color:#5a708a;letter-spacing:1px;white-space:nowrap}.media-review{margin:6px 0 0;color:#656f7a;font-size:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.media-delete{position:absolute;right:7px;top:7px;width:29px;height:29px;padding:0;border:0;border-radius:9px;background:rgba(255, 255, 255, .9);color:#76808c;opacity:0}.media-card:hover .media-delete{opacity:1}.media-list{display:flex;flex-direction:column;gap:0}.media-list .media-card{display:grid;grid-template-columns:58px minmax(0,1fr) auto;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid #dfe8ee}.media-list .media-cover{width:58px;aspect-ratio:3/4;border-radius:8px}.media-list .media-placeholder{padding:5px;font-size:10px}.media-list .media-card-body{padding:0}.media-list .media-delete{position:static;opacity:1}.media-stat strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.custom-list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:3px;color:var(--muted);font-size:11px;font-weight:700}.custom-list-head small{font-weight:400}.custom-manage-list{max-height:230px;overflow:auto;display:flex;flex-direction:column;gap:7px;padding-right:3px}.custom-manage-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#f2f7fa}.custom-manage-row strong,.custom-manage-row small{display:block}.custom-manage-row strong{font-size:12px}.custom-manage-row small{margin-top:2px;color:var(--muted);font-size:9px}.custom-manage-row button{width:32px;height:32px;padding:0;border:0;border-radius:9px;background:transparent;color:#8693a1}.custom-manage-row button:hover{background:#dce9f3;color:var(--terra)}.fitness-profile-sheet{width:min(600px,100%)}.fitness-profile-sheet .field>span{font-size:13px}.fitness-profile-sheet .field input,.fitness-profile-sheet .field select{height:52px;font-size:16px}.settings-backdrop{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:20px;background:rgba(22, 27, 31, .38);backdrop-filter:blur(6px)}.settings-backdrop[hidden]{display:none}.settings-sheet{width:min(520px,100%);max-height:calc(100vh - 40px);overflow:auto;padding:25px;border:1px solid rgba(255, 255, 255, .5);border-radius:24px;background:var(--card);box-shadow:0 28px 80px rgba(22, 30, 36, .24)}.settings-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}.sheet-close{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:#f2f7fa;font-size:24px;line-height:1}.brand-preview{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding:18px;border-radius:17px;background:#dde7ee}.brand-preview strong,.brand-preview span{display:block}.brand-preview strong{font:700 20px/1.3 "Songti SC",serif}.brand-preview span{margin-top:3px;color:var(--muted);font-size:11px}.settings-sheet form{display:flex;flex-direction:column;gap:16px}.theme-swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.theme-swatches input{position:absolute;opacity:0}.theme-swatches label{min-width:0;padding:10px 6px;border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}.theme-swatches i{width:28px;height:28px;border-radius:50%;background:var(--swatch);box-shadow:inset 0 0 0 1px rgba(0, 0, 0, .08)}.theme-swatches b{font-size:10px;font-weight:600}.theme-swatches input:checked~i{box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--plum)}.sheet-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:4px}.mobile-nav{display:none}.toast{position:fixed;left:50%;bottom:28px;z-index:100;max-width:calc(100vw - 32px);padding:11px 17px;border-radius:12px;background:#1f2327;color:white;box-shadow:0 10px 30px rgba(0, 0, 0, .18);font-size:12px;opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}.confetti{position:fixed;inset:0;z-index:99;pointer-events:none;overflow:hidden}.confetti i{position:absolute;left:var(--x);top:45%;width:7px;height:12px;border-radius:3px;background:var(--c);animation:burst .85s ease-out forwards}@keyframes burst{to{transform:translate(var(--dx),var(--dy)) rotate(280deg);opacity:0}}
+*{box-sizing:border-box}html{background:var(--paper);scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--paper);font:15px/1.55 Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}.svg-sprite{position:absolute;width:0;height:0;overflow:hidden}button,input,select{font:inherit;color:inherit}button{cursor:pointer}svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.app-shell{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar);padding:28px 20px 22px;background:#dce6ed;border-right:1px solid rgba(68, 89, 104, .12);display:flex;flex-direction:column;z-index:20;overflow-y:auto}.brand{position:relative;width:100%;display:flex;flex-direction:column;gap:0;padding:0 4px 20px 8px;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}.brand-inner{display:flex;align-items:center;gap:12px}.brand-edit{display:block;color:#858f9b;font-size:9px;font-style:normal;opacity:0;transition:.2s;white-space:nowrap;background:rgba(247, 252, 255, .85);padding:2px 8px;border-radius:6px;border:1px solid rgba(133, 143, 155, .2);margin-top:6px;text-align:center;align-self:flex-start}.brand:hover .brand-edit{opacity:1}.brand:hover .brand-edit{opacity:1}.brand-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--plum);color:white;font:700 19px/1 "Songti SC",serif;box-shadow:0 7px 18px rgba(48, 62, 77, .2)}.brand strong{display:block;font:700 19px/1.2 "Songti SC",serif;letter-spacing:.05em}.brand span{display:block;margin-top:4px;color:var(--muted);font-size:11px;letter-spacing:.12em}.side-nav{display:flex;flex-direction:column;gap:4px}.nav-item{display:flex;align-items:center;gap:12px;width:100%;height:44px;padding:0 13px;border:0;border-radius:12px;background:transparent;color:#4d555f;text-align:left;transition:.2s}.nav-item:hover{background:rgba(255, 255, 255, .48);color:var(--ink)}.nav-item.active{background:var(--card);color:var(--plum);box-shadow:0 5px 16px rgba(43, 62, 75, .05);font-weight:700}.nav-item svg{width:18px}.nav-label{margin:16px 13px 6px;color:#858f9b;font-size:10px;font-weight:700;letter-spacing:.18em}.local-card{margin-top:auto;padding:16px;border:1px solid #c0cfd9;border-radius:16px;background:rgba(247, 252, 255, .58)}.local-status{font-size:12px;font-weight:700}.status-dot{display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;background:#6d7e92;box-shadow:0 0 0 4px rgba(109, 126, 146, .12)}.local-card p{margin:9px 0 12px;color:var(--muted);font-size:11px;line-height:1.6}.backup-meter{height:4px;border-radius:9px;background:#c7d4dd;overflow:hidden}.backup-meter span{display:block;width:0;height:100%;background:var(--terra);transition:.3s}.local-card small{display:block;margin-top:7px;color:#788390;font-size:10px}.main-content{min-height:100vh;margin-left:var(--sidebar);padding:0 42px 56px}.topbar{position:sticky;top:0;z-index:15;min-height:104px;padding:25px 0 18px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;background:linear-gradient(180deg,var(--paper) 78%,rgba(232, 240, 245, 0))}.eyebrow{margin:0 0 4px;color:#798695;font-size:10px;font-weight:750;letter-spacing:.18em;text-transform:uppercase}.eyebrow.light{color:rgba(255, 255, 255, .68)}h1,h2,h3,p{margin-top:0}h1{margin:0;font:700 clamp(24px,2.2vw,34px)/1.2 "Songti SC",serif;letter-spacing:.02em}h2{margin:0;font:700 20px/1.35 "Songti SC",serif}.top-actions,.section-actions{display:flex;align-items:center;gap:8px}.section-actions{justify-content:flex-end;margin:-2px 0 16px}.save-state{display:flex;align-items:center;gap:7px;margin-right:5px;color:#69737f;font-size:11px;white-space:nowrap}.save-state span{width:7px;height:7px;border-radius:50%;background:#6e7a87}.save-state b{font-weight:500}.save-state.error span{background:var(--red)}.btn{min-height:42px;padding:0 15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:12px;font-size:13px;font-weight:700;transition:transform .15s,box-shadow .15s,background .15s}.btn:hover{transform:translateY(-1px)}.btn svg{width:16px}.btn.primary{background:var(--plum);color:#ffffff;box-shadow:0 8px 20px rgba(48, 62, 77, .16)}.btn.ghost{border-color:var(--line);background:rgba(247, 252, 255, .8)}.btn.ink{background:var(--ink);color:#ffffff}.btn.full{width:100%;min-height:48px;margin-top:6px}.text-btn{padding:7px 0;border:0;background:transparent;color:var(--terra);font-size:12px;font-weight:700}.system-alert,.module-alert{margin-bottom:16px;padding:14px 17px;border:1px solid #8fbbdb;border-radius:15px;background:#d2e6f5;display:flex;align-items:center;justify-content:space-between;gap:16px}.system-alert[hidden],.module-alert:empty{display:none}.system-alert strong,.system-alert span,.module-alert strong,.module-alert span{display:block}.system-alert span,.module-alert span{margin-top:2px;color:#4d6576;font-size:12px}.system-alert.danger{border-color:#d68f87;background:#f5dcd8}.module-alert.good{border-color:#bccecb;background:#e3ebea}.module-alert.good span{color:#5a6571}.module-alert.danger{border-color:#d68f87;background:#f5dcd8}.module-alert.danger strong{color:#8c443c}.module-alert.danger span{color:#7a4a44}.module-alert[hidden]{display:none}.view{display:none}.view.active{display:block;animation:reveal .28s ease}@keyframes reveal{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}.panel,.hero-card{border:1px solid rgba(67, 93, 111, .08);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow)}.panel{padding:22px}.dashboard-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.hero-card{position:relative;overflow:hidden;min-height:220px;padding:30px;background:var(--plum);color:#ffffff}.hero-card:after{content:"";position:absolute;width:190px;height:190px;right:-70px;bottom:-95px;border:1px solid rgba(255, 255, 255, .18);border-radius:50%}.hero-card h2{margin:12px 0 9px;font:700 64px/1 "Songti SC",serif}.hero-card h2 small{font:500 16px/1 sans-serif;color:rgba(255, 255, 255, .6)}.hero-card p:last-child{max-width:190px;margin:0;color:rgba(255, 255, 255, .72);font-size:12px}.score-orbit{position:absolute;right:27px;top:33px;width:92px;height:92px;border:1px solid rgba(255, 255, 255, .14);border-radius:50%}.score-orbit:before,.score-orbit:after{content:"";position:absolute;border:1px solid rgba(255, 255, 255, .09);border-radius:50%}.score-orbit:before{inset:14px}.score-orbit:after{inset:29px}.score-orbit span,.score-orbit i,.score-orbit b{position:absolute;width:7px;height:7px;border-radius:50%;background:#91bfe0}.score-orbit span{top:9px;left:18px}.score-orbit i{right:3px;top:50%;background:#b3bcc7}.score-orbit b{left:25px;bottom:3px;background:#c6d9e6}.quick-panel{grid-column:span 2}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:18px}.mini-note,.draft-status{color:#7f8b98;font-size:10px}.quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.quick-action{position:relative;min-width:0;min-height:108px;padding:17px 13px;border:0;border-radius:16px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left;transition:.2s}.quick-action:hover{transform:translateY(-2px)}.quick-action>svg{width:21px;height:21px}.quick-action span strong,.quick-action span small{display:block}.quick-action span strong{font-size:13px}.quick-action span small{margin-top:2px;color:rgba(30, 36, 42, .58);font-size:10px}.quick-action i{position:absolute;right:12px;top:11px;font-style:normal;font-size:17px}.terracotta{background:var(--terra-soft);color:#8d442e}.plum{background:var(--plum-soft);color:var(--plum)}.sage{background:var(--sage-soft);color:#4e5a68}.sand{background:var(--sand-soft);color:#316183}.stat-card{display:flex;align-items:center;gap:15px;min-height:105px}.stat-icon{flex:0 0 auto;width:48px;height:48px;border-radius:15px;display:grid;place-items:center}.stat-card span,.stat-card strong,.stat-card small{display:block}.stat-card span{color:var(--muted);font-size:11px}.stat-card strong{margin:1px 0;font-size:21px}.stat-card small{color:#828d9a;font-size:10px}.span-2{grid-column:span 2}.clean-list,.habit-stack,.timeline,.record-list,.date-groups,.archive-list,.shopping-list{display:flex;flex-direction:column}.clean-list{gap:7px}.task-row{display:grid;grid-template-columns:26px 1fr auto auto;align-items:center;gap:11px;min-height:48px;padding:6px 7px;border-radius:11px}.task-row:hover{background:#ebf2f7}.check-btn{flex:0 0 auto;width:25px;height:25px;padding:0;display:grid;place-items:center;border:1px solid #b7c5cf;border-radius:8px;background:transparent;color:white}.check-btn svg{width:14px}.check-btn.checked,.task-row.done .check-btn{background:var(--sage);border-color:var(--sage)}.task-row.done .task-title{text-decoration:line-through;color:#87919c}.task-title{font-size:13px}.task-title small{display:block;color:#7d8996;font-size:10px;font-weight:400;text-decoration:none}.task-time{color:#7d8996;font-size:11px}.priority-flag{width:6px;height:6px;border-radius:50%;background:#a2acb8}.priority-flag.high{background:var(--red)}.habit-stack{gap:10px}.habit-pill{display:flex;align-items:center;gap:12px}.habit-dot{width:10px;height:10px;border-radius:50%}.habit-pill strong{flex:1;font-size:12px}.habit-pill small{color:var(--muted)}.timeline{gap:0}.timeline-item{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:10px;padding:10px 0}.timeline-item:not(:last-child){border-bottom:1px solid #dee7ee}.record-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center}.record-icon svg{width:16px}.timeline-item strong,.timeline-item small{display:block}.timeline-item strong{font-size:12px}.timeline-item small{color:#7d8997;font-size:10px}.record-value{font-size:12px;font-weight:700}.insight-card{display:flex;flex-direction:column;justify-content:space-between;background:#d1dee8}.insight-card blockquote{margin:10px 0 25px;font:600 19px/1.7 "Songti SC",serif}.insight-card>span{color:#6d7b8b;font-size:10px}.empty-state{padding:24px 12px;text-align:center;color:#85909c;font-size:12px}.module-layout{display:grid;grid-template-columns:minmax(290px,360px) minmax(0,1fr);gap:18px;align-items:start}.form-panel{position:sticky;top:122px}.form-panel.static{position:static}.sticky-stack{position:sticky;top:122px;display:flex;flex-direction:column;gap:16px}.form-panel form{display:flex;flex-direction:column;gap:14px}.segmented{display:grid;grid-template-columns:1fr 1fr;padding:3px;border-radius:12px;background:#dfe8ee}.segmented input{position:absolute;opacity:0}.segmented span{height:36px;display:grid;place-items:center;border-radius:9px;color:#6a747f;font-size:12px;font-weight:700}.segmented input:checked+span{background:var(--card);color:var(--plum);box-shadow:0 3px 10px rgba(39, 54, 65, .07)}.field{display:flex;flex-direction:column;gap:7px}.field>span{color:#606a75;font-size:11px;font-weight:700}.field input,.field select,.compact-select{width:100%;height:44px;padding:0 12px;border:1px solid #c8d4dd;border-radius:11px;outline:0;background:#f3f8fb;transition:.2s}.field input:focus,.field select:focus,.compact-select:focus{border-color:#728293;box-shadow:0 0 0 3px rgba(48, 62, 77, .07);background:white}.compact-select{width:auto;height:36px;font-size:11px}.amount-field>div{display:flex;align-items:center;border-bottom:1px solid #bfccd6}.amount-field b{font:600 22px/1 serif}.amount-field input{height:58px;border:0;background:transparent;font-size:32px;font-weight:700}.amount-field input:focus{box-shadow:none}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.switch-row{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}.switch-row input{width:18px;height:18px;accent-color:var(--plum)}.module-main{display:flex;flex-direction:column;gap:18px;min-width:0}.metric-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{min-height:102px;padding:20px;border:1px solid rgba(67, 93, 111, .12);border-radius:18px;background:#dde7ee}.metric:nth-child(2){background:#e4eae9}.metric:nth-child(3){background:#e1e5e9}.metric.income{background:#e1ebe9}.metric.expense{background:#d6e6f1}.metric span,.metric strong{display:block}.metric span{color:#636d78;font-size:11px}.metric strong{margin-top:8px;font-size:23px}.inline-budget{color:var(--muted);font-size:11px}.inline-budget input{width:90px;padding:5px 2px;border:0;border-bottom:1px solid var(--line);background:transparent;font-weight:700;outline:0}.large-progress{height:10px;border-radius:20px;background:#dfe8ee;overflow:hidden}.large-progress span{display:block;width:0;height:100%;border-radius:inherit;background:var(--terra);transition:.35s}.large-progress.sage-bar span{background:var(--sage)}.progress-label{display:flex;justify-content:space-between;margin-top:9px;color:var(--muted);font-size:10px}.compare-card{display:flex;align-items:center;justify-content:space-between;gap:20px;background:#dfe9f0}.compare-card>span{color:var(--muted);font-size:12px}.split-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:18px;min-width:0}.split-grid>.panel{min-width:0;overflow:hidden}.pie-wrap{display:grid;grid-template-columns:minmax(150px,210px) minmax(110px,1fr);align-items:center;gap:18px;min-width:0}.pie-wrap svg{display:block;width:100%;height:auto;max-width:210px;overflow:visible}.chart-legend{min-width:0;display:flex;flex-direction:column;gap:9px}.legend-item{min-width:0;display:grid;grid-template-columns:9px minmax(0,1fr) auto;align-items:center;gap:7px;font-size:11px}.legend-item i{width:9px;height:9px;border-radius:50%}.legend-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.legend-item b{font-size:11px;white-space:nowrap}.record-list{gap:2px;max-height:520px;overflow:auto}.record-row{display:grid;grid-template-columns:42px 1fr auto 32px;gap:12px;align-items:center;min-height:62px;padding:8px 6px;border-bottom:1px solid #dfe8ee}.record-row:last-child{border-bottom:0}.record-main strong,.record-main small{display:block}.record-main strong{font-size:13px}.record-main small{margin-top:2px;color:#7d8996;font-size:10px}.record-amount{font-weight:750}.record-amount.expense{color:var(--red)}.record-amount.income{color:var(--green)}.delete-btn{width:32px;height:32px;padding:0;border:0;border-radius:9px;background:transparent;color:#959fab;opacity:0}.record-row:hover .delete-btn,.shopping-row:hover .delete-btn{opacity:1}.delete-btn:hover{background:#dce9f3;color:var(--terra)}.habit-layout{display:flex;flex-direction:column;gap:18px}.daily-habits{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px}.panel-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}.btn.compact{min-height:36px;padding:0 11px;font-size:11px}.daily-habit{position:relative;min-width:0;min-height:156px;padding:17px;border:1px solid var(--line);border-radius:17px;background:#f2f7fa;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}.habit-card-delete{position:absolute;right:9px;top:9px;width:28px;height:28px;padding:0;border:0;border-radius:9px;background:rgba(255, 255, 255, .75);color:#838f9c;opacity:0}.daily-habit:hover .habit-card-delete{opacity:1}.daily-habit>div:first-of-type{padding-right:25px}.daily-habit.done{border-color:#b0c3bf;background:var(--sage-soft)}.daily-habit.pulse{animation:gentlePulse 2.2s infinite}@keyframes gentlePulse{50%{box-shadow:0 0 0 5px rgba(66, 134, 182, .09);border-color:#9abdd6}}.daily-habit h3{margin:0;font:700 15px/1.35 Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.daily-habit p{margin:5px 0 0;color:var(--muted);font-size:10px;white-space:nowrap}.habit-action{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px}.habit-state{flex:0 0 auto;font-size:12px;font-weight:700;white-space:nowrap}.habit-action>button,.habit-action>.counter-control,.habit-action>.sleep-control{flex:0 0 auto;margin-left:auto}.habit-action .habit-check{width:42px;height:42px;padding:0;border:1px solid #bac7d0;border-radius:13px;background:white}.habit-action .habit-check.checked{background:var(--sage);border-color:var(--sage);color:white}.counter-control{display:flex;align-items:center;gap:7px}.counter-control button{width:34px;height:34px;padding:0;border:1px solid var(--line);border-radius:10px;background:white}.counter-control strong{min-width:28px;text-align:center}.sleep-control{display:flex;align-items:center;gap:5px}.sleep-control input{width:62px;height:38px;border:1px solid var(--line);border-radius:10px;background:white;text-align:center}.heatmap-panel{overflow:hidden}.heatmap-scroll{overflow-x:auto;padding-bottom:7px}.habit-heatmap{min-width:850px}.heatmap-header,.heatmap-row{display:grid;grid-template-columns:110px repeat(30,18px);gap:5px;align-items:center;margin-bottom:7px}.heatmap-header span{color:#84909d;font-size:8px;text-align:center}.heatmap-name{font-size:11px;font-weight:700;white-space:nowrap}.heat-cell{width:18px;height:18px;border-radius:5px;background:#dce6ed}.heat-cell.done{background:#6e7c8d}.heat-cell.partial{background:#b6bfc9}.streak-badge{margin-left:8px;color:var(--sage);font-size:10px}.profile-card{box-shadow:none}.target-progress{background:#dfe9f0}.target-progress .panel-head>span{font-size:22px;font-weight:700}.health-note{margin:14px 0 0;padding:11px 13px;border-radius:11px;background:rgba(255, 255, 255, .45);color:var(--muted);font-size:11px}.health-note.warning{background:#f2ddd7;color:#874b3b}.line-chart-wrap{width:100%;overflow-x:auto}.line-chart{display:block;width:100%;min-width:660px;height:auto;aspect-ratio:760/280;font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;shape-rendering:geometricPrecision;text-rendering:geometricPrecision}.line-chart text{stroke:none!important;paint-order:normal}.line-chart line,.line-chart path,.line-chart circle{stroke-linecap:round;stroke-linejoin:round}.legend-inline{display:flex;gap:12px;color:var(--muted);font-size:10px}.legend-inline span{display:flex;align-items:center;gap:5px}.legend-inline i{width:14px;height:3px;border-radius:2px}.dot-weight{background:var(--plum)}.dot-average{background:var(--terra)}.weekly-plan{display:grid;grid-template-columns:1fr 1fr;gap:10px}.plan-item{display:flex;align-items:flex-start;gap:11px;padding:13px;border:1px solid var(--line);border-radius:13px;background:#f2f7fa}.plan-item.done{opacity:.65}.plan-item.done strong{text-decoration:line-through}.plan-item button{margin-top:1px}.plan-item strong,.plan-item small{display:block}.plan-item>span{min-width:0;flex:1}.plan-item strong{font-size:12px}.plan-delete{flex:0 0 auto;width:30px;height:30px;padding:0;border:0;border-radius:9px;background:transparent;color:#8f9ba8;opacity:0}.plan-item:hover .plan-delete{opacity:1}.plan-delete:hover,.habit-card-delete:hover{background:#dce9f3;color:var(--terra)}.plan-item small{margin-top:3px;color:var(--muted);font-size:10px}.date-groups,.archive-list{gap:10px}.date-group,.archive-day{border:1px solid #d0dbe3;border-radius:15px;overflow:hidden}.date-group summary,.archive-day summary{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;background:#f2f7fa}.date-group summary::-webkit-details-marker,.archive-day summary::-webkit-details-marker{display:none}.date-group summary strong,.archive-day summary strong{font-size:13px}.date-group summary span,.archive-day summary span{color:#7f8a96;font-size:10px}.group-body{padding:3px 12px 10px}.week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.week-day{min-height:92px;padding:11px 7px;border:1px solid var(--line);border-radius:13px;background:#f2f7fa;text-align:center}.week-day.today{background:var(--plum);border-color:var(--plum);color:white}.week-day span,.week-day strong,.week-day small{display:block}.week-day span{font-size:10px}.week-day strong{margin:4px 0;font-size:20px}.week-day small{color:var(--muted);font-size:9px}.week-day.today small{color:rgba(255, 255, 255, .7)}.overdue .task-title{color:var(--red)}.list-tag{display:inline-block;margin-left:5px;padding:2px 6px;border-radius:5px;background:#d8e3eb;color:#616f7f;font-size:8px}.shopping-list{gap:7px}.shopping-row{display:grid;grid-template-columns:30px 1fr auto 32px;align-items:center;gap:12px;min-height:68px;padding:9px 8px;border-bottom:1px solid #dfe8ee}.shopping-row.bought{opacity:.58}.shopping-row.bought .shopping-main strong{text-decoration:line-through}.shopping-main strong,.shopping-main small{display:block}.shopping-main strong{font-size:13px}.shopping-main small{color:var(--muted);font-size:10px}.shopping-price{text-align:right}.shopping-price strong,.shopping-price small{display:block}.shopping-price small{color:var(--muted);font-size:9px}.urgent-dot{display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:var(--red)}.archive-head{margin:6px 0 22px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}.archive-head h2{font-size:26px}.filter-chips{display:flex;gap:7px;flex-wrap:wrap}.filter-chips button{height:34px;padding:0 13px;border:1px solid var(--line);border-radius:20px;background:transparent;color:#5e6873;font-size:11px}.filter-chips button.active{background:var(--ink);border-color:var(--ink);color:white}.archive-day{background:var(--card)}.archive-record{display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center;min-height:54px;padding:7px 5px;border-bottom:1px solid #dfe8ee}.archive-record:last-child{border-bottom:0}.type-tag{width:max-content;padding:4px 8px;border-radius:7px;background:#dee7ee;color:#5c6875;font-size:10px}.archive-record strong{font-size:12px}.archive-record small{display:block;color:#7e8996;font-size:10px}.media-layout{grid-template-columns:minmax(290px,340px) minmax(0,1fr)}.cover-upload{display:block;cursor:pointer}.cover-upload input{position:absolute;opacity:0;pointer-events:none}.cover-upload>span{min-height:92px;padding:14px;border:1px dashed #c1c8d1;border-radius:14px;background:#f7f9fb;display:grid;grid-template-columns:34px 1fr;grid-template-rows:auto auto;align-items:center;column-gap:10px;color:var(--plum)}.cover-upload svg{grid-row:1/3;width:24px}.cover-upload b,.cover-upload small{display:block}.cover-upload b{font-size:12px}.cover-upload small{color:var(--muted);font-size:10px}.cover-upload.has-cover>span{min-height:160px;background-size:cover;background-position:center;border-style:solid}.cover-upload.has-cover>span>*{display:none}.annual-card{background:linear-gradient(135deg,var(--plum),#536376);color:white}.annual-card .eyebrow,.annual-card .mini-note{color:rgba(255, 255, 255, .68)}.rating-distribution{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;gap:12px;height:110px}.rating-bar{height:100%;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;text-align:center}.rating-bar span{display:block;min-height:4px;height:var(--h);border-radius:8px 8px 3px 3px;background:rgba(255, 255, 255, .78)}.rating-bar b,.rating-bar small{font-size:9px}.rating-bar small{color:rgba(255, 255, 255, .7)}.media-toolbar{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:20px}.media-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.view-toggle{display:flex;padding:3px;border-radius:11px;background:#dfe8ee}.view-toggle button{height:30px;padding:0 11px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:10px}.view-toggle button.active{background:white;color:var(--plum);box-shadow:0 2px 8px rgba(28, 41, 50, .08)}.media-wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:24px 18px}.media-card{position:relative;min-width:0}.media-cover{aspect-ratio:3/4;border-radius:13px;overflow:hidden;background:linear-gradient(145deg,var(--plum-soft),#e5ebf0);display:flex;align-items:center;justify-content:center;color:var(--plum);box-shadow:0 10px 24px rgba(42, 49, 58, .08)}.media-cover img{width:100%;height:100%;object-fit:cover}.media-placeholder{padding:18px;text-align:center;font:700 20px/1.35 "Songti SC",serif;word-break:break-word}.media-card-body{padding:10px 3px 0}.media-card h3{margin:0;font:700 13px/1.4 Inter,-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.media-meta{margin-top:3px;display:flex;align-items:center;justify-content:space-between;gap:6px;color:var(--muted);font-size:9px}.stars{color:#5a708a;letter-spacing:1px;white-space:nowrap}.media-review{margin:6px 0 0;color:#656f7a;font-size:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.media-delete{position:absolute;right:7px;top:7px;width:29px;height:29px;padding:0;border:0;border-radius:9px;background:rgba(255, 255, 255, .9);color:#76808c;opacity:0}.media-card:hover .media-delete{opacity:1}.media-list{display:flex;flex-direction:column;gap:0}.media-list .media-card{display:grid;grid-template-columns:58px minmax(0,1fr) auto;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid #dfe8ee}.media-list .media-cover{width:58px;aspect-ratio:3/4;border-radius:8px}.media-list .media-placeholder{padding:5px;font-size:10px}.media-list .media-card-body{padding:0}.media-list .media-delete{position:static;opacity:1}.media-stat strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.custom-list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:3px;color:var(--muted);font-size:11px;font-weight:700}.custom-list-head small{font-weight:400}.custom-manage-list{max-height:230px;overflow:auto;display:flex;flex-direction:column;gap:7px;padding-right:3px}.custom-manage-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#f2f7fa}.custom-manage-row strong,.custom-manage-row small{display:block}.custom-manage-row strong{font-size:12px}.custom-manage-row small{margin-top:2px;color:var(--muted);font-size:9px}.custom-manage-row button{width:32px;height:32px;padding:0;border:0;border-radius:9px;background:transparent;color:#8693a1}.custom-manage-row button:hover{background:#dce9f3;color:var(--terra)}.fitness-profile-sheet{width:min(600px,100%)}.fitness-profile-sheet .field>span{font-size:13px}.fitness-profile-sheet .field input,.fitness-profile-sheet .field select{height:52px;font-size:16px}.settings-backdrop{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:20px;background:rgba(22, 27, 31, .38);backdrop-filter:blur(6px)}.settings-backdrop[hidden]{display:none}.settings-sheet{width:min(520px,100%);max-height:calc(100vh - 40px);overflow:auto;padding:25px;border:1px solid rgba(255, 255, 255, .5);border-radius:24px;background:var(--card);box-shadow:0 28px 80px rgba(22, 30, 36, .24)}.settings-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}.sheet-close{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:#f2f7fa;font-size:24px;line-height:1}.brand-preview{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding:18px;border-radius:17px;background:#dde7ee}.brand-preview strong,.brand-preview span{display:block}.brand-preview strong{font:700 20px/1.3 "Songti SC",serif}.brand-preview span{margin-top:3px;color:var(--muted);font-size:11px}.settings-sheet form{display:flex;flex-direction:column;gap:16px}.theme-swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.theme-swatches input{position:absolute;opacity:0}.theme-swatches label{min-width:0;padding:10px 6px;border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}.theme-swatches i{width:28px;height:28px;border-radius:50%;background:var(--swatch);box-shadow:inset 0 0 0 1px rgba(0, 0, 0, .08)}.theme-swatches b{font-size:10px;font-weight:600}.theme-swatches input:checked~i{box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--plum)}.sheet-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:4px}.mobile-nav{display:none}.toast{position:fixed;left:50%;bottom:28px;z-index:100;max-width:calc(100vw - 32px);padding:11px 17px;border-radius:12px;background:#1f2327;color:white;box-shadow:0 10px 30px rgba(0, 0, 0, .18);font-size:12px;opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}.confetti{position:fixed;inset:0;z-index:99;pointer-events:none;overflow:hidden}.confetti i{position:absolute;left:var(--x);top:45%;width:7px;height:12px;border-radius:3px;background:var(--c);animation:burst .85s ease-out forwards}@keyframes burst{to{transform:translate(var(--dx),var(--dy)) rotate(280deg);opacity:0}}
 @media(max-width:1280px){.split-grid{grid-template-columns:1fr}.pie-wrap{grid-template-columns:210px minmax(130px,1fr)}}
 @media(max-width:1180px){.main-content{padding-left:26px;padding-right:26px}.dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.quick-panel{grid-column:span 1}.quick-grid{grid-template-columns:repeat(2,1fr)}.stat-card:last-of-type{grid-column:span 2}.module-layout{grid-template-columns:310px minmax(0,1fr)}.daily-habits{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:860px){:root{--sidebar:0px}html,body{overflow-x:hidden}.sidebar{display:none}.main-content{margin-left:0;padding:0 16px calc(92px + env(safe-area-inset-bottom))}.topbar{min-height:88px;padding-top:18px;align-items:center;flex-wrap:wrap}.topbar>div:first-child{flex:1;min-width:150px}.topbar h1{font-size:24px}.top-actions{width:100%;min-width:0;display:grid;grid-template-columns:48px minmax(0,1fr) minmax(0,1.35fr)}.top-actions .save-state{display:none}.top-actions:has(#clearSamplesBtn[hidden]){grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}.top-actions .btn{width:100%;min-width:0;min-height:46px;padding:0 8px;white-space:nowrap}.top-actions #clearSamplesBtn span{display:none}.dashboard-grid{display:flex;flex-direction:column}.hero-card{min-height:190px}.quick-panel{order:-1}.quick-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.quick-action{min-height:96px;padding:14px 10px}.quick-action span small{display:none}.module-layout{display:flex;flex-direction:column}.form-panel,.sticky-stack{position:static;width:100%}.module-main{width:100%}.mobile-nav{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);left:10px;right:10px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:40;height:66px;padding:6px;border:1px solid rgba(55, 72, 85, .14);border-radius:20px;background:rgba(247, 252, 255, .94);box-shadow:0 14px 35px rgba(31, 44, 53, .16);backdrop-filter:blur(14px)}.mobile-nav button{min-width:0;border:0;border-radius:14px;background:transparent;color:#6f7985;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:9px}.mobile-nav button svg{width:21px;height:21px}.mobile-nav button.active{background:var(--plum);color:#ffffff}.daily-habits{grid-template-columns:repeat(2,1fr)}.archive-head{align-items:flex-start;flex-direction:column}.archive-record{grid-template-columns:72px 1fr}.archive-record>span:last-child{display:none}.delete-btn,.habit-card-delete,.plan-delete{opacity:1}.section-actions{justify-content:flex-start;overflow-x:auto}.media-toolbar{align-items:flex-start;flex-direction:column}.media-controls{width:100%;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}.media-controls>*{flex:0 0 auto}.media-delete{opacity:1}.section-actions .btn{min-height:46px;white-space:nowrap}.system-alert{align-items:flex-start}.system-alert .btn{white-space:nowrap}.week-strip{overflow-x:auto;grid-template-columns:repeat(7,78px)}.pie-wrap{grid-template-columns:190px 1fr}.pie-wrap svg{width:190px;height:190px}}
@@ -471,10 +471,12 @@
       <header data-page-node-id="bmbt9SBX6soG4wi34YoYaL" class="topbar">
         <div data-page-node-id="3keL7GQXUP1x8h2qpGEyYl"><p data-page-node-id="VYKjiceTPLTBmL1fPsu3OT" class="eyebrow" id="todayLabel"></p><h1 data-page-node-id="pQemMdxWhkZWl98nFWSq73" id="viewTitle"><!--pnid:ysl3CSbSfS7uvL20SSlku7-->Welcome to Earth Online</h1></div>
         <div data-page-node-id="M068rhTYbNS8r7TUXRx8kH" class="top-actions">
-          <span data-page-node-id="3McTBQocwXJjjokPXGEE8C" class="save-state"><span data-page-node-id="MD1wNcm29vPJy0ugerV0Sq"></span><b data-page-node-id="EKHc2qjGh3iUUFb0xuOyxX" id="saveText"><!--pnid:r01R289gxoz4IrrcUNqp23-->已自动保存</b></span>
+          <span data-page-node-id="3McTBQocwXJjjokPXGEE8C" class="save-state"><span data-page-node-id="MD1wNcm29vPJy0ugerV0Sq"></span><b data-page-node-id="EKHc2qjGh3iUUFb0xuOyxX" id="saveText"><!--pnid:r01R289gxoz4IrrcUNqp23-->已同步云端</b></span>
           <button data-page-node-id="cOKgUHgNxJftm90nPa43ay" class="btn ghost" id="clearSamplesBtn" title="清空"><svg data-page-node-id="ZuAltOOjRJf5YBr423M0J7"><use data-page-node-id="T1MPXJ9cwAcWJ3mhm10QQy" href="#i-trash"/></svg><span data-page-node-id="LMqPoEbnE1LSmRjENj0z9V"><!--pnid:FFBsWl63TTUR2Jv0p2tfoU-->清空</span></button>
         </div>
       </header>
+
+      <div class="module-alert danger" id="syncBanner" hidden></div>
 
       <section data-page-node-id="Zp6anuFpepDJz33vOwxA01" class="view active" data-title="Welcome to Earth Online" id="view-dashboard">
         <div data-page-node-id="2Gjn69w2uGWmvwseBty2ZT" class="dashboard-grid">
@@ -3034,250 +3036,410 @@
 (() => {
   'use strict';
 
-  /* ================= Database SDK Integration ================= */
-  var DB_MONEY = 'raIjD9hUK79eLGf3ZTGBZe';
-  var DB_HABIT = 'fPfcuPf45DDILahQysJcoj';
-  var DB_PLAN = 'CFonV9wxKe3GRHJmotOS6W';
-  var DB_FITNESS = 'JvPD7xujxPHoACLm3l7FAi';
-  var DB_SHOPPING = 'VPz0IX9noPDQmfMCZgZ1SI';
-  var DB_MEDIA = 'YMwV3vj92gV1CIrQR6g5Lh';
-  var ONLINE = false, LOCAL_ONLY = false;
-  try { if (window.__SMART_PAGE__ && window.__SMART_PAGE__.database) { var db = window.__SMART_PAGE__.database; ONLINE = true; } } catch(e) {}
+  /* ================= Supabase 数据通道 ================= */
+  var SUPABASE_URL = 'https://cjfaoldoxrkddfvwovzw.supabase.co/rest/v1';
+  var SUPABASE_KEY = 'sb_publishable_Ms45xDWCo_uykN1-EDFJuQ_ZNpST8RU';
+  var ONLINE = !!(SUPABASE_URL && SUPABASE_KEY && SUPABASE_KEY.indexOf('sb_publishable_') === 0);
 
-  function goLocalOnly(reason){ LOCAL_ONLY = true; console.warn("[database] " + reason); }
+  var T_MONEY = 'money_records', T_PLAN = 'schedules', T_HABIT = 'habit_logs',
+      T_FITNESS = 'fitness_logs', T_SHOPPING = 'shopping_items', T_MEDIA = 'media_items',
+      T_SETTINGS = 'app_settings';
+  var HABIT_CONFLICT = encodeURIComponent('日期') + ',' + encodeURIComponent('习惯');
 
-  function dbFetchAll(databaseId, cb){
-    if (!ONLINE || LOCAL_ONLY) { if(cb) cb(null); return; }
-    var all = [], cursor = null;
-    function fetchPage(){
-      db.query({ databaseId: databaseId, pageSize: 100, startCursor: cursor }).then(function(result){
-        all = all.concat(result.results || []);
-        if (result.hasMore && result.nextCursor) { cursor = result.nextCursor; fetchPage(); }
-        else { if(cb) cb(all); }
-      }).catch(function(err){ if(cb) cb(null); });
-    }
-    fetchPage();
+  var syncFailures = {};          // 环节 -> 错误信息
+  var settingsTimer = null;
+  var settingsReady = false;      // 首次云端拉取完成前，不回传设置，避免覆盖
+  var settingsTableMissing = false;
+
+  function sbHeaders(prefer){
+    var h = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json' };
+    if (prefer) h['Prefer'] = prefer;
+    return h;
   }
-
-  function dbAdd(databaseId, props, cb){
-    if (!ONLINE || LOCAL_ONLY) { if(cb) cb(null); return; }
-    try {
-      db.addRecord({ databaseId: databaseId, properties: props }).then(function(result){
-        if(cb) cb(result.id || null);
-      }).catch(function(err){ goLocalOnly("写入失败"); if(cb) cb(null); });
-    } catch(e){ goLocalOnly("写入异常"); if(cb) cb(null); }
-  }
-
-  function dbUpdate(databaseId, recordId, props){
-    if (!ONLINE || LOCAL_ONLY) return;
-    try {
-      db.updateRecord({ databaseId: databaseId, recordId: recordId, properties: props }).catch(function(err){ goLocalOnly("更新失败"); });
-    } catch(e){ goLocalOnly("更新异常"); }
-  }
-
-  function dbDelete(databaseId, recordId){
-    if (!ONLINE || LOCAL_ONLY) return;
-    try {
-      db.deleteRecord({ databaseId: databaseId, recordId: recordId }).catch(function(err){ goLocalOnly("删除失败"); });
-    } catch(e){ goLocalOnly("删除异常"); }
-  }
-
-  function pullAllRemote(cb){
-    if (!ONLINE || LOCAL_ONLY) { if(cb) cb(false); return; }
-    var pending = 6, done = 0, changed = false;
-    function oneDone(c){ done++; if(c) changed = true; if(done>=pending && cb) cb(changed); }
-    dbFetchAll(DB_MONEY, function(rows){ if(rows){ mergeMoney(rows); oneDone(true); } else oneDone(false); });
-    dbFetchAll(DB_HABIT, function(rows){ if(rows){ mergeHabit(rows); oneDone(true); } else oneDone(false); });
-    dbFetchAll(DB_PLAN, function(rows){ if(rows){ mergePlan(rows); oneDone(true); } else oneDone(false); });
-    dbFetchAll(DB_FITNESS, function(rows){ if(rows){ mergeFitness(rows); oneDone(true); } else oneDone(false); });
-    dbFetchAll(DB_SHOPPING, function(rows){ if(rows){ mergeShopping(rows); oneDone(true); } else oneDone(false); });
-    dbFetchAll(DB_MEDIA, function(rows){ if(rows){ mergeMedia(rows); oneDone(true); } else oneDone(false); });
-  }
-
-  function mergeMoney(rows){
-    if(!rows) return;
-    var remoteRecords = rows.map(function(r){
-      var d = r["日期"] ? String(r["日期"]).slice(0,10) : isoDate();
-      var cat = r["分类"] || "其他";
-      var amt = Number(r["金额"]) || 0;
-      var note = r["备注"] || "";
-      var isIncome = note.indexOf("收入：") === 0;
-      return {id:r.record_id||uid(),type:'money',date:d,createdAt:Date.now(),sample:false,remoteId:r.record_id,data:{flow:isIncome?'income':'expense',amount:amt,category:cat,note:isIncome?note.slice(3):note}};
+  function sbFetch(path, options){
+    var opts = options || {};
+    var init = { method: opts.method || 'GET', headers: sbHeaders(opts.prefer) };
+    if (opts.body !== undefined) init.body = opts.body;
+    var req;
+    try { req = fetch(SUPABASE_URL + path, init); }
+    catch (e) { return Promise.reject(e); }     // 环境不支持 fetch 时不要炸掉整页
+    return req.then(function(res){
+      if (!res.ok) {
+        return res.text().then(function(text){
+          var err = new Error('HTTP ' + res.status + ' ' + String(text).slice(0, 200));
+          err.status = res.status; err.body = String(text); throw err;
+        });
+      }
+      if (res.status === 204) return null;
+      var ct = res.headers.get('content-type') || '';
+      if (ct.indexOf('json') === -1) return null;
+      return res.json();
     });
-    state.records = state.records.filter(function(r){return r.type!=='money';}).concat(remoteRecords);
+  }
+  function qeq(filters){
+    var parts = [];
+    for (var k in filters) parts.push(encodeURIComponent(k) + '=eq.' + encodeURIComponent(filters[k]));
+    return parts.join('&');
   }
 
+  /* ---------- 同步状态提示 ---------- */
+  function setSyncLabel(kind){
+    var el = document.getElementById('saveText'), box = document.querySelector('.save-state');
+    if (!el || !box) return;
+    if (kind === 'pending') { box.classList.remove('error'); el.textContent = t('同步中…'); }
+    else if (kind === 'fail') { box.classList.add('error'); el.textContent = t('同步失败'); }
+    else { box.classList.remove('error'); el.textContent = t('已同步云端'); }
+  }
+  function reportSyncError(err, label){
+    syncFailures[label] = (err && err.message) || String(err || '未知错误');
+    setSyncLabel('fail');
+    renderSyncBanner();
+  }
+  function renderSyncBanner(){
+    var box = document.getElementById('syncBanner'); if (!box) return;
+    var keys = Object.keys(syncFailures);
+    if (!keys.length) { box.hidden = true; box.innerHTML = ''; return; }
+    box.hidden = false;
+    box.className = 'module-alert danger';
+    box.innerHTML = '<div><strong>' + t('云端同步失败') + '</strong><span>' +
+      t('改动已留在本机，恢复连接后点“重试同步”上传。失败环节：') + keys.join('、') + '</span></div>' +
+      '<button class="btn ghost" id="syncRetryBtn" type="button">' + t('重试同步') + '</button>';
+    var btn = document.getElementById('syncRetryBtn');
+    if (btn) btn.addEventListener('click', retrySync);
+  }
+  function clearSyncError(){ syncFailures = {}; renderSyncBanner(); }
+  function retrySync(){
+    clearSyncError(); setSyncLabel('pending');
+    pushMissing(); pushSettings();
+    setTimeout(function(){
+      pullAllRemote(function(){ if (!Object.keys(syncFailures).length) setSyncLabel('ok'); });
+    }, 600);
+  }
+
+  /* ---------- 基础读写 ---------- */
+  function dbFetchAll(table, cb){
+    if (!ONLINE) { if (cb) cb(null); return; }
+    sbFetch('/' + table + '?select=*').then(function(rows){
+      if (cb) cb(Array.isArray(rows) ? rows : null);
+    }).catch(function(err){ reportSyncError(err, t('读取远端') + ' · ' + table); if (cb) cb(null); });
+  }
+  function dbInsert(table, props, cb, silent){
+    if (!ONLINE) { if (cb) cb(null); return; }
+    sbFetch('/' + table + '?select=id', { method: 'POST', prefer: 'return=representation', body: JSON.stringify(props) })
+      .then(function(r){ var row = Array.isArray(r) ? r[0] : r; if (cb) cb(row && row.id ? row.id : null); })
+      .catch(function(err){ if (!silent) reportSyncError(err, t('写入远端') + ' · ' + table); if (cb) cb(null); });
+  }
+  function dbUpsert(table, props, onConflict, cb){
+    if (!ONLINE) { if (cb) cb(null); return; }
+    sbFetch('/' + table + '?on_conflict=' + onConflict + '&select=id',
+      { method: 'POST', prefer: 'return=representation,resolution=merge-duplicates', body: JSON.stringify(props) })
+      .then(function(r){ var row = Array.isArray(r) ? r[0] : r; if (cb) cb(row && row.id ? row.id : null); })
+      .catch(function(){ if (cb) cb(null); });
+  }
+  function dbUpsertMany(table, list, onConflict, cb){
+    if (!ONLINE) { if (cb) cb(false); return; }
+    sbFetch('/' + table + '?on_conflict=' + onConflict,
+      { method: 'POST', prefer: 'resolution=merge-duplicates,return=minimal', body: JSON.stringify(list) })
+      .then(function(){ if (cb) cb(true); })
+      .catch(function(){ if (cb) cb(false); });
+  }
+  function dbUpdate(table, id, props, label){
+    if (!ONLINE || !id) return;
+    sbFetch('/' + table + '?id=eq.' + encodeURIComponent(id), { method: 'PATCH', prefer: 'return=minimal', body: JSON.stringify(props) })
+      .catch(function(err){ reportSyncError(err, t('更新远端') + ' · ' + label); });
+  }
+  function dbDelete(table, id, label){
+    if (!ONLINE || !id) return;
+    sbFetch('/' + table + '?id=eq.' + encodeURIComponent(id), { method: 'DELETE', prefer: 'return=minimal' })
+      .catch(function(err){ reportSyncError(err, t('删除远端') + ' · ' + label); });
+  }
+  function dbDeleteWhere(table, filters, label){
+    if (!ONLINE) return;
+    sbFetch('/' + table + '?' + qeq(filters), { method: 'DELETE', prefer: 'return=minimal' })
+      .catch(function(err){ reportSyncError(err, t('删除远端') + ' · ' + label); });
+  }
+
+  /* ---------- 设置同步（预算 / 外观 / 自定义习惯 / 周计划） ---------- */
+  function pullSettings(cb){
+    if (!ONLINE) { if (cb) cb(false); return; }
+    sbFetch('/' + T_SETTINGS + '?id=eq.default&select=data').then(function(rows){
+      var row = Array.isArray(rows) ? rows[0] : null;
+      if (row && row.data && typeof row.data === 'object') { applyRemoteSettings(row.data); if (cb) cb(true); }
+      else if (cb) cb(false);
+    }).catch(function(err){
+      if (err && (err.status === 404 || (err.body && err.body.indexOf('app_settings') > -1))) {
+        settingsTableMissing = true;
+        console.warn('[supabase] app_settings 表不存在，设置暂只存本机');
+      } else {
+        reportSyncError(err, t('读取设置'));
+      }
+      if (cb) cb(false);
+    });
+  }
+  function applyRemoteSettings(data){
+    if (!data || typeof data !== 'object') return;
+    if (data.settings && typeof data.settings === 'object') state.settings = Object.assign({}, state.settings, data.settings);
+    if (Array.isArray(data.habits)) {
+      state.habits = data.habits.filter(function(h){ return h && h.name; }).map(function(h){
+        return { id: h.id || uid(), key: h.key || ('custom-' + uid()), name: h.name,
+          type: h.type || 'check', target: Number(h.target) || 1, unit: h.unit || '次',
+          tone: h.tone || 'sage', entries: {}, sample: false };
+      });
+    }
+  }
+  function scheduleSettingsSync(){
+    if (!ONLINE || !settingsReady || settingsTableMissing) return;
+    clearTimeout(settingsTimer);
+    settingsTimer = setTimeout(pushSettings, 800);
+  }
+  function pushSettings(){
+    if (!ONLINE || settingsTableMissing) return;
+    var payload = {
+      settings: state.settings,
+      habits: state.habits.map(function(h){ return { id: h.id, key: h.key, name: h.name, type: h.type, target: h.target, unit: h.unit, tone: h.tone }; })
+    };
+    var stamp = new Date().toISOString();
+    sbFetch('/' + T_SETTINGS + '?id=eq.default&select=id',
+      { method: 'PATCH', prefer: 'return=representation', body: JSON.stringify({ data: payload, updated_at: stamp }) })
+      .then(function(r){
+        if (Array.isArray(r) && r.length) return true;
+        return sbFetch('/' + T_SETTINGS, { method: 'POST', prefer: 'return=minimal',
+          body: JSON.stringify({ id: 'default', data: payload, updated_at: stamp }) });
+      })
+      .then(function(){ setSyncLabel('ok'); })
+      .catch(function(err){
+        if (err && (err.status === 404 || (err.body && err.body.indexOf('app_settings') > -1))) {
+          settingsTableMissing = true;
+          console.warn('[supabase] app_settings 表不存在，设置暂只存本机');
+          return;
+        }
+        reportSyncError(err, t('同步设置'));
+      });
+  }
+
+  /* ---------- 拉取全部 ---------- */
+  function pullAllRemote(cb){
+    if (!ONLINE) { if (cb) cb(false); return; }
+    setSyncLabel('pending');
+    pullSettings(function(hasSettings){
+      var total = 6, done = 0, changed = false;
+      function one(ok){
+        done++; if (ok) changed = true;
+        if (done < total) return;
+        settingsReady = true;
+        if (!hasSettings) pushSettings();
+        if (!Object.keys(syncFailures).length) setSyncLabel('ok');
+        if (cb) cb(changed);
+      }
+      dbFetchAll(T_MONEY,    function(rows){ if (rows) { mergeMoney(rows);    one(true); } else one(false); });
+      dbFetchAll(T_PLAN,     function(rows){ if (rows) { mergePlan(rows);     one(true); } else one(false); });
+      dbFetchAll(T_HABIT,    function(rows){ if (rows) { mergeHabit(rows);    one(true); } else one(false); });
+      dbFetchAll(T_FITNESS,  function(rows){ if (rows) { mergeFitness(rows);  one(true); } else one(false); });
+      dbFetchAll(T_SHOPPING, function(rows){ if (rows) { mergeShopping(rows); one(true); } else one(false); });
+      dbFetchAll(T_MEDIA,    function(rows){ if (rows) { mergeMedia(rows);    one(true); } else one(false); });
+    });
+  }
+
+  /* ---------- 云端数据 -> 本地 state ---------- */
+  function replaceType(type, remoteRecords){
+    var kept = state.records.filter(function(r){
+      if (r.type !== type) return true;
+      if (r.pending) return true;                                   // 本机尚未上传成功的，保留
+      return remoteRecords.length === 0 && !!r.sample;              // 云端为空时保留示例内容
+    });
+    state.records = kept.concat(remoteRecords);
+  }
+  function mergeMoney(rows){
+    if (!rows) return;
+    replaceType('money', rows.map(function(r){
+      var note = r["备注"] || "", isIncome = note.indexOf("收入：") === 0;
+      return { id: uid(), type: 'money', date: r["日期"] ? String(r["日期"]).slice(0, 10) : isoDate(),
+        createdAt: Date.now(), sample: false, remoteId: r.id,
+        data: { flow: isIncome ? 'income' : 'expense', amount: Number(r["金额"]) || 0,
+          category: r["分类"] || "其他", note: isIncome ? note.slice(3) : note } };
+    }));
+  }
   function mergeHabit(rows){
-    if(!rows) return;
-    var remoteEntries = {};
+    if (!rows || !rows.length) return;
+    var map = {};
     rows.forEach(function(r){
-      var d = r["日期"] ? String(r["日期"]).slice(0,10) : isoDate();
-      var hname = r["习惯"] || "";
-      var val = Number(r["数值"]) || 0;
-      if(!remoteEntries[hname]) remoteEntries[hname] = {};
-      remoteEntries[hname][d] = val;
+      var d = r["日期"] ? String(r["日期"]).slice(0, 10) : isoDate(), n = r["习惯"] || "";
+      if (!map[n]) map[n] = {};
+      map[n][d] = Number(r["数值"]) || 0;
     });
     state.habits.forEach(function(h){
-      var remote = remoteEntries[h.name];
-      if(remote){
-        h.entries = Object.assign({}, remote);
-        h.sample = false;
-      }
+      var remote = map[h.name];
+      if (remote) { h.entries = Object.assign({}, remote); h.sample = false; }
     });
   }
-
   function mergePlan(rows){
-    if(!rows) return;
-    var remoteRecords = rows.map(function(r){
-      var d = r["日期"] ? String(r["日期"]).slice(0,10) : isoDate();
-      var title = r["内容"] || "";
-      var list = r["类型"] || "生活";
-      var status = r["状态"] || "待完成";
-      return {id:r.record_id||uid(),type:'planner',date:d,createdAt:Date.now(),sample:false,remoteId:r.record_id,data:{title:title,list:list,done:(status==='已完成'),time:'',note:''}};
-    });
-    state.records = state.records.filter(function(r){return r.type!=='planner';}).concat(remoteRecords);
+    if (!rows) return;
+    replaceType('planner', rows.map(function(r){
+      return { id: uid(), type: 'planner', date: r["日期"] ? String(r["日期"]).slice(0, 10) : isoDate(),
+        createdAt: Date.now(), sample: false, remoteId: r.id,
+        data: { title: r["内容"] || "", list: r["类型"] || "生活", done: r["状态"] === "已完成", time: '', note: '' } };
+    }));
   }
-
   function mergeFitness(rows){
-    if(!rows) return;
-    var remoteRecords = rows.map(function(r){
-      var d = r["日期"] ? String(r["日期"]).slice(0,10) : isoDate();
-      return {id:r.record_id||uid(),type:'fitness',date:d,createdAt:Date.now(),sample:false,remoteId:r.record_id,data:{weight:Number(r["体重"])||0,bodyFat:r["体脂率"]?Number(r["体脂率"]):null,calories:0,duration:0,note:r["备注"]||""}};
-    });
-    state.records = state.records.filter(function(r){return r.type!=='fitness';}).concat(remoteRecords);
+    if (!rows) return;
+    replaceType('fitness', rows.map(function(r){
+      return { id: uid(), type: 'fitness', date: r["日期"] ? String(r["日期"]).slice(0, 10) : isoDate(),
+        createdAt: Date.now(), sample: false, remoteId: r.id,
+        data: { weight: Number(r["体重"]) || 0, bodyFat: r["体脂率"] != null ? Number(r["体脂率"]) : null,
+          calories: 0, duration: 0, note: r["备注"] || "" } };
+    }));
   }
-
   function mergeShopping(rows){
-    if(!rows) return;
-    var remoteRecords = rows.map(function(r){
-      return {id:r.record_id||uid(),type:'home',date:isoDate(),createdAt:Date.now(),sample:false,remoteId:r.record_id,data:{name:r["物品名称"]||"",quantity:String(r["数量"]||""),category:"日用品",price:Number(r["预估价格"])||0,priority:"normal",note:r["备注"]||"",bought:(r["是否已买"]==="已买")}};
-    });
-    state.records = state.records.filter(function(r){return r.type!=='home';}).concat(remoteRecords);
+    if (!rows) return;
+    replaceType('home', rows.map(function(r){
+      return { id: uid(), type: 'home', date: isoDate(), createdAt: Date.now(), sample: false, remoteId: r.id,
+        data: { name: r["物品名称"] || "", quantity: r["数量"] != null ? String(r["数量"]) : "",
+          category: "日用品", price: Number(r["预估价格"]) || 0, priority: "normal",
+          note: r["备注"] || "", bought: r["是否已买"] === "已买" } };
+    }));
   }
-
   function mergeMedia(rows){
-    if(!rows) return;
-    var typeMap = {'书籍':'书','电影':'电影','电视剧':'剧','动漫':'番'};
-    var statusMap = {'想看':'想看','在看':'在看','看过':'看完'};
-    state.mediaItems = rows.map(function(r){
-      var type = typeMap[r["类型"]] || '电影';
-      var status = statusMap[r["状态"]] || '想看';
-      return {id:r.record_id||uid(),name:r["标题"]||"",type:type,status:status,rating:Number(r["评分"])||0,review:r["短评"]||"",date:isoDate(),cover:"",sample:false,remoteId:r.record_id};
+    if (!rows) return;
+    var typeMap = { '书籍': '书', '电影': '电影', '电视剧': '剧', '动漫': '番' };
+    var statusMap = { '想看': '想看', '在看': '在看', '看过': '看完' };
+    var remoteItems = rows.map(function(r){
+      return { id: uid(), name: r["标题"] || "", type: typeMap[r["类型"]] || '电影',
+        status: statusMap[r["状态"]] || '想看', rating: Number(r["评分"]) || 0,
+        review: r["短评"] || "", date: isoDate(), cover: "", sample: false, remoteId: r.id };
+    });
+    var kept = state.mediaItems.filter(function(m){ return m.pending || (remoteItems.length === 0 && !!m.sample); });
+    state.mediaItems = kept.concat(remoteItems);
+  }
+
+  /* ---------- 本地新增 -> 云端 ---------- */
+  function settle(rec, rid){
+    if (rid) { rec.remoteId = rid; rec.pending = false; } else { rec.pending = true; }
+    saveState();
+  }
+  function pushMoney(rec){
+    dbInsert(T_MONEY, { "日期": rec.date, "分类": rec.data.category || "", "金额": Number(rec.data.amount) || 0,
+      "备注": (rec.data.flow === 'income' ? '收入：' : '') + (rec.data.note || "") }, function(rid){ settle(rec, rid); });
+  }
+  function pushPlan(rec){
+    dbInsert(T_PLAN, { "日期": rec.date, "内容": rec.data.title || "", "类型": rec.data.list || "生活",
+      "状态": rec.data.done ? "已完成" : "待完成" }, function(rid){ settle(rec, rid); });
+  }
+  function pushFitness(rec){
+    dbInsert(T_FITNESS, { "日期": rec.date, "体重": Number(rec.data.weight) || 0,
+      "体脂率": rec.data.bodyFat != null ? Number(rec.data.bodyFat) : null, "备注": rec.data.note || "" },
+      function(rid){ settle(rec, rid); });
+  }
+  function pushShopping(rec){
+    var props = { "物品名称": rec.data.name || "", "数量": rec.data.quantity || "",
+      "预估价格": Number(rec.data.price) || 0, "是否已买": rec.data.bought ? "已买" : "待买",
+      "备注": rec.data.note || "" };
+    dbInsert(T_SHOPPING, props, function(rid){
+      if (rid) { settle(rec, rid); return; }
+      // 云端"数量"若还是数字类型，退回只存数值
+      props["数量"] = parseInt(String(rec.data.quantity || '').replace(/[^\d.]/g, ''), 10) || 0;
+      dbInsert(T_SHOPPING, props, function(rid2){
+        if (rid2) { settle(rec, rid2); return; }
+        reportSyncError(null, t('写入远端') + ' · ' + T_SHOPPING);
+        rec.pending = true; saveState();
+      });
+    }, true);
+  }
+  function pushMedia(item){
+    var typeMap = { '书': '书籍', '电影': '电影', '剧': '电视剧', '番': '动漫' };
+    var statusMap = { '想看': '想看', '在看': '在看', '看完': '看过', '弃了': '在看' };
+    dbInsert(T_MEDIA, { "标题": item.name || "", "类型": typeMap[item.type] || "电影",
+      "状态": statusMap[item.status] || "想看", "评分": Number(item.rating) || 0, "短评": item.review || "" },
+      function(rid){ settle(item, rid); });
+  }
+  function pushHabit(h, date){
+    var val = Number(h.entries[date] || 0);
+    if (!val) { dbDeleteWhere(T_HABIT, { "日期": date, "习惯": h.name || "" }, t('习惯打卡')); return; }
+    var props = { "日期": date, "习惯": h.name || "", "数值": val, "备注": h.unit || "" };
+    dbUpsert(T_HABIT, props, HABIT_CONFLICT, function(rid){
+      if (rid) return;
+      // 没有唯一约束时的降级路径：先查再改
+      sbFetch('/' + T_HABIT + '?select=id&' + qeq({ "日期": date, "习惯": h.name || "" }))
+        .then(function(rows){
+          if (rows && rows.length) {
+            for (var i = 1; i < rows.length; i++) dbDelete(T_HABIT, rows[i].id, t('习惯打卡'));
+            dbUpdate(T_HABIT, rows[0].id, { "数值": val, "备注": h.unit || "" }, t('习惯打卡'));
+          } else {
+            dbInsert(T_HABIT, props, function(){});
+          }
+        })
+        .catch(function(err){ reportSyncError(err, t('习惯打卡')); });
     });
   }
-
-  function pushMoney(rec){
-    if (!ONLINE || LOCAL_ONLY) return;
-    var props = {};
-    props["日期"] = { date: rec.date };
-    props["分类"] = { text: rec.data.category || "" };
-    props["金额"] = { currency: rec.data.amount || 0 };
-    props["备注"] = { text: (rec.data.flow==='income'?'收入：':'') + (rec.data.note||"") };
-    dbAdd(DB_MONEY, props, function(rid){ if(rid) rec.remoteId = rid; });
+  function pushAllHabits(){
+    if (!ONLINE) return;
+    var cutoff = isoDate(new Date(Date.now() - 60 * 86400000)), rows = [];
+    state.habits.forEach(function(h){
+      Object.keys(h.entries || {}).forEach(function(d){
+        var v = Number(h.entries[d] || 0);
+        if (v > 0 && d >= cutoff) rows.push({ "日期": d, "习惯": h.name || "", "数值": v, "备注": h.unit || "" });
+      });
+    });
+    if (rows.length) dbUpsertMany(T_HABIT, rows, HABIT_CONFLICT, function(){});
   }
+  function deleteRemoteHabit(name){ if (name) dbDeleteWhere(T_HABIT, { "习惯": name }, t('习惯打卡')); }
 
-  function pushHabit(h, date){
-    if (!ONLINE || LOCAL_ONLY) return;
-    var props = {};
-    props["日期"] = { date: date };
-    props["习惯"] = { text: h.name || "" };
-    props["数值"] = { number: Number(h.entries[date]||0) };
-    props["备注"] = { text: h.unit || "" };
-    dbAdd(DB_HABIT, props);
-  }
-
-  function pushPlan(rec){
-    if (!ONLINE || LOCAL_ONLY) return;
-    var props = {};
-    props["日期"] = { date: rec.date };
-    props["内容"] = { text: rec.data.title || "" };
-    props["类型"] = { text: rec.data.list || "" };
-    props["状态"] = { text: rec.data.done ? "已完成" : "待完成" };
-    dbAdd(DB_PLAN, props, function(rid){ if(rid) rec.remoteId = rid; });
-  }
-
-  function pushFitness(rec){
-    if (!ONLINE || LOCAL_ONLY) return;
-    var props = {};
-    props["日期"] = { date: rec.date };
-    props["体重"] = { number: rec.data.weight || 0 };
-    props["体脂率"] = { number: rec.data.bodyFat || 0 };
-    props["备注"] = { text: rec.data.note || "" };
-    dbAdd(DB_FITNESS, props, function(rid){ if(rid) rec.remoteId = rid; });
-  }
-
-  function pushShopping(rec){
-    if (!ONLINE || LOCAL_ONLY) return;
-    var qty = parseInt(rec.data.quantity) || 0;
-    var props = {};
-    props["物品名称"] = { text: rec.data.name || "" };
-    props["数量"] = { number: qty };
-    props["预估价格"] = { currency: rec.data.price || 0 };
-    props["是否已买"] = { select: rec.data.bought ? "已买" : "待买" };
-    props["备注"] = { text: rec.data.note || "" };
-    dbAdd(DB_SHOPPING, props, function(rid){ if(rid) rec.remoteId = rid; });
-  }
-
-  function pushMedia(item){
-    if (!ONLINE || LOCAL_ONLY) return;
-    var typeMap = {'书':'书籍','电影':'电影','剧':'电视剧','番':'动漫'};
-    var statusMap = {'想看':'想看','在看':'在看','看完':'看过','弃了':'在看'};
-    var props = {};
-    props["标题"] = { text: item.name || "" };
-    props["类型"] = { select: typeMap[item.type] || "电影" };
-    props["状态"] = { select: statusMap[item.status] || "想看" };
-    props["评分"] = { number: item.rating || 0 };
-    props["短评"] = { text: item.review || "" };
-    dbAdd(DB_MEDIA, props, function(rid){ if(rid) item.remoteId = rid; });
-  }
-
+  /* ---------- 本地修改 / 删除 -> 云端 ---------- */
   function updateRemoteMoney(rec){
-    if (!ONLINE || LOCAL_ONLY || !rec.remoteId) return;
-    var props = {};
-    props["分类"] = { text: rec.data.category || "" };
-    props["金额"] = { currency: rec.data.amount || 0 };
-    props["备注"] = { text: (rec.data.flow==='income'?'收入：':'') + (rec.data.note||"") };
-    dbUpdate(DB_MONEY, rec.remoteId, props);
+    if (!rec || !rec.remoteId) return;
+    dbUpdate(T_MONEY, rec.remoteId, { "分类": rec.data.category || "", "金额": Number(rec.data.amount) || 0,
+      "备注": (rec.data.flow === 'income' ? '收入：' : '') + (rec.data.note || "") }, t('记账'));
   }
-  function deleteRemoteMoney(rid){ if(rid) dbDelete(DB_MONEY, rid); }
+  function deleteRemoteMoney(rid){ dbDelete(T_MONEY, rid, t('记账')); }
 
   function updateRemotePlan(rec){
-    if (!ONLINE || LOCAL_ONLY || !rec.remoteId) return;
-    var props = {};
-    props["状态"] = { text: rec.data.done ? "已完成" : "待完成" };
-    dbUpdate(DB_PLAN, rec.remoteId, props);
+    if (!rec || !rec.remoteId) return;
+    dbUpdate(T_PLAN, rec.remoteId, { "内容": rec.data.title || "", "类型": rec.data.list || "生活",
+      "状态": rec.data.done ? "已完成" : "待完成" }, t('日程'));
   }
-  function deleteRemotePlan(rid){ if(rid) dbDelete(DB_PLAN, rid); }
+  function deleteRemotePlan(rid){ dbDelete(T_PLAN, rid, t('日程')); }
 
   function updateRemoteFitness(rec){
-    if (!ONLINE || LOCAL_ONLY || !rec.remoteId) return;
-    var props = {};
-    props["体重"] = { number: rec.data.weight || 0 };
-    props["体脂率"] = { number: rec.data.bodyFat || 0 };
-    props["备注"] = { text: rec.data.note || "" };
-    dbUpdate(DB_FITNESS, rec.remoteId, props);
+    if (!rec || !rec.remoteId) return;
+    dbUpdate(T_FITNESS, rec.remoteId, { "体重": Number(rec.data.weight) || 0,
+      "体脂率": rec.data.bodyFat != null ? Number(rec.data.bodyFat) : null, "备注": rec.data.note || "" }, t('身体记录'));
   }
-  function deleteRemoteFitness(rid){ if(rid) dbDelete(DB_FITNESS, rid); }
+  function deleteRemoteFitness(rid){ dbDelete(T_FITNESS, rid, t('身体记录')); }
 
   function updateRemoteShopping(rec){
-    if (!ONLINE || LOCAL_ONLY || !rec.remoteId) return;
-    var props = {};
-    props["是否已买"] = { select: rec.data.bought ? "已买" : "待买" };
-    dbUpdate(DB_SHOPPING, rec.remoteId, props);
+    if (!rec || !rec.remoteId) return;
+    dbUpdate(T_SHOPPING, rec.remoteId, { "是否已买": rec.data.bought ? "已买" : "待买" }, t('待买清单'));
   }
-  function deleteRemoteShopping(rid){ if(rid) dbDelete(DB_SHOPPING, rid); }
+  function deleteRemoteShopping(rid){ dbDelete(T_SHOPPING, rid, t('待买清单')); }
 
   function updateRemoteMedia(item){
-    if (!ONLINE || LOCAL_ONLY || !item.remoteId) return;
-    var typeMap = {'书':'书籍','电影':'电影','剧':'电视剧','番':'动漫'};
-    var statusMap = {'想看':'想看','在看':'在看','看完':'看过','弃了':'在看'};
-    var props = {};
-    props["状态"] = { select: statusMap[item.status] || "想看" };
-    props["评分"] = { number: item.rating || 0 };
-    props["短评"] = { text: item.review || "" };
-    dbUpdate(DB_MEDIA, item.remoteId, props);
+    if (!item || !item.remoteId) return;
+    var statusMap = { '想看': '想看', '在看': '在看', '看完': '看过', '弃了': '在看' };
+    dbUpdate(T_MEDIA, item.remoteId, { "状态": statusMap[item.status] || "想看",
+      "评分": Number(item.rating) || 0, "短评": item.review || "" }, t('书影音'));
   }
-  function deleteRemoteMedia(rid){ if(rid) dbDelete(DB_MEDIA, rid); }
+  function deleteRemoteMedia(rid){ dbDelete(T_MEDIA, rid, t('书影音')); }
+
+  /* ---------- 断线后补传 ---------- */
+  function pushMissing(){
+    if (!ONLINE) return;
+    state.records.forEach(function(rec){
+      if (rec.sample) return;
+      if (rec.remoteId) {
+        if (!rec.pending) return;
+        if (rec.type === 'money') updateRemoteMoney(rec);
+        else if (rec.type === 'planner') updateRemotePlan(rec);
+        else if (rec.type === 'fitness') updateRemoteFitness(rec);
+        else if (rec.type === 'home') updateRemoteShopping(rec);
+        return;
+      }
+      if (rec.type === 'money') pushMoney(rec);
+      else if (rec.type === 'planner') pushPlan(rec);
+      else if (rec.type === 'fitness') pushFitness(rec);
+      else if (rec.type === 'home') pushShopping(rec);
+    });
+    state.mediaItems.forEach(function(it){ if (!it.sample && (!it.remoteId || it.pending)) pushMedia(it); });
+    pushAllHabits();
+  }
 
   const LANG_PARAM = new URL(location).searchParams.get('lang');
   const LANG = LANG_PARAM === 'en' ? 'en' : 'zh';
@@ -3306,7 +3468,7 @@
     "午饭":"Lunch","公交":"Bus","买衣服":"Clothes","电影票":"Movie ticket","整理本周生活清单":"Organize this week's life list","先处理最重要的三件事":"Start with the three most important things","预约牙科检查":"Book a dental checkup","带上医保卡":"Bring insurance card","周末采购":"Weekend shopping","按待买清单购买":"Shop from the list","状态平稳":"Feeling steady",
     "今天的节奏很好，也记得留一点空白。":"You found a good rhythm today. Remember to leave a little breathing room.","已经在稳稳推进，继续保持自己的节奏。":"You are making steady progress. Keep your own pace.","今天先从一件小事开始，慢慢来就好。":"Start with one small thing today. Take it slowly.","已超出本月预算":"Over this month's budget","今天全部完成":"Everything completed today","第一条记录，会从这里开始":"Your first entry will appear here","生活已经积攒了一些痕迹，趁现在为它存一份备份。":"Your life has gathered a few traces. This is a good time to save a backup.","你不是在追赶完美，而是在让好习惯慢慢变得自然。":"You are not chasing perfection; you are letting good habits become natural.","这个分类还没有流水":"No transactions in this category yet","今天还没记账":"No transaction logged today","有空时补一笔，让月度趋势保持完整。":"Add one when you have time to keep your monthly trend complete.","已新增 20 笔账目":"20 transactions added","建议现在导出一次备份。":"We recommend exporting a backup now.","先看消费结构，再决定哪些支出可以放慢一点。":"Review the spending breakdown, then decide what can wait.",
     "目标已达成，进入稳定期":"Goal reached. You are now in the maintenance phase.","多记录几天后估算达成时间":"Log a few more days to estimate your goal date","今天还没称重":"No weight logged today","尽量在相似时间、相似状态下记录，关注 7 天平均线。":"Log under similar conditions and focus on the 7-day average.","不用追赶，选一项适合今天状态的完成。":"No need to catch up. Choose one plan that fits how you feel today.","今天已记录，本周计划也完成了":"Today's data is logged and this week's plan is complete","做得很好，记得给身体留恢复时间。":"Well done. Remember to leave time for recovery.","还没有周计划，点击右上角新增一项":"No weekly plan yet. Add one from the top right.","记录体重和体脂，关注趋势而不是单日数字":"Log weight and body fat, and focus on the trend rather than a single day.","这个智能清单里暂时没有事项":"No items in this smart list yet","待买清单已经清空":"Your shopping list is clear","这里还没有物品":"No items here yet","这个筛选条件下还没有作品":"No titles match these filters","这个范围还没有记录":"No entries in this range","建议现在导出备份":"Export a backup now","还没有习惯":"No habits yet","还没有周计划":"No weekly plan yet",
-    "存不下了，先导出备份":"Storage is full. Export a backup first.","已经攒到 20 笔，记得导出备份":"You have reached 20 transactions. Remember to export a backup.","已立即保存到本机":"Saved to this device instantly","记录已删除":"Entry deleted","备份格式不正确":"Invalid backup format","备份中有损坏的记录，请换一份备份重试":"The backup contains corrupted entries. Try another backup.","备份已导出，请妥善保存":"Backup exported. Keep it somewhere safe.","Excel 已导出":"Excel file exported","备份导入成功":"Backup imported successfully","导入失败，请检查备份文件":"Import failed. Check the backup file.","封面读取失败":"Could not read the cover image","封面格式不支持":"Unsupported cover image format","封面图片请控制在 12MB 以内":"Keep the cover image under 12 MB","封面已压缩，可以保存了":"Cover compressed and ready to save","已加入书影音清单":"Added to your media log","新习惯已加入":"New habit added","新计划已加入":"New plan added","目标设置已更新":"Goal settings updated","完成一项，心里轻一点":"One task done, one less thing on your mind","习惯已删除":"Habit deleted","计划已删除":"Plan deleted","买到了，已移入完成":"Bought and moved to completed","已从书影音清单移除":"Removed from your media log","已恢复默认外观":"Default appearance restored","月度预算已更新":"Monthly budget updated","示例内容已清空":"Sample content cleared","另一个页面的数据已同步":"Data from another tab has been synced","工作台外观已更新":"Workbench appearance updated","请输入有效金额":"Enter a valid amount","请记录今天的体重":"Log today's weight"
+    "存不下了，先导出备份":"Storage is full. Export a backup first.","已经攒到 20 笔，记得导出备份":"You have reached 20 transactions. Remember to export a backup.","已立即保存到本机":"Saved to this device instantly","记录已删除":"Entry deleted","备份格式不正确":"Invalid backup format","备份中有损坏的记录，请换一份备份重试":"The backup contains corrupted entries. Try another backup.","备份已导出，请妥善保存":"Backup exported. Keep it somewhere safe.","Excel 已导出":"Excel file exported","备份导入成功":"Backup imported successfully","导入失败，请检查备份文件":"Import failed. Check the backup file.","封面读取失败":"Could not read the cover image","封面格式不支持":"Unsupported cover image format","封面图片请控制在 12MB 以内":"Keep the cover image under 12 MB","封面已压缩，可以保存了":"Cover compressed and ready to save","已加入书影音清单":"Added to your media log","新习惯已加入":"New habit added","新计划已加入":"New plan added","目标设置已更新":"Goal settings updated","完成一项，心里轻一点":"One task done, one less thing on your mind","习惯已删除":"Habit deleted","计划已删除":"Plan deleted","买到了，已移入完成":"Bought and moved to completed","已从书影音清单移除":"Removed from your media log","已恢复默认外观":"Default appearance restored","月度预算已更新":"Monthly budget updated","示例内容已清空":"Sample content cleared","另一个页面的数据已同步":"Data from another tab has been synced","工作台外观已更新":"Workbench appearance updated","请输入有效金额":"Enter a valid amount","请记录今天的体重":"Log today's weight","已同步云端":"Synced to cloud","同步失败":"Sync failed","同步中…":"Syncing…","云端同步失败":"Cloud sync failed","重试同步":"Retry sync","改动已留在本机，恢复连接后点“重试同步”上传。失败环节：":"Changes are kept on this device. Click “Retry sync” to upload them once the connection is back. Failed at: ","读取远端":"Read remote","写入远端":"Write remote","更新远端":"Update remote","删除远端":"Delete remote","读取设置":"Read settings","同步设置":"Sync settings"
   };
   const I18N = {zh:Object.fromEntries(Object.keys(EN_I18N).map(key=>[key,key])),en:EN_I18N};
   const t = (key, vars={}) => String(I18N[LANG][key] ?? key).replace(/\{(\w+)\}/g,(_,name)=>vars[name] ?? '');
@@ -3513,8 +3675,8 @@
   function saveState(showSaved=false){
     try{
       localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
-      document.querySelector('.save-state')?.classList.remove('error');
-      document.getElementById('saveText').textContent='已自动保存';
+      scheduleSettingsSync();
+      if(!Object.keys(syncFailures).length) setSyncLabel('ok');
       if(showSaved) pulseSaved();
       return true;
     }catch(error){
@@ -3752,7 +3914,7 @@
       if(type==='delete')deleteRecord(id);if(type==='toggle-task')toggleTask(id);
       if(type==='habit-plus')updateHabit(id,'plus');if(type==='habit-minus')updateHabit(id,'minus');if(type==='habit-toggle')updateHabit(id,'toggle');if(type==='habit-quick')updateHabit(id,'quick');
       if(type==='toggle-plan'){const item=state.settings.weeklyPlan.find(x=>x.id===id);if(item){item.done=!item.done;const saved=saveState();renderFitness();if(saved&&item.done)celebrate();}}
-      if(type==='delete-habit-custom'){const habit=state.habits.find(h=>h.id===id);if(habit&&confirm(LANG==='en'?`Delete the habit “${habit.name}” and all of its history?`:`确定删除习惯“${habit.name}”吗？历史打卡也会一起删除。`)){state.habits=state.habits.filter(h=>h.id!==id);if(HABIT_DEFS.some(def=>def.key===habit.key)){state.settings.hiddenHabitKeys=[...new Set([...(state.settings.hiddenHabitKeys||[]),habit.key])];}const saved=saveState();renderAll();renderHabitManageList();if(saved)toast('习惯已删除');}}
+      if(type==='delete-habit-custom'){const habit=state.habits.find(h=>h.id===id);if(habit&&confirm(LANG==='en'?`Delete the habit “${habit.name}” and all of its history?`:`确定删除习惯“${habit.name}”吗？历史打卡也会一起删除。`)){deleteRemoteHabit(habit.name);state.habits=state.habits.filter(h=>h.id!==id);if(HABIT_DEFS.some(def=>def.key===habit.key)){state.settings.hiddenHabitKeys=[...new Set([...(state.settings.hiddenHabitKeys||[]),habit.key])];}const saved=saveState();renderAll();renderHabitManageList();if(saved)toast('习惯已删除');}}
       if(type==='delete-plan'){const item=state.settings.weeklyPlan.find(x=>x.id===id);if(item&&confirm(LANG==='en'?`Delete the plan “${item.title}”?`:`确定删除计划“${item.title}”吗？`)){state.settings.weeklyPlan=state.settings.weeklyPlan.filter(x=>x.id!==id);const saved=saveState();renderFitness();renderPlanManageList();if(saved)toast('计划已删除');}}
       if(type==='toggle-shopping'){const item=state.records.find(r=>r.id===id&&r.type==='home');if(item){item.data.bought=!item.data.bought;item.data.boughtDate=item.data.bought?isoDate():null;updateRemoteShopping(item);const saved=saveState();renderAll();if(saved&&item.data.bought){celebrate();toast('买到了，已移入完成');}}}
       if(type==='delete-media'){const item=state.mediaItems.find(media=>media.id===id);if(item&&confirm(LANG==='en'?`Remove “${item.name}” from the list?`:`确定从清单中删除“${item.name}”吗？`)){if(item.remoteId)deleteRemoteMedia(item.remoteId);state.mediaItems=state.mediaItems.filter(media=>media.id!==id);const saved=saveState();renderMedia();if(saved)toast('已从书影音清单移除');}}
