@@ -3,282 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>CAD 制图速查 · 总入口</title>
+<meta name="robots" content="noindex">
+<title>LX集 · 生活工作台</title>
+<meta http-equiv="refresh" content="0; url=life-all-in-one.html">
+<script>
+  // 直接跳到生活工作台；部署后访问根目录就是这个页面
+  location.replace('life-all-in-one.html' + (location.search || '') + (location.hash || ''));
+</script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
-    background: #f4f6f9;
-    color: #1e2b38;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-    display: flex; flex-direction: column;
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px;
+    background: #f3f7fc; color: #17395c;
+    font: 15px/1.7 "PingFang SC", "Microsoft YaHei", sans-serif;
+    text-align: center; padding: 24px;
   }
-
-  /* ============ 顶部导航 ============ */
-  .nav {
-    background: #143d63;
-    color: #fff;
-    position: sticky; top: 0; z-index: 50;
-    box-shadow: 0 2px 10px rgba(20,61,99,.18);
-  }
-  .nav-in {
-    max-width: 1080px; margin: 0 auto;
-    padding: 0 24px; height: 62px;
-    display: flex; align-items: center; gap: 26px;
-  }
-  .brand { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; letter-spacing: .5px; }
-  .brand svg { flex: none; }
-  .nav-links { display: flex; gap: 4px; margin-left: auto; }
-  .nav-links a {
-    color: #c3d5e6; text-decoration: none; font-size: 14px;
-    padding: 7px 14px; border-radius: 5px; transition: .18s; white-space: nowrap;
-  }
-  .nav-links a:hover { background: rgba(255,255,255,.12); color: #fff; }
-
-  /* ============ 头部主视觉 ============ */
-  .hero {
-    background:
-      linear-gradient(135deg, #1c4e80 0%, #143d63 100%);
-    color: #fff; padding: 74px 24px 78px; text-align: center;
-    position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: ""; position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
-    background-size: 34px 34px;
-    pointer-events: none;
-  }
-  .hero-in { position: relative; max-width: 760px; margin: 0 auto; }
-  .hero h1 { font-size: 31px; font-weight: 700; letter-spacing: 1px; margin-bottom: 12px; }
-  .hero p { font-size: 15px; color: #c8dcec; }
-  .badge {
-    display: inline-block; margin-bottom: 16px;
-    background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25);
-    color: #eaf3fa; font-size: 12.5px; padding: 4px 13px; border-radius: 20px; letter-spacing: .5px;
-  }
-
-  /* ---------- 主标题下的快捷直达 ---------- */
-  .quick { margin-top: 30px; }
-  .q-label { display: block; font-size: 12px; color: #8fb4d4; letter-spacing: 3px; margin-bottom: 12px; }
-  .q-list { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .q-item {
-    display: flex; align-items: center; gap: 9px;
-    background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.30);
-    border-radius: 9px; padding: 10px 18px;
-    color: #fff; text-decoration: none; font-size: 14.5px; font-weight: 600;
-    transition: .18s;
-  }
-  .q-item:hover { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.55); transform: translateY(-2px); }
-  .q-dot {
-    width: 19px; height: 19px; border-radius: 50%; flex: none;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11.5px; font-weight: 700; color: #143d63;
-  }
-  .q-dot.d1 { background: #8ec5f0; }
-  .q-dot.d2 { background: #f0a35e; }
-  .q-dot.d3 { background: #9dd6a8; }
-  .q-dot.d4 { background: #c3a8e0; }
-
-  /* ============ 入口卡片 ============ */
-  .main { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-  .entries {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
-    margin-top: -34px; position: relative; z-index: 2;
-  }
-  .card {
-    background: #fff; border: 1px solid #e0e7ee; border-radius: 12px;
-    padding: 26px 26px 22px; text-decoration: none; color: inherit;
-    display: flex; flex-direction: column;
-    box-shadow: 0 3px 14px rgba(20,61,99,.08);
-    transition: transform .2s, box-shadow .2s, border-color .2s;
-  }
-  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(20,61,99,.16); border-color: #1c4e80; }
-  .card:active { transform: translateY(-1px); }
-  .ico {
-    width: 48px; height: 48px; border-radius: 10px; flex: none;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 15px;
-  }
-  .ico.a { background: #e7f0f8; }
-  .ico.b { background: #fdf0e6; }
-  .ico.c { background: #e9f5ec; }
-  .ico.d { background: #f1ebfa; }
-  .card h2 { font-size: 19px; font-weight: 700; color: #143d63; margin-bottom: 8px; }
-  .card .desc { font-size: 14px; color: #55657a; flex: 1; margin-bottom: 16px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
-  .tag {
-    font-size: 12px; color: #4a5f75; background: #f1f5f9;
-    border: 1px solid #e2e9f0; border-radius: 4px; padding: 2px 8px;
-  }
-  /* ============ 页脚 ============ */
-  .foot {
-    margin-top: auto; background: #143d63; color: #a8c0d6;
-    padding: 26px 24px; text-align: center; font-size: 13px;
-  }
-  .foot b { color: #fff; }
-
-  @media (max-width: 820px) {
-    .entries { grid-template-columns: 1fr; margin-top: -20px; }
-    .nav-links { display: none; }
-    .hero h1 { font-size: 24px; }
-  }
+  .mark { width: 46px; height: 46px; border-radius: 14px; background: #1a5fb4;
+          color: #fff; font: 700 21px/46px "Songti SC", serif; }
+  a { color: #1a5fb4; }
+  small { color: #6a7f98; }
 </style>
 </head>
 <body>
-
-<!-- ===== 顶部导航 ===== -->
-<nav class="nav">
-  <div class="nav-in">
-    <div class="brand">
-      <svg fill="none" height="24" viewBox="0 0 24 24" width="24">
-        <rect height="19" rx="2.5" stroke="#8ec5f0" stroke-width="1.7" width="19" x="2.5" y="2.5"/>
-        <path d="M6.5 17.5V6.5l11 11" stroke="#f0a35e" stroke-linecap="round" stroke-width="1.7"/>
-        <path d="M17.5 6.5v11" stroke="#8ec5f0" stroke-linecap="round" stroke-width="1.7"/>
-      </svg>
-      <span>CAD 制图速查</span>
-    </div>
-    <div class="nav-links">
-      <a href="pages/drawing-commands.html">绘图命令</a>
-      <a href="pages/modify-commands.html">修改命令</a>
-      <a href="pages/blocks.html">图块使用</a>
-      <a href="pages/text-and-dimension.html">文字与标注</a>
-    </div>
-  </div>
-</nav>
-
-<!-- ===== 主视觉 ===== -->
-<header class="hero">
-  <div class="hero-in">
-    <span class="badge">环境工程 · AutoCAD 制图</span>
-    <h1>CAD 制图速查 · 总入口</h1>
-    <p>一个入口，直通四份制图速查。点开就能看，不用再翻聊天记录找链接。</p>
-
-    <div class="quick">
-      <span class="q-label">快捷直达</span>
-      <div class="q-list">
-        <a class="q-item" href="pages/drawing-commands.html">
-          <span class="q-dot d1">1</span>
-          <span>绘图命令</span>
-          <svg fill="none" height="15" viewBox="0 0 24 24" width="15">
-            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
-          </svg>
-        </a>
-        <a class="q-item" href="pages/modify-commands.html">
-          <span class="q-dot d2">2</span>
-          <span>修改命令</span>
-          <svg fill="none" height="15" viewBox="0 0 24 24" width="15">
-            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
-          </svg>
-        </a>
-        <a class="q-item" href="pages/blocks.html">
-          <span class="q-dot d3">3</span>
-          <span>图块使用</span>
-          <svg fill="none" height="15" viewBox="0 0 24 24" width="15">
-            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
-          </svg>
-        </a>
-        <a class="q-item" href="pages/text-and-dimension.html">
-          <span class="q-dot d4">4</span>
-          <span>文字与标注</span>
-          <svg fill="none" height="15" viewBox="0 0 24 24" width="15">
-            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- ===== 两个入口 ===== -->
-<div class="main">
-  <div class="entries">
-
-    <a class="card" href="pages/drawing-commands.html">
-      <div class="ico a">
-        <svg fill="none" height="26" viewBox="0 0 24 24" width="26">
-          <path d="M4 18l6-6 4 4 6-7" stroke="#1c4e80" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-          <circle cx="10" cy="12" fill="#1c4e80" r="1.9"/>
-          <circle cx="20" cy="9" fill="#1c4e80" r="1.9"/>
-        </svg>
-      </div>
-      <h2>绘图命令</h2>
-      <p class="desc">讲怎么把东西「从无到有」画出来：直线和多段线的区别、圆的六种画法、矩形与正多边形、两种等分怎么选，最后串一遍画圆形沉淀池。</p>
-      <div class="tags">
-        <span class="tag">直线 / 多段线</span>
-        <span class="tag">圆的六法</span>
-        <span class="tag">矩形 / 多边形</span>
-        <span class="tag">定数 / 定距等分</span>
-      </div>
-    </a>
-
-    <a class="card" href="pages/modify-commands.html">
-      <div class="ico b">
-        <svg fill="none" height="26" viewBox="0 0 24 24" width="26">
-          <rect height="9" stroke="#d9480f" stroke-width="1.8" width="9" x="3" y="4"/>
-          <path d="M14 8h7M18 5l3 3-3 3" stroke="#d9480f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
-          <rect height="7" stroke="#c2410c" stroke-width="1.8" width="9" x="12" y="14"/>
-        </svg>
-      </div>
-      <h2>二维图形修改命令</h2>
-      <p class="desc">讲画完怎么改：复制、镜像、偏移这三个别混，修剪与延伸是一对反操作，拉伸必须交叉框选，圆角倒角区别，三种阵列怎么选。</p>
-      <div class="tags">
-        <span class="tag">复制 / 镜像 / 偏移</span>
-        <span class="tag">修剪 / 延伸</span>
-        <span class="tag">拉伸 / 移动</span>
-        <span class="tag">三种阵列</span>
-      </div>
-    </a>
-
-    <a class="card" href="pages/blocks.html">
-      <div class="ico c">
-        <svg fill="none" height="26" viewBox="0 0 24 24" width="26">
-          <rect height="7" stroke="#2f7a4f" stroke-width="1.8" width="7" x="3" y="3"/>
-          <rect height="7" stroke="#2f7a4f" stroke-dasharray="2.5 2" stroke-width="1.8" width="7" x="14" y="3"/>
-          <rect height="7" stroke="#2f7a4f" stroke-dasharray="2.5 2" stroke-width="1.8" width="7" x="3" y="14"/>
-          <rect height="7" stroke="#2f7a4f" stroke-width="1.8" width="7" x="14" y="14"/>
-        </svg>
-      </div>
-      <h2>图块使用</h2>
-      <p class="desc">讲图块：怎么把画好的东西变成一个整体（图块），怎么反复调用、批量替换，画流程图和构筑物时省大量时间。</p>
-      <div class="tags">
-        <span class="tag">创建图块</span>
-        <span class="tag">插入图块</span>
-        <span class="tag">块属性</span>
-        <span class="tag">标高符号</span>
-      </div>
-    </a>
-
-    <a class="card" href="pages/text-and-dimension.html">
-      <div class="ico d">
-        <svg fill="none" height="26" viewBox="0 0 24 24" width="26">
-          <path d="M3 8h18M3 16h18" stroke="#7c5aa6" stroke-width="1.6"/>
-          <path d="M6 5v6M18 5v6" stroke="#7c5aa6" stroke-width="1.6"/>
-          <path d="M6.5 13l1.5-3M17.5 13l-1.5-3" stroke="#7c5aa6" stroke-linecap="round" stroke-width="1.8"/>
-          <path d="M10 15.5h4" stroke="#5c3f80" stroke-linecap="round" stroke-width="1.6"/>
-        </svg>
-      </div>
-      <h2>文字样式与尺寸标注</h2>
-      <p class="desc">讲文字和标注：文字样式六个格子怎么填、标注样式五个选项卡抄哪些数、全局比例怎么定，附国标数值对照表。</p>
-      <div class="tags">
-        <span class="tag">文字样式</span>
-        <span class="tag">尺寸样式</span>
-        <span class="tag">新建标注</span>
-        <span class="tag">国标对照</span>
-      </div>
-    </a>
-
-  </div>
-</div>
-
-<!-- ===== 页脚 ===== -->
-<footer class="foot">
-  <div><b>CAD 制图速查 · 总入口</b>　|　共 4 个站点入口</div>
-  <div style="margin-top:6px">依据《环境工程制图与CAD》（第2版，化学工业出版社 2022）· AutoCAD 2018</div>
-</footer>
-
+  <div class="mark">L</div>
+  <strong>LX集 · 生活工作台</strong>
+  <p>正在跳转……若没有自动跳转，请<a href="life-all-in-one.html">点这里</a>。</p>
+  <small>CAD 制图速查站：<a href="cad.html">cad.html</a></small>
 </body>
 </html>
