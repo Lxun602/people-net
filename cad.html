@@ -2,135 +2,142 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CAD 制图速查 · 总入口</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
-    background: #f4f6f9;
-    color: #1e2b38;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-    display: flex; flex-direction: column;
+  :root{
+    --navy:#143d63; --blue:#1c4e80; --accent:#2f7ec9;
+    --bg:#f4f6f9; --card:#ffffff; --ink:#1e2b38;
+    --muted:#5b6d80; --line:#dde6ef; --soft:#eef4fa;
   }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;
+    -webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;
+  }
+  a{color:inherit}
 
-  /* ============ 顶部导航 ============ */
-  .nav {
-    background: #143d63;
-    color: #fff;
-    position: sticky; top: 0; z-index: 50;
-    box-shadow: 0 2px 10px rgba(20,61,99,.18);
-  }
-  .nav-in {
-    max-width: 1080px; margin: 0 auto;
-    padding: 0 24px; height: 62px;
-    display: flex; align-items: center; gap: 26px;
-  }
-  .brand { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; letter-spacing: .5px; }
-  .brand svg { flex: none; }
-  .nav-links { display: flex; gap: 4px; margin-left: auto; }
-  .nav-links a {
-    color: #c3d5e6; text-decoration: none; font-size: 14px;
-    padding: 7px 14px; border-radius: 5px; transition: .18s; white-space: nowrap;
-  }
-  .nav-links a:hover { background: rgba(255,255,255,.12); color: #fff; }
+  /* ===== 顶部导航 ===== */
+  .nav{background:var(--navy);color:#fff;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(20,61,99,.18)}
+  .nav-in{max-width:1120px;margin:0 auto;padding:0 24px;min-height:62px;display:flex;align-items:center;gap:22px}
+  .brand{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:700;letter-spacing:.5px;white-space:nowrap}
+  .brand svg{flex:none}
+  .back{color:#b9d4ec;text-decoration:none;font-size:13px;white-space:nowrap;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.18)}
+  .back:hover{background:rgba(255,255,255,.12);color:#fff}
+  .nav-links{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{color:#c3d5e6;text-decoration:none;font-size:14px;padding:7px 13px;border-radius:6px;white-space:nowrap;transition:.18s}
+  .nav-links a:hover{background:rgba(255,255,255,.12);color:#fff}
 
-  /* ============ 头部主视觉 ============ */
-  .hero {
-    background:
-      linear-gradient(135deg, #1c4e80 0%, #143d63 100%);
-    color: #fff; padding: 74px 24px 78px; text-align: center;
-    position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: ""; position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
-    background-size: 34px 34px;
-    pointer-events: none;
-  }
-  .hero-in { position: relative; max-width: 760px; margin: 0 auto; }
-  .hero h1 { font-size: 31px; font-weight: 700; letter-spacing: 1px; margin-bottom: 12px; }
-  .hero p { font-size: 15px; color: #c8dcec; }
-  .badge {
-    display: inline-block; margin-bottom: 16px;
-    background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25);
-    color: #eaf3fa; font-size: 12.5px; padding: 4px 13px; border-radius: 20px; letter-spacing: .5px;
-  }
+  /* ===== 头部 + 搜索 ===== */
+  .hero{background:linear-gradient(135deg,#1c4e80 0%,#143d63 100%);color:#fff;padding:52px 24px 58px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);background-size:34px 34px;pointer-events:none}
+  .hero-in{position:relative;max-width:800px;margin:0 auto}
+  .badge{display:inline-block;margin-bottom:14px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);color:#eaf3fa;font-size:12.5px;padding:4px 13px;border-radius:20px;letter-spacing:.5px}
+  .hero h1{font-size:30px;font-weight:700;letter-spacing:1px;margin-bottom:10px}
+  .hero .lede{font-size:15px;color:#c8dcec;max-width:620px;margin:0 auto}
 
-  /* ---------- 主标题下的快捷直达 ---------- */
-  .quick { margin-top: 30px; }
-  .q-label { display: block; font-size: 12px; color: #8fb4d4; letter-spacing: 3px; margin-bottom: 12px; }
-  .q-list { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .q-item {
-    display: flex; align-items: center; gap: 9px;
-    background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.30);
-    border-radius: 9px; padding: 10px 18px;
-    color: #fff; text-decoration: none; font-size: 14.5px; font-weight: 600;
-    transition: .18s;
-  }
-  .q-item:hover { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.55); transform: translateY(-2px); }
-  .q-dot {
-    width: 19px; height: 19px; border-radius: 50%; flex: none;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11.5px; font-weight: 700; color: #143d63;
-  }
-  .q-dot.d1 { background: #8ec5f0; }
-  .q-dot.d2 { background: #f0a35e; }
-  .q-dot.d3 { background: #9dd6a8; }
-  .q-dot.d4 { background: #c3a8e0; }
+  .search-wrap{margin-top:28px;max-width:660px;margin-left:auto;margin-right:auto;text-align:left}
+  .search-box{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:0 14px;min-height:54px;box-shadow:0 10px 30px rgba(6,28,52,.24)}
+  .search-box:focus-within{outline:3px solid rgba(142,197,240,.55)}
+  .search-box svg{flex:none;color:#5b7fa3}
+  .search-box input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:16px;color:var(--ink);font-family:inherit;height:52px}
+  .search-box input::placeholder{color:#8b9bad}
+  .search-box input::-webkit-search-cancel-button{display:none}
+  .search-clear{flex:none;width:30px;height:30px;border:0;border-radius:50%;background:#eaf1f8;color:#4b6b8a;font-size:20px;line-height:1;cursor:pointer}
+  .search-clear:hover{background:#d8e7f4}
+  .search-clear[hidden]{display:none}
+  .search-meta{margin-top:9px;font-size:12.5px;color:#a9c8e2;padding-left:2px}
 
-  /* ============ 入口卡片 ============ */
-  .main { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-  .entries {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
-    margin-top: -34px; position: relative; z-index: 2;
-  }
-  .card {
-    background: #fff; border: 1px solid #e0e7ee; border-radius: 12px;
-    padding: 26px 26px 22px; text-decoration: none; color: inherit;
-    display: flex; flex-direction: column;
-    box-shadow: 0 3px 14px rgba(20,61,99,.08);
-    transition: transform .2s, box-shadow .2s, border-color .2s;
-  }
-  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(20,61,99,.16); border-color: #1c4e80; }
-  .card:active { transform: translateY(-1px); }
-  .ico {
-    width: 48px; height: 48px; border-radius: 10px; flex: none;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 15px;
-  }
-  .ico.a { background: #e7f0f8; }
-  .ico.b { background: #fdf0e6; }
-  .ico.c { background: #e9f5ec; }
-  .ico.d { background: #f1ebfa; }
-  .card h2 { font-size: 19px; font-weight: 700; color: #143d63; margin-bottom: 8px; }
-  .card .desc { font-size: 14px; color: #55657a; flex: 1; margin-bottom: 16px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
-  .tag {
-    font-size: 12px; color: #4a5f75; background: #f1f5f9;
-    border: 1px solid #e2e9f0; border-radius: 4px; padding: 2px 8px;
-  }
-  /* ============ 页脚 ============ */
-  .foot {
-    margin-top: auto; background: #143d63; color: #a8c0d6;
-    padding: 26px 24px; text-align: center; font-size: 13px;
-  }
-  .foot b { color: #fff; }
+  /* ===== 主内容 ===== */
+  .main{width:100%;max-width:1120px;margin:0 auto;padding:34px 24px 56px;flex:1}
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+  .eyebrow{font-size:11px;letter-spacing:.18em;color:#7b90a5;font-weight:700;text-transform:uppercase;margin-bottom:5px}
+  .section-head h2{font-size:21px;color:var(--navy);font-weight:700}
+  .count{font-size:13px;color:var(--muted);white-space:nowrap}
 
-  @media (max-width: 820px) {
-    .entries { grid-template-columns: 1fr; margin-top: -20px; }
-    .nav-links { display: none; }
-    .hero h1 { font-size: 24px; }
+  /* 快捷直达：层级低于卡片 */
+  .quick{margin:0 0 26px;padding:16px 18px;background:#eaf2fa;border:1px solid #d8e6f3;border-radius:12px}
+  .q-label{display:block;font-size:11px;color:#5c7b99;letter-spacing:2px;margin-bottom:10px;font-weight:700}
+  .q-list{display:flex;gap:10px;flex-wrap:wrap}
+  .q-item{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #d6e4f1;border-radius:9px;padding:8px 14px;color:#1c4e80;text-decoration:none;font-size:13.5px;font-weight:600;transition:.18s;min-height:40px}
+  .q-item:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 16px rgba(28,78,128,.14)}
+  .q-dot{width:19px;height:19px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;color:#143d63}
+  .q-dot.d1{background:#8ec5f0}.q-dot.d2{background:#f0a35e}.q-dot.d3{background:#9dd6a8}.q-dot.d4{background:#c3a8e0}
+
+  /* 入口卡片 */
+  .entries{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 24px 20px;text-decoration:none;color:inherit;display:flex;flex-direction:column;box-shadow:0 3px 14px rgba(20,61,99,.07);transition:transform .2s,box-shadow .2s,border-color .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(20,61,99,.15);border-color:var(--accent)}
+  .card:active{transform:translateY(-1px)}
+  .card-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .ico{width:46px;height:46px;border-radius:11px;flex:none;display:flex;align-items:center;justify-content:center}
+  .ico.a{background:#e7f0f8}.ico.b{background:#fdf0e6}.ico.c{background:#e9f5ec}.ico.d{background:#f1ebfa}
+  .card-no{margin-left:auto;font-size:11px;font-weight:700;color:#9aabbc;letter-spacing:.1em}
+  .card h2{font-size:18.5px;font-weight:700;color:var(--navy);margin-bottom:8px}
+  .card .desc{font-size:14px;color:var(--muted);margin-bottom:16px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+  .tag{font-size:12px;color:#4a5f75;background:#f1f5f9;border:1px solid #e2e9f0;border-radius:5px;padding:3px 9px}
+  .card-cta{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:14px;border-top:1px solid #edf2f7;font-size:13.5px;font-weight:700;color:var(--blue)}
+  .card-cta svg{flex:none;transition:transform .2s}
+  .card:hover .card-cta svg{transform:translateX(4px)}
+
+  /* ===== 搜索结果 ===== */
+  .result-panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 3px 14px rgba(20,61,99,.07);margin-bottom:26px}
+  .result-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;margin-bottom:6px;border-bottom:1px solid #edf2f7}
+  .result-head strong{font-size:15px;color:var(--navy)}
+  .result-head button{border:1px solid var(--line);background:#f6f9fc;color:#4a6280;border-radius:8px;min-height:36px;padding:0 13px;font-size:13px;cursor:pointer}
+  .result-head button:hover{background:#e8f1fa}
+  .result-item{display:block;text-decoration:none;padding:13px 4px;border-bottom:1px solid #f0f4f8}
+  .result-item:last-child{border-bottom:0}
+  .result-item:hover{background:#f7fbff}
+  .result-title{font-size:15px;font-weight:700;color:var(--blue);margin-bottom:3px}
+  .result-src{display:inline-block;font-size:11px;color:#5b7fa3;background:#eef4fa;border-radius:4px;padding:1px 7px;margin-right:8px;vertical-align:1px}
+  .result-snip{font-size:13px;color:#5b6d80;line-height:1.65;word-break:break-all}
+  mark{background:#ffe9a8;color:#7a4b00;border-radius:2px;padding:0 2px}
+  .result-more{font-size:12.5px;color:#8b9bad;padding:10px 4px 2px}
+  .no-result{background:#fff;border:1px dashed #cbdbe9;border-radius:14px;padding:34px 22px;text-align:center;margin-bottom:26px}
+  .no-result h3{font-size:17px;color:var(--navy);margin-bottom:8px}
+  .no-result p{font-size:13.5px;color:var(--muted);margin-bottom:16px}
+  .suggest{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .suggest button{border:1px solid #d6e4f1;background:#f3f8fd;color:#2c5f8e;border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;min-height:36px}
+  .suggest button:hover{background:#e2eef9}
+  [hidden]{display:none!important}
+
+  /* ===== 页脚 ===== */
+  .foot{background:var(--navy);color:#a8c0d6;padding:26px 24px;text-align:center;font-size:13px}
+  .foot b{color:#fff}
+  .foot a{color:#cfe3f5;text-decoration:none;margin-left:10px}
+  .foot a:hover{text-decoration:underline}
+
+  /* ===== 窄屏 ===== */
+  @media(max-width:820px){
+    .nav-in{padding:0 16px;gap:12px;flex-wrap:wrap;padding-top:9px;padding-bottom:9px}
+    .nav-links{order:3;width:100%;margin-left:0}
+    .back{margin-left:auto}
+    .hero{padding:38px 16px 44px}
+    .hero h1{font-size:24px}
+    .hero .lede{font-size:14px}
+    .main{padding:26px 16px 44px}
+    .entries{grid-template-columns:1fr;gap:16px}
+    .section-head{align-items:flex-start;flex-direction:column;gap:4px}
+    .quick{padding:14px}
+    .q-item{flex:1 1 calc(50% - 10px);justify-content:center}
+  }
+  @media(max-width:480px){
+    .hero h1{font-size:21px}
+    .search-box{min-height:50px;padding:0 11px}
+    .search-box input{font-size:16px;height:48px}
+    .card{padding:20px 18px 16px}
+    .card h2{font-size:17px}
+    .result-panel{padding:14px}
+    .foot{padding:22px 16px}
   }
 </style>
 </head>
 <body>
 
-<!-- ===== 顶部导航 ===== -->
 <nav class="nav">
   <div class="nav-in">
     <div class="brand">
@@ -141,6 +148,7 @@
       </svg>
       <span>CAD 制图速查</span>
     </div>
+    <a class="back" href="index.html">← 返回生活工作台</a>
     <div class="nav-links">
       <a href="pages/drawing-commands.html">绘图命令</a>
       <a href="pages/modify-commands.html">修改命令</a>
@@ -150,135 +158,245 @@
   </div>
 </nav>
 
-<!-- ===== 主视觉 ===== -->
 <header class="hero">
   <div class="hero-in">
     <span class="badge">环境工程 · AutoCAD 制图</span>
     <h1>CAD 制图速查 · 总入口</h1>
-    <p>一个入口，直通四份制图速查。点开就能看，不用再翻聊天记录找链接。</p>
+    <p class="lede">一个入口，直通四份制图速查。可以直接点开看，也可以搜命令、图解或任意关键词。</p>
 
-    <div class="quick">
-      <span class="q-label">快捷直达</span>
-      <div class="q-list">
-        <a class="q-item" href="pages/drawing-commands.html">
-          <span class="q-dot d1">1</span>
-          <span>绘图命令</span>
-          <svg fill="none" height="15" viewBox="0 0 24 24" width="15">
-            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
-          </svg>
-        </a>
-        <a class="q-item" href="pages/modify-commands.html">
-          <span class="q-dot d2">2</span>
-          <span>修改命令</span>
-          <svg fill="none" height="15" viewBox="0 0 24 24" width="15">
-            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
-          </svg>
-        </a>
-        <a class="q-item" href="pages/blocks.html">
-          <span class="q-dot d3">3</span>
-          <span>图块使用</span>
-          <svg fill="none" height="15" viewBox="0 0 24 24" width="15">
-            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
-          </svg>
-        </a>
-        <a class="q-item" href="pages/text-and-dimension.html">
-          <span class="q-dot d4">4</span>
-          <span>文字与标注</span>
-          <svg fill="none" height="15" viewBox="0 0 24 24" width="15">
-            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
-          </svg>
-        </a>
+    <div class="search-wrap">
+      <div class="search-box">
+        <svg fill="none" height="20" viewBox="0 0 24 24" width="20"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>
+        <input id="cadSearch" type="search" autocomplete="off" spellcheck="false" placeholder="搜命令、图解或关键词，例如 修剪 / 圆的六种画法 / BEDIT">
+        <button class="search-clear" id="cadSearchClear" type="button" aria-label="清空搜索" hidden>×</button>
       </div>
+      <p class="search-meta" id="cadSearchMeta">输入即搜 · 覆盖本页与 4 份图解的全部正文</p>
     </div>
   </div>
 </header>
 
-<!-- ===== 两个入口 ===== -->
 <div class="main">
-  <div class="entries">
+  <div class="section-head" id="sectionHead">
+    <div><p class="eyebrow">ALL ENTRIES</p><h2>四份图解，按需直达</h2></div>
+    <span class="count">共 4 个入口</span>
+  </div>
+
+  <section class="result-panel" id="cadResults" hidden>
+    <div class="result-head"><strong id="cadResultCount"></strong><button type="button" id="cadResultClear">清空搜索</button></div>
+    <div id="cadResultList"></div>
+  </section>
+
+  <div class="no-result" id="cadEmpty" hidden>
+    <h3 id="cadEmptyTitle">没找到相关内容</h3>
+    <p>换个短一点的词试试，或者从下面这些常见关键词点进去。</p>
+    <div class="suggest" id="cadSuggest"></div>
+  </div>
+
+  <div class="quick" id="quickBlock">
+    <span class="q-label">快捷直达</span>
+    <div class="q-list">
+      <a class="q-item" href="pages/drawing-commands.html"><span class="q-dot d1">1</span><span>绘图命令</span></a>
+      <a class="q-item" href="pages/modify-commands.html"><span class="q-dot d2">2</span><span>修改命令</span></a>
+      <a class="q-item" href="pages/blocks.html"><span class="q-dot d3">3</span><span>图块使用</span></a>
+      <a class="q-item" href="pages/text-and-dimension.html"><span class="q-dot d4">4</span><span>文字与标注</span></a>
+    </div>
+  </div>
+
+  <div class="entries" id="entriesBlock">
 
     <a class="card" href="pages/drawing-commands.html">
-      <div class="ico a">
-        <svg fill="none" height="26" viewBox="0 0 24 24" width="26">
-          <path d="M4 18l6-6 4 4 6-7" stroke="#1c4e80" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-          <circle cx="10" cy="12" fill="#1c4e80" r="1.9"/>
-          <circle cx="20" cy="9" fill="#1c4e80" r="1.9"/>
-        </svg>
-      </div>
+      <div class="card-top"><div class="ico a"><svg fill="none" height="26" viewBox="0 0 24 24" width="26"><path d="M4 18l6-6 4 4 6-7" stroke="#1c4e80" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><circle cx="10" cy="12" fill="#1c4e80" r="1.9"/><circle cx="20" cy="9" fill="#1c4e80" r="1.9"/></svg></div><span class="card-no">01 / 04</span></div>
       <h2>绘图命令</h2>
       <p class="desc">讲怎么把东西「从无到有」画出来：直线和多段线的区别、圆的六种画法、矩形与正多边形、两种等分怎么选，最后串一遍画圆形沉淀池。</p>
-      <div class="tags">
-        <span class="tag">直线 / 多段线</span>
-        <span class="tag">圆的六法</span>
-        <span class="tag">矩形 / 多边形</span>
-        <span class="tag">定数 / 定距等分</span>
-      </div>
+      <div class="tags"><span class="tag">直线 / 多段线</span><span class="tag">圆的六法</span><span class="tag">矩形 / 多边形</span><span class="tag">定数 / 定距等分</span></div>
+      <div class="card-cta"><span>打开图解</span><svg fill="none" height="16" viewBox="0 0 24 24" width="16"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/></svg></div>
     </a>
 
     <a class="card" href="pages/modify-commands.html">
-      <div class="ico b">
-        <svg fill="none" height="26" viewBox="0 0 24 24" width="26">
-          <rect height="9" stroke="#d9480f" stroke-width="1.8" width="9" x="3" y="4"/>
-          <path d="M14 8h7M18 5l3 3-3 3" stroke="#d9480f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
-          <rect height="7" stroke="#c2410c" stroke-width="1.8" width="9" x="12" y="14"/>
-        </svg>
-      </div>
+      <div class="card-top"><div class="ico b"><svg fill="none" height="26" viewBox="0 0 24 24" width="26"><rect height="9" stroke="#d9480f" stroke-width="1.8" width="9" x="3" y="4"/><path d="M14 8h7M18 5l3 3-3 3" stroke="#d9480f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><rect height="7" stroke="#c2410c" stroke-width="1.8" width="9" x="12" y="14"/></svg></div><span class="card-no">02 / 04</span></div>
       <h2>二维图形修改命令</h2>
       <p class="desc">讲画完怎么改：复制、镜像、偏移这三个别混，修剪与延伸是一对反操作，拉伸必须交叉框选，圆角倒角区别，三种阵列怎么选。</p>
-      <div class="tags">
-        <span class="tag">复制 / 镜像 / 偏移</span>
-        <span class="tag">修剪 / 延伸</span>
-        <span class="tag">拉伸 / 移动</span>
-        <span class="tag">三种阵列</span>
-      </div>
+      <div class="tags"><span class="tag">复制 / 镜像 / 偏移</span><span class="tag">修剪 / 延伸</span><span class="tag">拉伸 / 移动</span><span class="tag">三种阵列</span></div>
+      <div class="card-cta"><span>打开图解</span><svg fill="none" height="16" viewBox="0 0 24 24" width="16"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/></svg></div>
     </a>
 
     <a class="card" href="pages/blocks.html">
-      <div class="ico c">
-        <svg fill="none" height="26" viewBox="0 0 24 24" width="26">
-          <rect height="7" stroke="#2f7a4f" stroke-width="1.8" width="7" x="3" y="3"/>
-          <rect height="7" stroke="#2f7a4f" stroke-dasharray="2.5 2" stroke-width="1.8" width="7" x="14" y="3"/>
-          <rect height="7" stroke="#2f7a4f" stroke-dasharray="2.5 2" stroke-width="1.8" width="7" x="3" y="14"/>
-          <rect height="7" stroke="#2f7a4f" stroke-width="1.8" width="7" x="14" y="14"/>
-        </svg>
-      </div>
+      <div class="card-top"><div class="ico c"><svg fill="none" height="26" viewBox="0 0 24 24" width="26"><rect height="7" stroke="#2f7a4f" stroke-width="1.8" width="7" x="3" y="3"/><rect height="7" stroke="#2f7a4f" stroke-dasharray="2.5 2" stroke-width="1.8" width="7" x="14" y="3"/><rect height="7" stroke="#2f7a4f" stroke-dasharray="2.5 2" stroke-width="1.8" width="7" x="3" y="14"/><rect height="7" stroke="#2f7a4f" stroke-width="1.8" width="7" x="14" y="14"/></svg></div><span class="card-no">03 / 04</span></div>
       <h2>图块使用</h2>
       <p class="desc">讲图块：怎么把画好的东西变成一个整体（图块），怎么反复调用、批量替换，画流程图和构筑物时省大量时间。</p>
-      <div class="tags">
-        <span class="tag">创建图块</span>
-        <span class="tag">插入图块</span>
-        <span class="tag">块属性</span>
-        <span class="tag">标高符号</span>
-      </div>
+      <div class="tags"><span class="tag">创建图块</span><span class="tag">插入图块</span><span class="tag">块属性</span><span class="tag">标高符号</span></div>
+      <div class="card-cta"><span>打开图解</span><svg fill="none" height="16" viewBox="0 0 24 24" width="16"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/></svg></div>
     </a>
 
     <a class="card" href="pages/text-and-dimension.html">
-      <div class="ico d">
-        <svg fill="none" height="26" viewBox="0 0 24 24" width="26">
-          <path d="M3 8h18M3 16h18" stroke="#7c5aa6" stroke-width="1.6"/>
-          <path d="M6 5v6M18 5v6" stroke="#7c5aa6" stroke-width="1.6"/>
-          <path d="M6.5 13l1.5-3M17.5 13l-1.5-3" stroke="#7c5aa6" stroke-linecap="round" stroke-width="1.8"/>
-          <path d="M10 15.5h4" stroke="#5c3f80" stroke-linecap="round" stroke-width="1.6"/>
-        </svg>
-      </div>
+      <div class="card-top"><div class="ico d"><svg fill="none" height="26" viewBox="0 0 24 24" width="26"><path d="M3 8h18M3 16h18" stroke="#7c5aa6" stroke-width="1.6"/><path d="M6 5v6M18 5v6" stroke="#7c5aa6" stroke-width="1.6"/><path d="M6.5 13l1.5-3M17.5 13l-1.5-3" stroke="#7c5aa6" stroke-linecap="round" stroke-width="1.8"/><path d="M10 15.5h4" stroke="#5c3f80" stroke-linecap="round" stroke-width="1.6"/></svg></div><span class="card-no">04 / 04</span></div>
       <h2>文字样式与尺寸标注</h2>
       <p class="desc">讲文字和标注：文字样式六个格子怎么填、标注样式五个选项卡抄哪些数、全局比例怎么定，附国标数值对照表。</p>
-      <div class="tags">
-        <span class="tag">文字样式</span>
-        <span class="tag">尺寸样式</span>
-        <span class="tag">新建标注</span>
-        <span class="tag">国标对照</span>
-      </div>
+      <div class="tags"><span class="tag">文字样式</span><span class="tag">尺寸样式</span><span class="tag">新建标注</span><span class="tag">国标对照</span></div>
+      <div class="card-cta"><span>打开图解</span><svg fill="none" height="16" viewBox="0 0 24 24" width="16"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/></svg></div>
     </a>
 
   </div>
 </div>
 
-<!-- ===== 页脚 ===== -->
 <footer class="foot">
-  <div><b>CAD 制图速查 · 总入口</b>　|　共 4 个站点入口</div>
+  <div><b>CAD 制图速查 · 总入口</b>　|　共 4 个站点入口<a href="index.html">返回生活工作台</a></div>
   <div style="margin-top:6px">依据《环境工程制图与CAD》（第2版，化学工业出版社 2022）· AutoCAD 2018</div>
 </footer>
 
+<script>
+(function(){
+  'use strict';
+  var PAGE_INDEX = [{"path":"pages/blocks.html","headings":["图块使用","一句话讲透：块到底解决什么问题","六种“块”，先分清再动手","全流程图：从画线到出表","对话框实况：五个对话框逐项拆解","建内部块：B 块定义对话框逐项拆解","写块：W 把块变成能带走的 .dwg","插入块：I 定点、定比例、定角度","属性块：让同一个块“每处写不同字”","改块三把刀：改定义、在位改、同名重定义","实战：10 分钟做一个“轴号”属性块","速查：命令、变量、鼠标操作","8 个高频坑，附对症解法","最后一页：30 秒选对块"],"text":"图块使用 返回总入口 图块使用 一次画好，处处调用 —— 对应教材第 7 章 书名 《环境工程制图与CAD》（第 2 版） 主编 张晶、潘立卫、王嘉斌 出版 化学工业出版社，2022 年 1 月 ISBN 978-7-122-38763-9 软件平台 AutoCAD 2018 依据 教材 7.1「图块」～7.2.2「编辑块属性」 图 01 一句话讲透：块到底解决什么问题 WHOLE OBJECT, ONE DEFINITION 块（Block）是把若干线条、文字、填充 打包成一个整体对象 。图形里只存一份“块定义”，其余地方全是“块参照”——像同一个母版印出来的许多张，改母版，全部跟着变。 体积小 重复图形只存一次定义，几十个门、上百个轴号也不明显撑大文件。 插入快 选一次、点一下，比框选复制少一半操作；还能带基点精准落位。 改一处全改 重定义块后，图内所有参照同步更新，不会漏改某一扇门。 普通复制 vs 块：差别就在“以后改不改” 复制粘贴 × 8 改尺寸要一个个改，漏一个就是错图 有一个尺寸忘了改 同一块 × 8 改一次块定义，8 个参照同时更新 8 个全对 块定义（母版） 只此一份 改这里 → 全部同步 图 1 复制的图形彼此独立；块参照共享同一个定义 图 02 六种“块”，先分清再动手 DON'T MIX THEM UP 新手最容易混的是“内部块 / 外部块 / 属性块 / 动态块”——它们不是并列的四种东西，而是 按“存在哪”和“带不带数据”两个维度交叉 出来的。先看这张表。 类型 命令 存在哪里 典型用途 内部块 （临时块） B / BLOCK 只存在当前 DWG 里，换文件就没有 本图专用的门、窗、轴号、图框 外部块 （写块） W / WBLOCK 单独存成 .dwg 文件，可跨图纸调用 企业图库、标准图例、重复使用的图框 插入块 I / INSERT 不产生新块，只是“摆放”已有块 把上面两种放到图中 属性块 ATT + B 块内嵌可填写的文字字段 轴号、门窗编号、标高、图签栏 动态块 BE / BEDIT 块内带参数与动作，可拉伸/翻转/切换 一扇门搞定 750/900/1000 三种宽度 外部参照 （不是块） XR / XREF 引用别的 dwg 文件，本体不在本图 建筑底图套结构图，底图改了自动跟着变 记忆法： B 是“存进本图”，W 是“存成文件”，I 是“拿出来摆”，ATT 是“给它装个输入框”。 块与外部参照，一句话区分 块 = 影印件 内容已经印进本图。源文件改了，本图 不会 自动变，得重新插入覆盖。适合小对象、图例。 外部参照 = 玻璃窗 只是“看向”另一个文件。对方一存盘，本图重开就同步。适合整张底图，且不会把对方内容吞进本图。 图 03 全流程图：从画线到出表 THE WHOLE LOOP 无论是做一个门、一个轴号还是一整张图框，走的都是这 6 步。其中 第 2 步（定属性）只有需要填不同文字时才做 ，其余五步是通用主线。 ① 画几何 线条 / 圆弧 / 文字 画在 0 层，颜色随层 ② 定属性 ATTDEF 设标记与提示 要填不同值时才做 ③ 定义块 B 建内部块 W 存外部 dwg ④ 插入 I 选块 → 定点 定比例 / 角度 ⑤ 填值 / 微调 双击块改属性值 夹点调动态块 ⑥ 统计 / 出表 COUNT 计数 数据提取 → 门窗表 需要改图：BEDIT 改定义，全图参照一起变 图 2 六步主线 + 一条回流（改块定义） 铁律一 · 画在 0 层 块内几何放在 0 层、颜色随层，插到哪层就显哪层颜色。否则插进灰色图层它还是黄的。 铁律二 · 基点选功能点 基点是插入时“捏住”的那个点：门轴、圆心、图框右下角。选在图形外，每次插都要挪。 铁律三 · 改定义不炸开 要改就 BEDIT 改定义，全图同步；炸开只改一个，等于断了与母版的联系。 图 04 对话框实况：五个对话框逐项拆解 绿色勾选=建议勾上的 块这一章的操作全在对话框里 ，命令只是把对话框叫出来。下面五个框是 AutoCAD 2018 的真实字段，照着填就能做出来。 B 块定义 BLOCK 块定义 名称 名称(N)： 轴号 基点 ✓ 在屏幕上指定(S) 拾取点(P)： 拾取点 X： 0.0000 Y： 0.0000 对象 ✓ 在屏幕上指定(O) 选择对象(T)： 选择对象 保留(R) ✓ 转换为块(C) 删除(D) 方式 注释性(A) ✓ 按统一比例缩放(S) ✓ 允许分解(E) 设置 块单位(U)： 毫米 说明(E)： 轴号属性块 确定 取消 帮助 四步走 ：起名字 → 指定基点（ 基点决定插入时抓哪一点 ，画轴号就选圆心）→ 选对象 → 选「转换为块」。 「保留」 =原图形还在、另外存一份块定义； 「转换为块」 =原图形直接变成块（常用）； 「删除」 =原图形删掉。 W 写块 WBLOCK 写块 源 块(B) 整个图形(E) ✓ 对象(O) 拾取点(P)： 拾取点 选择对象(T)： 选择对象 ✓ 保留(R) 转换为块(C) 删除(D) 目标 文件名和路径(F)： D://图库//轴号.dwg 浏览... 插入单位(U)： 毫米 确定 取消 帮助 把块 单独存成一个 .dwg 文件 ，别的图纸也能用。跟 B 的区别： B 只在当前图纸里有效，W 存成文件可以跨图调用 。做企业图库、标准图例就要用 W。 I 插入 INSERT 插入 名称 名称(N)： 轴号 浏览(B)... 插入点 ✓ 在屏幕上指定(S) X： 0.0000 Y： 0.0000 比例 在屏幕上指定(E) X： 1 Y： 1 Z： 1 ✓ 统一比例(U) 旋转 在屏幕上指定(R) 角度(A)： 0 块单位 单位： 毫米 比例： 1.0000 分解(D) 确定 取消 帮助 把块 摆到图上 。勾「在屏幕上指定」就是自己点位置；不勾就按 X/Y 坐标摆。勾 「统一比例」 后 X 改了 Y 跟着变，不会把块拉歪。 「分解」 勾上就是插进来直接炸开成散线。 ATT 属性定义 ATTDEF 属性定义 模式 不可见(I) 固定(C) 验证(V) 预设(P) ✓ 锁定位置(K) 多行(M) 属性 标记(T)： 轴号 提示(M)： 请输入轴号: 默认(L)： 1 插入点 ✓ 在屏幕上指定(O) 文字设置 对正(J)： 居中 文字样式(S)： GB-仿宋 文字高度(E)： 3.5 旋转(R)： 0 确定 取消 帮助 给块 装一个能填字的字段 。 标记 =字段名（如\"轴号\"）； 提示 =插入时命令行问你的话； 默认 =不填时的默认值。 「锁定位置」 要勾，不然块一移动属性就跑偏。 EATTEDIT 增强属性编辑器 EATTEDIT 增强属性编辑器 属性 文字选项 特性 属性值 标记： 轴号 提示： 请输入轴号: 值(V)： 3 说明 改完「值」这一格，块上显示的文字立刻跟着变 应用(A) 确定 取消 改已有块的属性值 用的。双击属性块也能打开它。「属性」页改数值，「文字选项」页改字高对正，「特性」页改图层颜色。 图 05 建内部块：B 块定义对话框逐项拆解 BLOCK · 7.1.1.1 三种启动方式，任选： 命令行 B 绘图 → 块 → 创建 功能区 插入 → 块定义 → 创建块 。 图 3 块定义对话框（对应教材 图 7-1） 三个“对象”选项，到底选哪个 选项 定义后原图形 什么时候用 保留 原样留在图上，另生成一个块定义 原图形还要单独用；或准备做“块 + 参照”两套 转换为块 （默认推荐） 就地变成块参照 99% 的情况。图形直接成了可重复调用的块 删除 从图中清掉，只留块定义 只想入库、暂不摆放 名称与基点：两条能省下大量返工的习惯 命名用“类别-规格”三段式 ： DOOR-900 、 WIN-C1518 、 GRID-A 、 TB-A3 。中文名虽然合法，但跨版本、跨插件、脚本调用时容易出问题；中英混排还容易多打空格——空格是 合法 的，但会让后续查找很痛苦。 基点就选“功能定位点” ： 门 / 窗 门放 门轴 ，窗放 洞口边中点 。插入时直接点洞口端点，不用再移。 轴号 / 标高 放 圆心 或 符号尖端 ，正好落在轴网交点、标高线上。 图框 / 图签 放 内框右下角 ，与图纸边界对齐，套图时一键落位。 家具 / 设备 放 靠墙面中点 或 中心 ，方便贴墙、居中布置。 图 06 写块：W 把块变成能带走的 .dwg WBLOCK · 7.1.1.2 WBLOCK 的本质是 “另存一个只含这块图形的 dwg 文件” 。它既是“存块”，也是“把当前图形的一部分单独导出”的利器。命令： W WBLOCK 。 图 4 写块对话框（对应教材 图 7-3） “源”的三个选项怎么选 源 含义 典型场景 块 把图中已有块定义原样导出为新文件 整理图库：把本图攒下的块逐个 W 出去 整个图形 整张模型空间存成一个 dwg（含未使用的块定义） 拆图、导出单张平面、做“底图” 对象 临时框选一部分图形，存成文件 从大图里抠一个节点详图/一个符号 和“另存为 / 导出”的区别 另存为会把整张图连同布局、图层、标注样式一起带走；W 只带走“这一个对象 + 它必需的图层/线型/文字样式”，文件往往只有几十 KB。做图库用 W，做备份用另存为。 图 07 插入块：I 定点、定比例、定角度 INSERT · 7.1.2 图 5 插入对话框（对应教材 图 7-4） 三个比例技巧，绝大多数教程没讲 负数 = 镜像 比例填 -1 得到左右镜像的块， X=-1 Y=1 水平翻， X=1 Y=-1 垂直翻。比先插入再 MIRROR 快。 非等比 = 变形 X=1、Y=0.5 会把块压扁。只有图例符号（如阀门、箭头）可以这么干；门、家具千万别。 命令行更快 插入后不回对话框，直接敲 S 改比例、 R 改角度、 B 换基点，连点带敲一气呵成。 重复插入：别一遍遍点 插入对话框底部有 “重复放置” ，勾上后可连点多个位置；老版本可在插入后直接按回车重复上一个命令。要按规律排（柱、灯具、轴线号），用 ARRAY（阵列） 选“块参照”最快，改一个全排跟着变。 图 08 属性块：让同一个块“每处写不同字” ATTDEF · EATTEDIT · 7.2 普通块里的文字是死的——十个轴号插进去全是“A”。 属性（Attribute）是块里的“可填写字段” ：几何一样，每次插入可以填不同值，之后还能改、能被统计。 标记 Tag 字段的“内部名”，相当于数据库列名。不能有空格，字母会自动转大写。如 NUM 、 DWG_NO 。 提示 Prompt 插入时问你的那句话，给人看的。如“请输入轴号”。留空则直接用标记当提示。 默认值 Value 不填时用什么。常填最常见的规格，如 900 、 A ，能省大量回车。 第 1 步： ATT 定义属性 图 6 属性定义对话框（对应教材 图 7-5） 四种“模式”，决定填写时的手感 模式 插入时 用在哪 不可见 不显示、不打印，但值仍存在、可提取 造价、材料代号、供应商等“看得见没用”的信息 固定 不提示，永远是第一次设的值 图号前缀、单位名称等全图统一的文字 验证 填完再确认一次，可改 关键数据：标高、管径、防火等级 预设 不提示，直接落默认值，事后可改 大批量插入、先占位后统一填 四个都不勾（默认）＝插入时正常问你一句，最常用。想临时关掉所有提示，把系统变量 ATTREQ 设为 0。 第 2 步：打包成块（这一步最容易漏） 框选 图形 + 所有属性定义 ，一起 B 定义成块。漏选属性，插出来就是一堆死文字，之后再也改不了值。 第 3 步：填值与改值 插入时 ：命令行会逐条问你，如 请输入轴号 <A>: ，直接回车取默认，或输入 B 。 插入后 ： 双击块 ，或 EATTEDIT （菜单：修改 → 对象 → 属性 → 单个），弹出增强属性编辑器。 标记 提示 值 NUM 请输入轴号 B 图 7 增强属性编辑器（对应教材 图 7-6），三个选项卡：属性 / 文字选项 / 特性 属性真正的价值：能出表 因为属性是可读数据，所以能把图“算”成一张表： 需求 命令 产出 数一数图上有多少扇门 COUNT （2022+） 数量列表，并高亮每一处 门窗表 / 材料表 / 设备清单 DATAEXTRACTION （EATTEXT） 可插入图面的表格，或导出 Excel/CSV 批量改所有块的某个属性值 BATTMAN 全图统一，无需逐个双击 新增属性后让旧块也显示 ATTSYNC 把新属性同步进已插入的参照 “数据提取” wizard 里记得勾 Count 列，相同块会自动合并计数——这是手绘门窗表和软件出表的区别。 图 09 改块三把刀：改定义、在位改、同名重定义 BEDIT / REFEDIT / REDEFINE 块做好后总要改。三种方式影响范围不同，选错会把图改乱： 方式 命令 / 入口 影响范围 适合 块编辑器 （首选） BE / BEDIT，或右键块 → 块编辑器 改定义， 全图所有参照 同步更新 统一改尺寸、加线条、加属性、做动态块 在位编辑 REFEDIT ，或右键 → 在位编辑块 也在改定义，但能看到周边图形作参照 改的时候需要对齐旁边的墙、轴线 同名重定义 画好新图形 → B → 输入 已有块名 覆盖原定义，全图更新 块要整体换掉、旧定义已乱 顺带把动态块做了： BE 动态块 = 块 + 参数（夹点）+ 动作（夹点拉动时发生什么）。最小可用案例，做一扇能调宽、能左右翻的门： 先有普通块 画门（门扇 + 开启弧）， B 定义成 DOOR-900 ，基点放 门轴 。 进块编辑器 双击块，或 BE 选该块。界面变灰，出现“块编写选项板”。 加线性参数 选项板 → 参数 → 线性，从门轴拉到门扇外沿，命名为“门宽”。 加拉伸动作 选项板 → 动作 → 拉伸，选“门宽”参数 → 选参数点 → 框住门扇右端 → 回车。此时拉夹点，门扇会跟着变长。 加翻转参数 参数 → 翻转，沿门扇中线放一条翻转轴；动作 → 翻转，选该参数 → 框选全部门图形。 限定可选宽度（可选） 选中“门宽”参数 → 特性面板 → 值集 → 列表，填入 750 / 900 / 1000，夹点就只能停在这三档。 测试并保存 点“测试块”试拉、试翻；没问题后“关闭块编辑器”→ 保存更改，全图该块立即获得夹点。 图 10 实战：10 分钟做一个“轴号”属性块 WALKTHROUGH · 圆 + 属性 → 块 → 插入 → 改值 选它是因为它把“画几何 → 定属性 → 建块 → 插入 → 编辑属性”整条链走了一遍，而且出图立刻能用。假设 1:100 出图，圆直径 800，字高 500。 画圆 在 0 层画 C 圆，直径 800。若要双线圈，再 O 偏移 100。 定属性 ATT → 标记 NUM 、提示“请输入轴号”、默认 A ；对正选 正中 ，字高 500；插入点点圆心。 检查 图上应出现一个 NUM 字样（这就是属性定义本体，尚未成为块的一部分）。 建块 B → 名称 GRID-A → 拾取基点＝ 圆心 → 框选“圆 + NUM” → 选“转换为块” → 确定。 插入 I → 选 GRID-A → 勾“在屏幕上指定” → 在轴网端点点击 → 命令行提示“请输入轴号 <A>:”，输入 1 。 继续排 同一命令连点其余轴线端点，依次填 2、3、4；竖向用 I 后 R 旋转 90°，或插入后夹点旋转。 改值 填错了？双击该轴号 → 属性选项卡 → 值改为 B → 确定。只影响这一处，其他轴号不动。 入库 W → 源选“块” → 选 GRID-A → 存成 D:\\图库\\GRID-A.dwg ，单位毫米。以后任何图纸 I → 浏览即可用。 出表（可选） DATAEXTRACTION → 选本图 → 勾 GRID-A 与 NUM → 输出表格，得到“轴号清单”，改图后重跑一次即可更新。 图 11 速查：命令、变量、鼠标操作 CHEAT SHEET 命令 快捷键 命令 作用 记法 B BLOCK 建内部块 Block W WBLOCK 写块为 dwg 文件 Write block I INSERT 插入块 / 图形 Insert ATT ATTDEF 定义属性 ATTribute DEFinition — EATTEDIT 改单个块属性（双击块同效） Enhanced ATTribute EDIT BE BEDIT 块编辑器（含动态块） Block EDIT — REFEDIT 在位编辑块 REFerence EDIT X EXPLODE 分解块 —— — BATTMAN 块属性管理器（批量改值） Block ATTribute MANager — ATTSYNC 把新属性同步到旧块 ATTribute SYNChronize — DATAEXTRACTION 数据提取（出门窗表） EATTEXT 旧名 — COUNT 统计块数量（2022+） —— PU PURGE 清理未使用的块定义 Purge REN RENAME 重命名块 Rename XR XREF 外部参照（非块） eXternal REFerence Ctrl+2 ADCENTER 设计中心，跨图取块 —— Ctrl+Shift+C COPYBASE 带基点复制（粘贴即成块） —— 系统变量 变量 取值 作用 INSUNITS 0 无单位 / 1 英寸 / 4 毫米 / 5 厘米 / 6 米 图形插入单位，国内 设 4 ；设错会出现块巨大或极小 ATTREQ 1 提示（默认） / 0 不提示取默认 批量插入属性块时先设 0，事后统一填 ATTDIA 1 弹对话框 / 0 只在命令行问 嫌弹窗打断连点时可设 0 ATTMODE 0 全关 / 1 正常 / 2 全开 检查“不可见”属性里到底藏了什么 BLOCKEDITLOCK 0 允许 / 1 禁止 1 时双击块不会进编辑器，防误改 三个“不记命令也能干”的操作 双击块 普通块 → 块编辑器；属性块 → 增强属性编辑器。这是最高频的入口。 右键拖动 选中图形， 右键 拖到别处松手 → “粘贴为块”。临时用、不想命名的场合很快。 特性面板 Ctrl+1 选中块，可直接改 X/Y 比例、旋转、图层，以及“允许分解”。 图 12 8 个高频坑，附对症解法 TROUBLESHOOTING # 现象 真正原因 解法 1 块插到某图层后，颜色不跟着图层变 块内对象被设成了具体图层/具体颜色，而不是 0 层 + ByLayer 进 BE ，把块内几何全部改到 0 层 、颜色 ByBlock/ByLayer ；批量可用 SETBYLAYER 2 块插进来特别大或特别小（差 25.4 倍） 源图与目标图 INSUNITS 不一致（英寸 vs 毫米） 两边都设 INSUNITS=4 ；已插入的用 SCALE 按 25.4 或 1/25.4 修正 3 给块加了新属性，旧的地方不显示 旧参照还停在旧定义 ATTSYNC → 选该块名 → 是；或 BATTMAN 里“同步” 4 插入属性块不弹输入提示，直接落默认值 ATTREQ=0 或属性被设成了“固定/预设” ATTREQ 设 1；检查属性模式 5 块改不动、夹点拉不动、炸不开 块被设为“不允许分解”，或图层被锁定/冻结 Ctrl+1 看“允许分解”；解冻解锁图层 6 块名删不掉，PU 也清不掉 图里还有参照（可能藏在别的块里，或被冻结图层上） 用 QSELECT / COUNT 找全，删净后再 PU （可试 -PURGE → 块） 7 炸开后属性文字变成普通文字，改不了值 炸开即脱离定义，属性退化为 ATTDEF/TEXT 撤销；改用 BEDIT 改定义，或用 EATTEDIT 改值 8 本图块明明改了，同事的图打开还是旧样 块不跨文件同步，外部块文件也没重新导出 重新 W 覆盖图库文件；对方插入时选“重定义” 图 13 最后一页：30 秒选对块 DECISION MAP 准备 画好图形 0 层 · 颜色随层 定好基点 第一步 B 普通块 本图复用 改定义全图更新 升级 一 W 写块 跨图纸调用 存成独立 .dwg 升级 二 ATT 属性块 每处填不同文字 可统计、可出表 升级 三 BE 动态块 尺寸 / 方向可调 参数 + 动作 + 夹点 只用这一次 → 直接复制 不必建块，也不占块表 图 8 四级叠加：从普通块一路升到动态属性块 每升一级都是 加一层能力 ，不是换一种块：只在本图用，可以停在 ②；不需要填字，跳过 ④；尺寸固定，跳过 ⑤。任意组合都成立。唯一不该做的，是为了“就改这一处”把块炸开——那等于退回复制粘贴，统计和联动全部失效。 记住这一句 块的本质是 用一个定义管住许多实例 。凡是要重复、要统一、要统计的图形，都该做成块。 记住这一条 要改就改 定义 ，不要炸开改单个。炸开等于退回到“复制粘贴”。 记住这一步 做好的块一定 W 出去存档。只存在图里的块，换台电脑就等于没做过。 资料说明 本图解的对话框结构、选项释义与命令流程，依据所给教材《环境工程制图与 CAD（第二版）》第 7 章“图块与属性”7.1～7.2.2 整理；操作细节、系统变量与常见问题对策，参考 Autodesk 官方知识库及主流 CAD 教学资料核校。不同 AutoCAD 版本（2016 / 2020 / 2024）的对话框布局略有差异，命令与选项含义一致。 图中对话框为按教材截图 重绘的示意图 ，用于标注各区域含义，非软件截图。 出处 张晶, 潘立卫, 王嘉斌. 环境工程制图与CAD[M]. 2 版. 北京: 化学工业出版社, 2022. ISBN 978-7-122-38763-9.（第 7 章 图块与属性） 命令名与快捷键按 Autodesk 官方《AutoCAD 快捷键手册》与 AutoCAD 2018 中文版界面。 待核项：教材第 7 章的具体页码未查到，用前建议翻书核对。"},{"path":"pages/drawing-commands.html","headings":["绘图命令","绘图命令速查表","命令框实况：每个命令到底在跟你说什么","最容易搞混的一对：直线 vs 多段线","圆的六种画法","矩形 与 正多边形","定数等分 与 定距等分","串一遍：画一个圆形沉淀池平面"],"text":"绘图命令 返回总入口 绘图命令 把东西「从无到有」画出来的那些命令 —— 对应教材第 5 章 书名 《环境工程制图与CAD》（第 2 版） 主编 张晶、潘立卫、王嘉斌 出版 化学工业出版社，2022 年 1 月 ISBN 978-7-122-38763-9 软件平台 AutoCAD 2018 依据 Autodesk 官方《AutoCAD 快捷键手册》 图 01 绘图命令速查表 18 个，按用得多少排的 命令 快捷键 画出来是什么 什么时候用它 LINE L 一条直线段 用得最多。画池体轮廓、管线、图框 PLINE PL 连成一整条的多段线 要整体偏移、算面积、改线宽时用。画工艺流程图管线、箭头 CIRCLE C 圆 圆形沉淀池、检查井、法兰、风机 ARC A 圆弧 弯头、池体圆角过渡、池底坡度线 RECTANG REC 矩形（整体） 设备基础、池体矩形平面、图框、标题栏 POLYGON POL 正多边形 六角螺栓头、人孔、阀门手轮 ELLIPSE EL 椭圆 斜看过去的圆管口、示意性设备 HATCH H 图案填充（剖面线） 剖面图里填混凝土、填土、保温层 SPLINE SPL 光滑的样条曲线 地形等高线、水面线、不规则边界 XLINE XL 两端无限长的构造线 当辅助线用，画完删掉。定位中心线、对齐基准 MLINE ML 多条平行线 画双线墙体、双线道路 DONUT DO 圆环（实心圈） 画粗点、节点标记、管道断点 POINT PO 一个点 定位标记、等分的落脚点 DIVIDE DIV 按「段数」平分 把一段线等分成 N 段（比如 8 格格栅） MEASURE ME 按「固定长度」分 每隔固定距离放一个（比如每 2m 一个检查井） REVCLOUD REVCLOUD 云线（一圈波浪） 圈出要修改的地方、标注问题区域 SOLID SO 实心三角形/四边形 填实心块、做箭头 RAY — 一端无限长的射线 辅助线，用得比构造线少 快捷键按 Autodesk 官方《AutoCAD 快捷键手册》与 AutoCAD 2018 中文版界面。RAY（射线）没有默认快捷键，要在命令行打全名。 图 02 命令框实况：每个命令到底在跟你说什么 绿字=你输入的，橙字=可以选的选项 先学会看命令行： 命令: 后面是你敲的； 方括号 [ ] 里的字母 是可以选的选项，敲那个字母回车就切换；尖括号 < > 里是默认值，直接回车就用它。 L 直线 LINE 命令行 命令: L LINE 指定第一点: （点起点） 指定下一点或 [放弃(U)] : （点第二点） 指定下一点或 [放弃(U)] : （点第三点） 指定下一点或 [闭合(C)/放弃(U)] : C U = 撤掉刚画的那一段； C = 自动连回起点，画闭合图形用它收尾。 PL 多段线 PLINE 命令行 命令: PL PLINE 指定起点: （点一下） 当前线宽为 0.0000 指定下一个点或 [圆弧(A)/半宽(H)/长度(L)/放弃(U)/宽度(W)] : W 指定起点宽度 <0.0000>: 0.5 指定端点宽度 <0.5000>: 回车 W 是设线宽（画粗管线、箭头全靠它）； A 切到画圆弧； U 撤一段。首尾宽度不一样就是箭头。 C 圆 CIRCLE 命令行 命令: C CIRCLE 指定圆的圆心或 [三点(3P)/两点(2P)/切点、切点、半径(T)] : （点圆心） 指定圆的半径或 [直径(D)] : D 指定圆的直径: 8000 直接输数字 = 半径；先敲 D 再输数字 = 直径。图纸标的是 Ø8000 就用 D，别自己除以 2。 A 圆弧 ARC 命令行 命令: A ARC 指定圆弧的起点或 [圆心(C)] : （点起点） 指定圆弧的第二个点或 [圆心(C)/端点(E)] : E 指定圆弧的端点: （点端点） 指定圆弧的圆心或 [角度(A)/方向(D)/半径(R)] : R 指定圆弧的半径: 1500 默认是「三点画弧」。敲 C 就是先定圆心再画，画管道弯头顺手得多。 REC 矩形 RECTANG 命令行 命令: REC 指定第一个角点或 [倒角(C)/标高(E)/圆角(F)/厚度(T)/宽度(W)] : F 指定矩形的圆角半径 <0.0000>: 200 指定第一个角点: （点一下） 指定另一个角点或 [面积(A)/尺寸(D)/旋转(R)] : D 指定矩形的长度 <10.0000>: 5000 指定矩形的宽度 <10.0000>: 3000 先敲 F 给圆角 → 画出来直接是圆角矩形；敲 D 直接输长宽，不用数格子。 POL 正多边形 POLYGON 命令行 命令: POL POLYGON 输入边的数目 <4>: 6 指定正多边形的中心点或 [边(E)] : （点中心） 输入选项 [内接于圆(I)/外切于圆(C)] <I>: C 指定圆的半径: 20 I = 顶点落在圆上； C = 边贴着圆。已知「对边距离」（如六角螺栓）选 C 。 EL 椭圆 ELLIPSE 命令行 命令: EL ELLIPSE 指定椭圆的轴端点或 [圆弧(A)/中心点(C)] : （点一端） 指定轴的另一个端点: （点另一端） 指定另一条半轴长度或 [旋转(R)] : 800 先定长轴两头，再给短轴的 一半 长度。注意是半轴，不是全长。 H 图案填充 HATCH 命令行 命令: H （弹出「图案填充和渐变色」对话框） 选图案 → 设比例 → 点「添加：拾取点」 拾取内部点或 [选择对象(S)/删除边界(B)] : （在闭合区域里点一下） 回车 → 确定 区域必须 严丝合缝闭合 ，有一条缝就会报「边界未闭合」，这是填充失败的头号原因。 XL 构造线 XLINE 命令行 命令: XL XLINE 指定点或 [水平(H)/垂直(V)/角度(A)/二等分(B)/偏移(O)] : H 指定通过点: （点一下） 指定通过点: （再点一下，或回车结束） 两端无限长的辅助线。 用完记得删掉 （E），不然打印时会满纸都是。 SPL 样条曲线 SPLINE 命令行 命令: SPL SPLINE 当前设置: 方式=拟合 节点=弦 指定第一个点或 [方式(M)/节点(K)/对象(O)] : （点起点） 指定下一点: （连着点几个点） 指定下一点或 [端点相切(T)/公差(L)/放弃(U)] : 回车 点几个点位，软件自动穿成光滑曲线。画等高线、水面线、不规则边界。 DO 圆环 DONUT 命令行 命令: DO DONUT 指定圆环的内径 <0.5000>: 0 指定圆环的外径 <1.0000>: 300 指定圆环的中心点或 <退出>: （点一下） 指定圆环的中心点或 <退出>: 回车 内径填 0 = 实心圆点。可以做节点标记、粗点。 ML 多线 MLINE 命令行 命令: ML MLINE 当前设置: 对正 = 上，比例 = 20.00，样式 = STANDARD 指定起点或 [对正(J)/比例(S)/样式(ST)] : S 输入多线比例 <20.00>: 240 指定起点: （点一下） 比例 就是两条平行线的间距，画 240 墙就输 240。 J 决定你点的位置是墙的哪一边。 DIV 定数等分 DIVIDE 命令行 命令: DIV DIVIDE 选择要定数等分的对象: （选那条线） 输入线段数目或 [块(B)] : 8 输 8 = 均分成 8 段，落下 7 个 点（点比分线段数少一个）。敲 B 可以把「点」换成「图块」。 ME 定距等分 MEASURE 命令行 命令: ME MEASURE 选择要定距等分的对象: （选那条线） 指定线段长度或 [块(B)] : 30000 每隔 30000（30 米）放一个。 最后不够一段就不放 ，所以点数跟总长有关。 等分出来的点看不见？ 默认点样式就一个小点，几乎找不着。先输 DDPTYPE （点样式）换个十字或圆点，再等分就能看见了。 图 03 最容易搞混的一对：直线 vs 多段线 选错就白画 L 直线 LINE 3 根各自独立的线 每一段都是 单独的对象 。点一下只选中一根，偏移要一根一根来，算面积算不出来。 PL 多段线 PLINE 1 个整体，点哪都全选中 整条是 一个对象 。一次偏移就整体挪，能直接算周长和面积，能整体改线宽。 什么时候必须用 PL： 画工艺管线的走向箭头（要粗线宽）、画要填图案的闭合区域、画完要算面积的池体轮廓。 已经用 L 画错了怎么办： 输入 PE（PEDIT 多段线编辑） → 选其中一根 → 输入 J（合并）→ 框选全部 → 回车，就能把散线接成一条多段线。 图 04 圆的六种画法 环境工程画圆形池子必会 R 圆心 + 半径 已知圆心位置和半径。默认方式，最常用 C → 点圆心 → 输半径 D 圆心 + 直径 图纸标的是直径时用（比如池内径 Ø8000） C → 点圆心 → 输 D → 输直径 两点 两点当直径的两端。用在「这段就是直径」的时候 C → 输 2P → 点两头 三点 圆过三个已知点。定圆心麻烦时用它 C → 输 3P → 点三点 相切 + 相切 + 半径 圆要同时贴着两条线（或圆），给定半径。画管道弯头、池体切角 C → 输 T → 选两条 → 输半径 相切 + 相切 + 相切 圆卡在三个对象中间，半径不用给，软件算 C → 输 3P → 再输 T → 逐个选 画圆形沉淀池平面： 一般用「圆心 + 直径」，因为图纸上标的都是 Ø（直径）。输入 C → 点池中心 → 输 D → 输 8000 → 回车，一个内径 8 米的池子圆就出来了。 图 05 矩形 与 正多边形 内接还是外切，别选反 REC 矩形 RECTANG 点两个对角，一次成型 整体对象 （本质是闭合多段线）：能直接偏移、倒角、圆角、算面积。画池体矩形平面、设备基础都用它，别用 L 画四根线。 POL 正多边形 POLYGON R 内接于圆（顶点在圆上） 外切于圆（边贴圆） 输边数（3~1024）→ 点中心 → 选「内接于圆 I」还是「外切于圆 C」→ 给半径。 六角螺栓头 要的是「对边距离」= 外切圆直径，选 C（外切） ；才知道外接圆大小时选 I（内接） 。 图 06 定数等分 与 定距等分 名字像，干的活不一样 DIV 定数等分 DIVIDE 我说分成几段，你就分几段 你告诉它 「分成 6 段」 ，它就把这条线均匀切成 6 份，落下 5 个点。 每段多长它自己算。 例：格栅渠要均布 8 根栅条 → DIV → 选渠边线 → 输 8 ME 定距等分 MEASURE 固定 2000 我给固定间距，剩多少算多少 你告诉它 「每隔 2000 放一个」 ，它就按这个间距摆点。 最后不够一段的，就不放。 例：管线每 30 米一个检查井 → ME → 选管线 → 输 30000 等分出来的点看不见？ 默认的点样式就一个小点，几乎找不着。先输 DDPTYPE （点样式）换个十字或圆点样式，再等分就能看见了。 图 07 串一遍：画一个圆形沉淀池平面 把命令连起来用 STEP 1 画池壁外圈 圆心 + 直径，输内径 8000 C → D STEP 2 偏移出壁厚 向外偏 240（池壁厚），同心圆 O 偏移 STEP 3 画中心筒 再画一个小圆，直径 1500 C STEP 4 画走道板分格 把外圈按 8 段等分落点 DIV STEP 5 填混凝土剖面 选中池壁环，填图案 H 关键顺序： 先画主体圆，再偏移出壁厚（比画两个同心圆快得多），最后填充。很多人习惯先画两个圆再算差，多一步还容易错。 出处 张晶, 潘立卫, 王嘉斌. 环境工程制图与CAD[M]. 2 版. 北京: 化学工业出版社, 2022. ISBN 978-7-122-38763-9.（第 5 章 绘图命令） 命令名与快捷键：Autodesk 官方《AutoCAD 快捷键手册》（autodesk.com.cn/shortcuts/autocad），并与 AutoCAD 2018 中文版界面对照。 命令的调用方式（命令行输入 / 功能区面板 / 工具栏）按 AutoCAD 2018 中文版默认设置。 待核项：教材第 5 章的具体页码未查到，用前建议翻书核对。"},{"path":"pages/modify-commands.html","headings":["二维图形修改命令","修改命令速查表","命令框实况：每个命令到底在跟你说什么","三个「都是复制」的命令，别混","修剪 与 延伸：一对反操作","移动 与 拉伸：一个整体搬，一个局部拽","圆角 与 倒角","阵列的三种排法","框选方向：决定你选中了什么"],"text":"二维图形修改命令 返回总入口 二维图形修改命令 把画好的东西「改一改」的那些命令 —— 对应教材第 6 章 书名 《环境工程制图与CAD》（第 2 版） 主编 张晶、潘立卫、王嘉斌 出版 化学工业出版社，2022 年 1 月 ISBN 978-7-122-38763-9 软件平台 AutoCAD 2018 依据 Autodesk 官方《AutoCAD 快捷键手册》 图 01 修改命令速查表 17 个，先认脸再挑着用 命令 快捷键 干什么 什么时候用它 OFFSET O 等距复制（偏移） 用得最多 。池壁、道路边线、同心圆、平行管线 TRIM TR 剪掉多余的线头 管线交叉、线条出头太多 EXTEND EX 把线补到边界上 线没画够长，接到另一条线上 FILLET F 倒圆角 池体内壁转角、管线转弯处 CHAMFER CHA 倒斜角 设备基础、安装孔的 45° 倒角 COPY CO 原样复制一份 同样的设备画第二台、第三台 MIRROR MI 镜像（翻面复制） 左右对称的池体、对称布置的设备 ARRAY AR 阵列（批量复制） 曝气头、喷头、检查井成排布置 MOVE M 搬位置 摆错地方了挪一挪 ROTATE RO 转个角度 设备摆斜了、管线改走向 SCALE SC 整体放大缩小 图块插入后尺寸不对，按比例缩放 STRETCH S 拉长/拉短（形状跟着变） 池体加长、渠宽调整 LENGTHEN LEN 改长度（形状不变） 单根线加长，不牵动别的 BREAK BR 打断成两段 / 挖掉一段 管线留接口、断开标注线 JOIN J 把断开的接成一根 BREAK 的反向操作 EXPLODE X 炸开（拆成零件） 图块、多段线、矩形要单独改一部分时 ERASE E 删除 画错了删掉（跟键盘 Delete 键一样） 快捷键按 Autodesk 官方《AutoCAD 快捷键手册》与 AutoCAD 2018 中文版界面。删除也可以直接按键盘 Delete 键。 图 02 命令框实况：每个命令到底在跟你说什么 绿字=你输入的，橙字=可以选的选项 先学会看命令行： 命令: 后面是你敲的； 方括号 [ ] 里的字母 是可以选的选项，敲那个字母回车就切换；尖括号 < > 里是默认值，直接回车就用它。 所有修改命令都是「先选对象，回车，再操作」。 O 偏移 OFFSET 命令行 命令: O OFFSET 当前设置: 删除源对象=否 图层=源 指定偏移距离或 [通过(T)/删除(E)/图层(L)] <通过>: 240 选择要偏移的对象，或 [退出(E)/放弃(U)] <退出>: （选池壁圆） 指定要偏移的那一侧上的点，或 [退出(E)/多个(M)/放弃(U)] <退出>: （点外侧） 三步走： 输距离 → 选对象 → 点偏哪一侧 。敲 T 可以让偏移后的线刚好通过某个点（不用算距离）。 TR 修剪 TRIM 命令行 命令: TR TRIM 当前设置: 投影=UCS，边=无 选择剪切边... 选择对象或 <全部选择> : 回车 选择要修剪的对象，或按住 Shift 键选择要延伸的对象，或 [栏选(F)/窗交(C)/投影(P)/边(E)/删除(R)/放弃(U)] : （点要剪掉的线头） 直接回车 = 全图都当剪刀 ，然后点哪剪哪，省掉选边界这步。这是最省事的用法。 EX 延伸 EXTEND 命令行 命令: EX EXTEND 当前设置: 投影=UCS，边=无 选择边界的边... 选择对象或 <全部选择> : 回车 选择要延伸的对象，或按住 Shift 键选择要修剪的对象，或 [栏选(F)/窗交(C)/投影(P)/边(E)/放弃(U)] : （点要补长的线） 操作步骤跟修剪 一模一样 。按住 Shift 能临时切成修剪，两个命令来回切。 F 圆角 FILLET 命令行 命令: F FILLET 当前设置: 模式 = 修剪，半径 = 0.0000 选择第一个对象或 [放弃(U)/多段线(P)/半径(R)/修剪(T)/多个(M)] : R 指定圆角半径 <0.0000>: 30 选择第一个对象或 [...] : （点第一条线） 选择第二个对象，或按住 Shift 键选择要应用角点的对象: （点第二条） 第一次必须先敲 R 设半径 ，否则半径是 0，倒出来什么都没有。 M = 连着倒多个角不退出。 CHA 倒角 CHAMFER 命令行 命令: CHA CHAMFER 选择第一条直线或 [放弃(U)/多段线(P)/距离(D)/角度(A)/修剪(T)/方式(E)/多个(M)] : D 指定第一个倒角距离 <0.0000>: 40 指定第二个倒角距离 <40.0000>: 回车 选择第一条直线: （点第一条） 选择第二条直线: （点第二条） 两个距离 相等 就是标准 45° 倒角。第二个距离默认跟着第一个，直接回车即可。 CO 复制 COPY 命令行 命令: CO COPY 选择对象: 找到 1 个 选择对象: 回车 指定基点或 [位移(D)/模式(O)] <位移>: （在对象上点个基准点） 指定第二个点或 [阵列(A)] <使用第一个点作为位移>: @12000,0 @12000,0 = 相对刚才那个点向右 12000。 @ 符号就是「相对」 的意思，画第二格池子直接用。 MI 镜像 MIRROR 命令行 命令: MI MIRROR 选择对象: 找到 1 个 指定镜像线的第一点: （点对称轴一头） 指定镜像线的第二点: （点另一头） 要删除源对象吗？ [是(Y)/否(N)] <否>: N N = 原来的留着（两边都有）； Y = 原来的删掉（相当于翻过去）。 文字会被镜像反 ，先输 MIRRTEXT 设成 0。 AR 阵列 ARRAY 命令行 命令: AR ARRAY 选择对象: 找到 1 个 输入阵列类型 [矩形(R)/路径(PA)/极轴(PO)] <矩形>: PO 指定阵列的中心点或 [基点(B)/旋转轴(A)] : （点池中心） 输入阵列中的项目数目: 8 指定填充角度 (+=逆时针, -=顺时针) <360>: 回车 R 排行列、 PA 沿线排、 PO 绕圈排（界面里叫「 环形阵列 」）。填 360 回车 = 整整一圈。 M 移动 MOVE 命令行 命令: M MOVE 选择对象: 找到 1 个 指定基点或 [位移(D)] <位移>: （在自己身上点个\"把手\"） 指定第二个点或 <使用第一个点作为位移>: （把手放到目标位置） 先在自己身上抓一个点，再把这个点放到目标处。 开对象捕捉（F3） 抓端点、中点最准。 RO 旋转 ROTATE 命令行 命令: RO ROTATE 指定基点: （点旋转中心） 指定旋转角度，或 [复制(C)/参照(R)] <0>: 90 正角度 = 逆时针，负角度 = 顺时针。 C = 转一份、原样留一份； R = 照着现有方向对齐（改管线走向时超好用）。 SC 缩放 SCALE 命令行 命令: SC SCALE 选择对象: 找到 1 个 指定基点: （点一个不动的点） 指定比例因子或 [复制(C)/参照(R)] <1.0000>: R 指定参照长度 <1>: （点现在的长度两端） 指定新的长度或 [点(P)] <1>: 5000 直接输 2 = 放大一倍， 0.5 = 缩小一半。敲 R 可以输「现在多长 → 应该多长」， 不用自己算比例 。 S 拉伸 STRETCH 命令行 命令: S STRETCH 以交叉窗口或交叉多边形选择要拉伸的对象... 选择对象: 指定对角点: （从右往左拉框，虚线框） 选择对象: 回车 指定基点或 [位移(D)] <位移>: （点一下） 指定第二个点或 <使用第一个点作为位移>: （往要拉的方向点） 命令行第一句就明说了： 必须交叉窗口 （从右往左拉）。拉成实线框就变成移动了。 BR 打断 BREAK 命令行 命令: BR BREAK 选择对象: （点对象，这一点就是第一个断点） 指定第二个打断点 或 [第一点(F)] : （点第二点） 两点之间那段被挖掉。 想精确指定第一个断点 就敲 F ，不然「点对象」的那下也算断点，位置不准。 J 合并 JOIN 命令行 命令: J JOIN 选择源对象或要一次合并的多个对象: （框选要接的几段） 选择要合并的对象: 回车 3 条直线已合并为 1 条直线 前提是 在同一条直线上（共线） ，歪一点都合不了。合完就变成整体，能一起偏移。 X 分解 EXPLODE 命令行 命令: X EXPLODE 选择对象: 找到 1 个 选择对象: 回车 （图块 / 矩形 / 多段线 被拆成单独的线和弧） 炸开是 不可逆的整体感 ：炸完就不能整体偏移、整体改线宽了。要改整体前先想清楚。 LEN 拉长 LENGTHEN 命令行 命令: LEN LENGTHEN 选择对象或 [增量(DE)/百分数(P)/全部(T)/动态(DY)] : DY 选择要修改的对象或 [放弃(U)] : （点线靠近要长的那一端） 指定新端点: （拖到想要的长度） DY（动态）最直观 ：点哪一端就拖哪一端。 DE = 输「加长多少」， T = 输「改成总共多长」。 E 删除 ERASE 命令行 命令: E ERASE 选择对象: 找到 1 个 选择对象: 回车 （对象消失） 跟「先选中、再按键盘 Delete 键」效果一样。删错了按 Ctrl+Z 撤回来。 图 03 三个「都是复制」的命令，别混 新人第一道坎 CO 复制 COPY 指定距离 原样 一模一样 原样搬一份到别处， 方向、大小完全不变 。你给个方向和距离就行。 例：一号池画好了，二号池一模一样 → CO，指定间距 12000 MI 镜像 MIRROR 对称轴 沿一条对称轴 翻面 复制。形状镜像对称，左右颠倒。 文字会被镜像反！ 命令行问「是否删除源对象」之前，先把 MIRRTEXT 系统变量设成 0 ，文字才不会变成反的。 O 偏移 OFFSET 240 同心 / 平行，间距固定 生成一个 等距 的新对象。圆→同心圆，直线→平行线，多段线→整体平行。 例：池内壁画好了，壁厚 240 → O，输 240，点外侧 图 04 修剪 与 延伸：一对反操作 先选边界，再选对象 TR 修剪 TRIM —— 剪短的 被剪掉的部分 竖线是「边界」，横线被剪断 把线 超出去的部分剪掉 。操作： TR 回车 → 先点边界线（竖线）→ 回车 → 再点要剪掉的那一段。 嫌选边界麻烦？ TR 回车后直接再回车一次 ，等于「全图都能当边界」，然后直接点要剪的线头，快很多。 EX 延伸 EXTEND —— 补长的 补出来的部分 线不够长，接上去 把线 补长到边界上 。操作跟修剪一模一样： EX 回车 → 先点边界 → 回车 → 点要延长的线。 同样可以 EX 回车后再回车 ，跳过选边界这步。 记法： 两个命令的操作顺序完全一样 —— 都是「先选边界，回车，再选对象」。区别只在于一个是剪短、一个是补长。按住 Shift 还能在两个命令之间临时切换。 图 05 移动 与 拉伸：一个整体搬，一个局部拽 拉伸必须「交叉框选」 M 移动 MOVE 形状一点不变 整个对象 原封不动 换个位置。形状、大小都不变。 S 拉伸 STRETCH 框住的右边被拽出来了 只把 被框住的那一头 拽走，没框住的那头钉着不动，形状跟着变。 必须用「交叉框选」：鼠标从右往左拉 ，框成虚线绿框。从左往右拉（实线蓝框）会把整个对象选中，就变成移动了。 框选方向是新人最常踩的坑： 从左往右拉 = 实线框 = 只有 完全框住 的才选中；从右往左拉 = 虚线框 = 碰到就选中 。拉伸、延伸、修剪这些「只改一部分」的命令，都用后者。 图 06 圆角 与 倒角 一个圆滑，一个切平 F 圆角 FILLET R30 用一段圆弧拐弯 两条线之间 用圆弧过渡 ，给半径 R。操作：F → 输 R → 输半径值 → 点两条线。 池体内壁转角、管线转弯都用这个。半径设 0 时，能当「把两条线接到一起」用。 CHA 倒角 CHAMFER 40 40 切成一个斜面 把尖角 切掉一小块，成一个斜面 。给两个距离（或距离+角度）。操作：CHA → 输 D → 输两个距离 → 点两条线。 设备基础、安装孔的 45° 倒角。两个距离相等就是标准 45° 倒角。 图 07 阵列的三种排法 批量布置设备全靠它 矩形阵列 排成几行几列。给行数、列数、行距、列距 AR → 矩形(R) 例：曝气池底 4×3 个曝气头 路径阵列 沿着一条线（路径）等距排布 AR → 路径(PA) 例：沿管沟每 30m 一个检查井 环形阵列 绕一个中心点转圈排。给数量、总角度 AR → 环(PO) 例：圆形池子一圈 8 个布水口 三种阵列关系： 阵列出来的对象 是一组 ，改一个全跟着改（阵列是关联的）。要单独改某一个，先输 X（分解） 把它炸开。 图 08 框选方向：决定你选中了什么 所有修改命令的第一步 ←→ 从左往右拉 = 窗口选择 实线蓝框 · 完全框住的才选中 → 两个都选中 框是 实线 。对象必须 整个在框里面 才算选中。碰边不算。 →← 从右往左拉 = 交叉选择 虚线绿框 · 碰到的就选中 → 只选中右边那个 框是 虚线 。只要 碰到框 就算选中，不用整个进去。 什么时候用哪个： 要整个对象（复制、移动、删除）→ 从左往右，实线框。只要改一部分（拉伸、局部修剪）→ 从右往左，虚线框。 记不住就看框的颜色： 蓝实线 = 全包住，绿虚线 = 碰就中。 出处 张晶, 潘立卫, 王嘉斌. 环境工程制图与CAD[M]. 2 版. 北京: 化学工业出版社, 2022. ISBN 978-7-122-38763-9.（第 6 章 二维图形修改命令） 命令名与快捷键：Autodesk 官方《AutoCAD 快捷键手册》（autodesk.com.cn/shortcuts/autocad），并与 AutoCAD 2018 中文版界面对照。 MIRRTEXT（镜像文字）、关联阵列等行为，按 AutoCAD 2018 默认设置描述。 待核项：教材第 6 章的具体页码未查到，用前建议翻书核对。"},{"path":"pages/text-and-dimension.html","headings":["AutoCAD 文字样式 · 尺寸标注 · 新建标注 —— 照着做的图解","尺寸标注到底由哪几块拼成","文字样式对话框 —— 六个格子，照着填","标注样式管理器 + 新建标注样式","国标数值对照表 —— 参数不要自己估","全局比例 —— 为什么你的标注要么看不见要么糊成一团","新建一个尺寸标注的完整流程","四个一踩就中的坑"],"text":"AutoCAD 文字样式与尺寸标注 · 操作图解 返回总入口 AutoCAD 文字样式 · 尺寸标注 · 新建标注 —— 照着做的图解 对应教材第 8 章《文本和尺寸标注》：8.1 文字样式 / 8.2 尺寸样式 书名 《环境工程制图与CAD》（第 2 版） 主编 张晶、潘立卫、王嘉斌 出版 化学工业出版社，2022 年 1 月，271 页 ISBN 978-7-122-38763-9 软件平台 AutoCAD 2018（全书 14 章，第 8 章讲文字与标注） 依据 GB/T 50001-2017、GB/T 14691-1993（文末标出处） 图 01 尺寸标注到底由哪几块拼成 先认清零件，再去调参数 构筑物轮廓（被标注的对象） 2400 1600 4000 1700 1 2 3 4 1 尺寸界线 ——从被标注的轮廓线上引出来的细实线。一头要 离开轮廓线至少 2mm （不能贴死），另一头要 超出尺寸线 2~3mm 。 2 尺寸线 ——细实线，跟被量的那一段平行。图上原来的任何线（轮廓线、中心线）都 不能拿来当尺寸线用 。 3 起止符号 ——环境工程图用水处理/建筑那套，用 中粗斜短线 ：跟尺寸界线成顺时针 45°，长 2~3mm。标半径、直径、角度、弧长时改用箭头。 4 尺寸数字 ——写在尺寸线 上方、居中 ，字高 3.5mm。单位毫米， 数字后面不写 mm 。水平尺寸从左往右读，竖直尺寸从下往上读。 图上「2400 / 1600」那道和「4000」那道，两条尺寸线的间距国标要求 7~10mm，并且 小尺寸靠里、大尺寸靠外 ，几条间距还得保持一致。图示为了看清楚做了放大。 图 02 文字样式对话框 —— 六个格子，照着填 命令：STYLE ／ 快捷键 ST ／ 菜单：格式 → 文字样式 文字样式 当前文字样式：Standard 样式(S) GB-仿宋 新建(N)... 删除(D) 字体 字体名(F)： gbenor.shx 字体样式(Y)： 常规 ✓ 使用大字体(U) 大字体(B)： gbcbig.shx 大小 注释性(A) 高度(H)： 0.0000 效果 颠倒 反向 垂直 宽度因子(W)： 1.0000 倾斜角度(O)： 0 预览 曝气池 AaBb 置为当前(C) 应用(A) 取消 ① 样式名 ：别在 Standard 上改，点「新建」自己起个名，比如 GB-标注 。以后图纸用哪个样式，就在上面这个下拉框里选。 ② 字体名 ：填 gbenor.shx 。这是国标的西文/数字字体，画出来的数字是长仿宋味道、笔画统一。 ③ 使用大字体 + 大字体 ：两个都得管。先勾上「使用大字体」，下面那格才会亮，填 gbcbig.shx 。这一格是专门管汉字的 长仿宋体 。不勾，图里的中文就会变成一堆 ??? 。 ④ 高度 ： 0.0000 ，必须填 0。填 0 的意思是「字高每次现定」；你一填 3.5，以后所有文字全被锁死在 3.5，标注里的字高怎么改都改不动（这是最常见的坑）。 ⑤ 宽度因子 ： 1.0000 。因为 gbcbig.shx 本身就是长仿宋（字宽≈0.7×字高），不用再压。要是换成 TrueType 的「仿宋」字体，这里才填 0.7 。 ⑥ 倾斜角度 ： 0 。汉字不能斜。数字要斜体是另说的（国标斜体是 75°，这里一般也不填）。 填完先点「应用」，再点「置为当前」，最后关闭。少点「置为当前」这一步，新建的样式只是躺在列表里，实际没生效。 图 03 标注样式管理器 + 新建标注样式 命令：DIMSTYLE ／ 快捷键 D ／ 菜单：标注 → 标注样式 标注样式管理器 当前标注样式：GB-1-100 标注样式: Annotative GB-1-100 ISO-25 Standard 预览(P) 3600 置为当前(S) 新建(N)... 修改(M)... 替代(O)... 比较(C)... 关闭 新建标注样式：GB-1-100 线 符号和箭头 文字 调整 主单位 换算单位 公差 尺寸线 颜色(C)： ByLayer（随层） 线宽： ByLayer 基线间距(B)： 7.0000 ← 平行尺寸线之间留多宽 尺寸界线 颜色(E)： ByLayer（随层） 线宽： ByLayer 超出尺寸线(X)： 2.0000 起点偏移量(F)： 2.0000 ↑ 这两格是国标最容易扣分的地方，见下面第 1、2 号卡 确定 取消 帮助 1 符号和箭头 第一个 / 第二个 建筑标记 引线 点 箭头大小 2.5 ~ 3 圆心标记 无 2 文字 文字样式 GB-仿宋 文字高度 3.5 垂直 / 水平 上方 / 居中 从尺寸线偏移 0.6 ~ 1 文字对齐 与尺寸线对齐 3 调整 调整选项 文字或箭头 文字位置 尺寸线上方，不带引线 全局比例 = 出图比例分母 标注特征比例 不是「注释性」 4 主单位 单位格式 小数 精度 0 小数分隔符 句点 测量单位比例因子 1 消零 后续 5 公差 方式 无 精度 0 换算单位 不勾 ! 一句话记住 新建时「基础样式」选 ISO-25 ，别选 Standard —— ISO-25 的起点偏移量、箭头逻辑本来就接近国标，改起来省事。 图 04 国标数值对照表 —— 参数不要自己估 左边是国标要求，右边是 CAD 里填哪一格 项目 国标怎么规定 AutoCAD 里填哪里 依据 汉字字高 不小于 3.5mm ；字高系列 1.8 / 2.5 / 3.5 / 5 / 7 / 10 / 14 / 20 标注样式 → 文字 → 文字高度 3.5 GB/T 14691-1993 汉字字宽 约为字高的 0.7 倍 （h/√2），长仿宋体 文字样式 → 宽度因子 1 （gbcbig.shx 已自带）；换 TrueType 仿宋才填 0.7 GB/T 14691-1993 尺寸界线起点 离图样轮廓线 不小于 2mm 线 → 起点偏移量 2 GB/T 50001-2017 第11.1.2条 尺寸界线出头 另一端宜 超出尺寸线 2~3mm 线 → 超出尺寸线 2 GB/T 50001-2017 第11.1.2条 起止符号 中粗斜短线 ，与尺寸界线成顺时针 45°，长 2~3mm 符号和箭头 → 建筑标记，箭头大小 2.5~3 GB/T 50001-2017 第11.1.4条 半径/直径/角度/弧长 起止符号 改用箭头 ，箭头宽不小于 1mm 这几类标注单独建一个样式，符号选「实心闭合」 GB/T 50001-2017 第11.1.4条 平行尺寸线间距 宜为 7~10mm ，且保持一致 线 → 基线间距 7~8 GB/T 50001-2017 第11.3.3条 尺寸单位 毫米 ，数字后面不注单位（标高和总平面用米） 主单位 → 精度 0 ，不加后缀 GB/T 50001-2017 第11.2.2条 尺寸线离轮廓 图样轮廓线以外的尺寸界线，距最外轮廓 不小于 10mm 没有参数管，标注时手动拉开位置 GB/T 50001-2017 第11.3.3条 说明：GB/T 50001-2017 里尺寸标注是第 11 章。环境工程的水处理构筑物图、厂区平面图都按这套建筑制图标准走；只有画泵、阀这类设备零件图（机械图）时才换成「实心闭合箭头」。 图 05 全局比例 —— 为什么你的标注要么看不见要么糊成一团 位置：标注样式 → 调整 → 使用全局比例 图纸出图比例 全局比例填 打印出来的效果 1:20 20 字高正好 3.5mm 1:50 50 字高正好 3.5mm 1:100 100 字高正好 3.5mm 1:200 200 字高正好 3.5mm 大白话讲清楚： 你在电脑上按真实尺寸画图（1 米就画 1000 个单位），但打印的时候整张图要缩到 1/100 才塞得进 A3 纸。 缩完以后，原本 3.5 高的字就只剩 0.035，肉眼看不见了。 所以 先在样式里按「最终打出来多大」把字高填 3.5 ，再让「全局比例 100」把它预先放大 100 倍 —— 缩回去刚好 3.5mm。 换比例怎么办： 别去改字高。复制一份样式，命名 GB-1-50 ，只改「全局比例」这一格，其它一个都不动。 图 06 新建一个尺寸标注的完整流程 从零到图上出现第一道尺寸 STEP 1 建文字样式 gbenor.shx + 大字体 gbcbig.shx，高度填 0 ST STEP 2 打开标注管理器 看左下角列表，确认当前样式 D STEP 3 新建样式 基础样式选 ISO-25，命名 GB-1-100 新建 STEP 4 填五个选项卡 照图 03 的卡片 1~5 抄数字 确定 STEP 5 置为当前 回管理器点「置为当前」，再关闭 置为当前 STEP 6 打标注 点两点 → 往外一拉 → 点一下落下 DLI 命令 快捷键 叫什么 什么时候用 DIMLINEAR DLI 线性标注 标水平或竖直的距离，用得最多，八成标注都是它 DIMALIGNED DAL 对齐标注 量斜的、歪的那段距离（比如斜管、斜坡） DIMRADIUS DRA 半径标注 圆角、圆弧，数字前自动带 R DIMDIAMETER DDI 直径标注 圆管、圆孔，数字前自动带 Φ DIMANGULAR DAN 角度标注 管道转角、坡度以外的夹角 DIMCONTINUE DCO 连续标注 接着上一个标，一路标下去，间距自动对齐 DIMBASELINE DBA 基线标注 几道尺寸共用一条基准线时用（比如池体分格） 打完发现数字不对，别删了重画 —— 双击那个尺寸数字，弹出来的框里可以直接改覆盖值；或者用 DIMEDIT（DED） 统一改。 图 07 四个一踩就中的坑 出问题先对号入座 坑 1：标注里的字高改不动 原因： 文字样式里「高度」填了 3.5 。那一格一填数字，字高就锁死了。 解法：回文字样式，把高度改回 0 ，再回标注样式里设文字高度。 坑 2：中文全变成「???」 原因：只设了 gbenor.shx， 没勾「使用大字体」也没选 gbcbig.shx 。 解法：勾上「使用大字体」，大字体下拉里选 gbcbig.shx。 坑 3：字和箭头小得像蚂蚁 原因： 全局比例还停在 1 ，图是按 1:100 出。 解法：调整选项卡里，使用全局比例填 100 。 坑 4：斜短线（起止符号）不见了 原因：符号选了「建筑标记」后， 「超出标记」填了 0 或负数 ，短线被尺寸线吃掉。 解法：线选项卡里「超出标记」填 2 ，让尺寸线从短线里穿出去一点。 出处 张晶, 潘立卫, 王嘉斌. 环境工程制图与CAD[M]. 2 版. 北京: 化学工业出版社, 2022. ISBN 978-7-122-38763-9.（271 页，以 AutoCAD 2018 为平台，全书 14 章，第 8 章为「文本和尺寸标注」，含 8.1 文字样式、8.2 尺寸样式两个小节） —— 书目信息核对自西南石油大学图书馆馆藏记录（lib.swpu.edu.cn/1857.8080/opac/book/787430）、国家出版发行信息公共服务平台（book.cppinfo.cn）。 GB/T 50001-2017《房屋建筑制图统一标准》第 11 章 尺寸标注：11.1.2（尺寸界线 2mm / 2~3mm）、11.1.4（起止符号 45° 斜短线 2~3mm）、11.2.2（单位毫米）、11.3.3（平行尺寸线间距 7~10mm、距轮廓不小于 10mm）。 GB/T 14691-1993《技术制图 字体》：字高系列 1.8/2.5/3.5/5/7/10/14/20mm，汉字不小于 3.5mm，字宽约 0.7h，长仿宋体。 对话框字段、选项卡名称、快捷键均按 AutoCAD 2018 中文版界面写。 待核项：教材第 8 章的具体页码和插图编号，我这边只查到章节标题级目录，没查到页码，用之前建议翻书对一下。"}];
+  var PAGE_LABEL = {
+    'pages/drawing-commands.html':'绘图命令',
+    'pages/modify-commands.html':'修改命令',
+    'pages/blocks.html':'图块使用',
+    'pages/text-and-dimension.html':'文字与标注'
+  };
+
+  var input  = document.getElementById('cadSearch');
+  var clear  = document.getElementById('cadSearchClear');
+  var meta   = document.getElementById('cadSearchMeta');
+  var panel  = document.getElementById('cadResults');
+  var countEl= document.getElementById('cadResultCount');
+  var listEl = document.getElementById('cadResultList');
+  var emptyEl= document.getElementById('cadEmpty');
+  var emptyT = document.getElementById('cadEmptyTitle');
+  var suggest= document.getElementById('cadSuggest');
+  var section= document.getElementById('sectionHead');
+  var quick  = document.getElementById('quickBlock');
+  var entries= document.getElementById('entriesBlock');
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function norm(s){ return String(s||'').toLowerCase().replace(/\s+/g,' '); }
+
+  // 从本页 DOM 抓现有可检索内容，保证"页面现有内容"不会漏
+  function buildIndex(){
+    var items = [];
+    document.querySelectorAll('.card').forEach(function(card){
+      var tags = [].map.call(card.querySelectorAll('.tag'),function(t){return t.textContent.trim();});
+      var title= card.querySelector('h2').textContent.trim();
+      var desc = card.querySelector('.desc').textContent.trim();
+      items.push({t:title,g:'入口卡片',h:card.getAttribute('href'),x:[title,desc,tags.join(' ')].join(' '),k:0,snip:desc});
+    });
+    document.querySelectorAll('.q-item').forEach(function(a){
+      items.push({t:a.textContent.trim(),g:'快捷直达',h:a.getAttribute('href'),x:a.textContent.trim(),k:3,snip:'从总入口快速打开这一份图解'});
+    });
+    document.querySelectorAll('.nav-links a').forEach(function(a){
+      items.push({t:a.textContent.trim(),g:'顶部导航',h:a.getAttribute('href'),x:a.textContent.trim(),k:3,snip:'顶部导航里的分类入口'});
+    });
+    items.push({t:document.querySelector('.hero h1').textContent.trim(),g:'本页',h:'index.html',
+                x:document.querySelector('.hero-in').textContent,k:2,snip:document.querySelector('.hero .lede').textContent.trim()});
+    items.push({t:'出处 · 《环境工程制图与CAD》（第2版，化学工业出版社 2022）',g:'页脚',h:'pages/drawing-commands.html',
+                x:document.querySelector('.foot').textContent,k:3,snip:'四份图解的共同依据与软件版本'});
+
+    PAGE_INDEX.forEach(function(p){
+      var label = PAGE_LABEL[p.path] || p.path;
+      (p.headings||[]).forEach(function(h){
+        items.push({t:h,g:label,h:p.path,x:h,k:1,snip:'这一份图解里的章节，点开即可跳到对应页面'});
+      });
+      items.push({t:'页面正文',g:label,h:p.path,x:p.text,k:2,snip:'',body:true});
+    });
+    return items;
+  }
+  var INDEX = buildIndex();
+
+  function highlight(text, terms){
+    var out = esc(text);
+    terms.forEach(function(term){
+      if(!term) return;
+      var re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')','gi');
+      out = out.replace(re,'<mark>$1</mark>');
+    });
+    return out;
+  }
+  function snippet(text, terms){
+    if(!text) return '';
+    var low = norm(text), pos = -1;
+    for(var i=0;i<terms.length;i++){
+      var p = low.indexOf(terms[i]);
+      if(p > -1){ pos = p; break; }
+    }
+    if(pos < 0) pos = 0;
+    var start = Math.max(0,pos-32), end = Math.min(text.length,pos+90);
+    return (start>0?'…':'') + text.slice(start,end) + (end<text.length?'…':'');
+  }
+
+  function render(q){
+    var terms = norm(q).split(' ').filter(Boolean);
+    clear.hidden = !q;
+    if(!terms.length){ reset(); return; }
+
+    var hits = INDEX.filter(function(it){
+      var x = norm(it.x);
+      return terms.every(function(term){ return x.indexOf(term) > -1; });
+    });
+    // 标题命中优先；同优先级按卡片 > 章节 > 正文 > 导航
+    hits.sort(function(a,b){
+      var ta = norm(a.t), tb = norm(b.t);
+      var ha = terms.some(function(x){return ta.indexOf(x)>-1;}) ? 0 : 1;
+      var hb = terms.some(function(x){return tb.indexOf(x)>-1;}) ? 0 : 1;
+      if(ha!==hb) return ha-hb;
+      return a.k-b.k;
+    });
+
+    entries.hidden = true; quick.hidden = true; section.hidden = true;
+    meta.textContent = '找到 ' + hits.length + ' 条相关内容';
+
+    if(!hits.length){
+      panel.hidden = true;
+      emptyEl.hidden = false;
+      emptyT.textContent = '没找到「' + q + '」';
+      suggest.innerHTML = SUGGEST.map(function(s){
+        return '<button type="button">'+esc(s)+'</button>';
+      }).join('');
+      [].forEach.call(suggest.querySelectorAll('button'),function(b){
+        b.addEventListener('click',function(){ input.value=b.textContent; render(b.textContent); input.focus(); });
+      });
+      return;
+    }
+
+    emptyEl.hidden = true;
+    panel.hidden = false;
+    var shown = hits.slice(0,30);
+    countEl.textContent = '「' + q + '」· 共 ' + hits.length + ' 条';
+    listEl.innerHTML = shown.map(function(it){
+      var snip = it.body ? snippet(it.x,terms) : (it.snip || '');
+      return '<a class="result-item" href="'+esc(it.h)+'">'+
+             '<div class="result-title"><span class="result-src">'+esc(it.g)+'</span>'+highlight(it.t,terms)+'</div>'+
+             (snip?'<div class="result-snip">'+highlight(snip,terms)+'</div>':'')+
+             '</a>';
+    }).join('') + (hits.length>shown.length ? '<div class="result-more">还有 '+(hits.length-shown.length)+' 条未显示，换个更具体的词可以缩小范围。</div>' : '');
+  }
+
+  function reset(){
+    input.value = '';
+    clear.hidden = true;
+    panel.hidden = true;
+    emptyEl.hidden = true;
+    entries.hidden = false; quick.hidden = false; section.hidden = false;
+    meta.textContent = '输入即搜 · 覆盖本页与 4 份图解的全部正文';
+  }
+
+  var SUGGEST = ['修剪','圆','图块','镜像','标注样式','全局比例','阵列','BEDIT','拉伸','多段线'];
+  input.addEventListener('input',function(){ render(input.value.trim()); });
+  clear.addEventListener('click',function(){ reset(); input.focus(); });
+  document.getElementById('cadResultClear').addEventListener('click',function(){ reset(); input.focus(); });
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){ reset(); return; }
+    if(e.key==='Enter'){
+      var first = listEl.querySelector('.result-item');
+      if(first && !panel.hidden){ location.href = first.getAttribute('href'); }
+    }
+  });
+  // 浏览器保留搜索词时，恢复成干净的初始态
+  reset();
+})();
+</script>
 </body>
 </html>
