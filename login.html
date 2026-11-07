@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>登录 · LX集 生活工作台</title>
+<style>
+  :root{--paper:#f3f7fc;--card:#fff;--ink:#17395c;--muted:#6a7f98;--line:#d8e3f0;--blue:#1a5fb4;--blue2:#2f7ec9;--red:#c2554d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--paper);color:var(--ink);font:15px/1.6 "PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{width:100%;max-width:410px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:22px;justify-content:center}
+  .mark{width:46px;height:46px;border-radius:14px;background:var(--blue);color:#fff;font:700 21px/46px "Songti SC",serif;text-align:center;box-shadow:0 7px 18px rgba(26,95,180,.22)}
+  .brand strong{display:block;font:700 19px/1.3 "Songti SC",serif;letter-spacing:.05em}
+  .brand span{display:block;color:var(--muted);font-size:11px;letter-spacing:.12em}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 18px 50px rgba(23,57,92,.10)}
+  .tabs{display:flex;gap:6px;background:#eef4fb;border-radius:12px;padding:4px;margin-bottom:22px}
+  .tabs button{flex:1;min-height:40px;border:0;border-radius:9px;background:transparent;color:var(--muted);font-size:14px;font-weight:700;cursor:pointer}
+  .tabs button.active{background:#fff;color:var(--blue);box-shadow:0 2px 8px rgba(23,57,92,.10)}
+  h1{font-size:20px;margin-bottom:5px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+  label{display:block;margin-bottom:14px}
+  label span{display:block;font-size:12px;font-weight:700;color:#4a5f75;margin-bottom:6px}
+  input{width:100%;min-height:46px;padding:0 13px;border:1px solid var(--line);border-radius:11px;background:#fbfdff;font-size:16px;color:var(--ink);font-family:inherit}
+  input:focus{outline:0;border-color:var(--blue2);box-shadow:0 0 0 3px rgba(47,126,201,.15)}
+  .btn{width:100%;min-height:48px;border:0;border-radius:12px;background:var(--blue);color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
+  .btn:hover{background:#154e96}
+  .btn:disabled{opacity:.6;cursor:wait}
+  .btn.ghost{background:#eef4fb;color:var(--blue);margin-top:10px}
+  .msg{margin-top:14px;padding:11px 13px;border-radius:10px;font-size:13px;line-height:1.6}
+  .msg[hidden]{display:none}
+  .msg.err{background:#fbe9e7;border:1px solid #eec4bf;color:#8c443c}
+  .msg.ok{background:#e6f3ee;border:1px solid #bcded1;color:#256b52}
+  .hint{margin-top:18px;padding-top:16px;border-top:1px solid #edf2f7;color:var(--muted);font-size:12px;line-height:1.7}
+  .hint b{color:var(--ink)}
+  .signed{text-align:center}
+  .signed .who{font-size:16px;font-weight:700;margin:8px 0 4px;word-break:break-all}
+  .foot{text-align:center;margin-top:16px;font-size:12px;color:var(--muted)}
+  .foot a{color:var(--blue);text-decoration:none}
+  @media(max-width:420px){.card{padding:22px 18px}body{padding:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><div class="mark">L</div><div><strong>LX集</strong><span>生活有迹可循</span></div></div>
+
+  <div class="card" id="formCard">
+    <div class="tabs">
+      <button type="button" class="active" id="tabLogin">登录</button>
+      <button type="button" id="tabSignup">注册新账号</button>
+    </div>
+    <h1 id="title">登录你的工作台</h1>
+    <p class="sub" id="subtitle">每个账号的数据完全分开，别人看不到你的记录。</p>
+
+    <form id="authForm">
+      <label><span>邮箱</span><input id="email" name="email" type="email" autocomplete="username" placeholder="you@example.com" required></label>
+      <label><span>密码</span><input id="password" name="password" type="password" autocomplete="current-password" placeholder="至少 6 位" minlength="6" required></label>
+      <button class="btn" id="submitBtn" type="submit">登录</button>
+    </form>
+
+    <div class="msg" id="msg" hidden></div>
+
+    <div class="hint">
+      <b>第一次用？</b>点上面「注册新账号」，填邮箱和密码就行。注册完会自动建好这个账号专属的数据空间，口令由系统生成，不用你自己记。<br>
+      如果后台开了邮箱验证，注册后要去邮箱点一下确认链接，再回来登录。
+    </div>
+  </div>
+
+  <div class="card signed" id="signedCard" hidden>
+    <h1>已经登录</h1>
+    <p class="who" id="who"></p>
+    <p class="sub">这台设备记着你的登录状态，直接进就行。</p>
+    <button class="btn" id="enterBtn" type="button">进入工作台</button>
+    <button class="btn ghost" id="switchBtn" type="button">换个账号登录</button>
+    <button class="btn ghost" id="logoutBtn" type="button">退出登录</button>
+  </div>
+
+  <div class="foot"><a href="cad.html">CAD 制图速查站</a> · <a href="index.html">返回首页</a></div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var PROJECT = 'https://cjfaoldoxrkddfvwovzw.supabase.co';
+  var ANON    = 'sb_publishable_Ms45xDWCo_uykN1-EDFJuQ_ZNpST8RU';
+  var AUTH    = PROJECT + '/auth/v1';
+  var STORE   = 'lx-auth';
+  var LAST    = 'lx-last-email';
+
+  var $ = function(id){ return document.getElementById(id); };
+  var mode = 'login';
+  var formCard = $('formCard'), signedCard = $('signedCard');
+  var msg = $('msg');
+
+  function showMsg(text, kind){
+    msg.hidden = false;
+    msg.className = 'msg ' + (kind || 'err');
+    msg.textContent = text;
+  }
+  function hideMsg(){ msg.hidden = true; }
+
+  function readAuth(){
+    try { return JSON.parse(localStorage.getItem(STORE) || 'null'); } catch(e){ return null; }
+  }
+  function saveAuth(a){
+    try { localStorage.setItem(STORE, JSON.stringify(a)); } catch(e){}
+  }
+  function clearAuth(){
+    try { localStorage.removeItem(STORE); } catch(e){}
+  }
+  function expired(a){ return !a || !a.token || !a.exp || Date.now() > a.exp - 60000; }
+
+  function renderSigned(a){
+    formCard.hidden = true;
+    signedCard.hidden = false;
+    $('who').textContent = a.email || '（已登录）';
+  }
+  function renderForm(){
+    formCard.hidden = false;
+    signedCard.hidden = true;
+  }
+
+  function setMode(m){
+    mode = m;
+    $('tabLogin').classList.toggle('active', m === 'login');
+    $('tabSignup').classList.toggle('active', m === 'signup');
+    $('title').textContent = m === 'login' ? '登录你的工作台' : '建一个新账号';
+    $('subtitle').textContent = m === 'login'
+      ? '每个账号的数据完全分开，别人看不到你的记录。'
+      : '新账号会有自己独立的一份数据，和别的账号互不干扰。';
+    $('submitBtn').textContent = m === 'login' ? '登录' : '注册并登录';
+    $('password').autocomplete = m === 'login' ? 'current-password' : 'new-password';
+    hideMsg();
+  }
+
+  function post(path, body){
+    return fetch(AUTH + path, {
+      method: 'POST',
+      headers: { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function(r){
+      return r.text().then(function(t){
+        var data = null;
+        try { data = t ? JSON.parse(t) : null; } catch(e){}
+        if (!r.ok) {
+          var why = (data && (data.msg || data.message || data.error_description)) || ('请求失败（' + r.status + '）');
+          throw new Error(why);
+        }
+        return data;
+      });
+    });
+  }
+
+  function finish(data, email){
+    var a = {
+      token: data.access_token,
+      refresh: data.refresh_token || '',
+      email: (data.user && data.user.email) || email,
+      sub: (data.user && data.user.id) || '',
+      exp: Date.now() + (Number(data.expires_in) || 3600) * 1000
+    };
+    saveAuth(a);
+    try { localStorage.setItem(LAST, a.email); } catch(e){}
+    location.href = 'life-all-in-one.html';
+  }
+
+  $('tabLogin').addEventListener('click', function(){ setMode('login'); });
+  $('tabSignup').addEventListener('click', function(){ setMode('signup'); });
+
+  $('authForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = $('email').value.trim(), password = $('password').value;
+    if (!email || !password) return;
+    hideMsg();
+    var btn = $('submitBtn');
+    btn.disabled = true;
+    btn.textContent = mode === 'login' ? '正在登录…' : '正在注册…';
+
+    var path = mode === 'login' ? '/token?grant_type=password' : '/signup';
+    post(path, { email: email, password: password })
+      .then(function(data){
+        if (!data.access_token) {
+          btn.disabled = false;
+          btn.textContent = mode === 'login' ? '登录' : '注册并登录';
+          showMsg('注册成功，但还没拿到登录状态。去邮箱点一下确认链接，再回来登录。', 'ok');
+          return;
+        }
+        finish(data, email);
+      })
+      .catch(function(err){
+        btn.disabled = false;
+        btn.textContent = mode === 'login' ? '登录' : '注册并登录';
+        var text = String(err.message || err);
+        if (/Invalid login credentials/i.test(text)) text = '邮箱或密码不对，再检查一遍。';
+        else if (/User already registered/i.test(text)) text = '这个邮箱已经注册过了，切到「登录」就行。';
+        else if (/Password should be/i.test(text)) text = '密码太短，至少 6 位。';
+        else if (/Email not confirmed/i.test(text)) text = '邮箱还没验证，去邮箱点确认链接。';
+        showMsg(text, 'err');
+      });
+  });
+
+  $('enterBtn').addEventListener('click', function(){ location.href = 'life-all-in-one.html'; });
+  $('switchBtn').addEventListener('click', function(){ clearAuth(); renderForm(); setMode('login'); $('email').focus(); });
+  $('logoutBtn').addEventListener('click', function(){
+    clearAuth();
+    renderForm(); setMode('login');
+    showMsg('已退出，这台设备不再保存登录状态。', 'ok');
+  });
+
+  var auth = readAuth();
+  try { $('email').value = localStorage.getItem(LAST) || ''; } catch(e){}
+  if (auth && !expired(auth)) renderSigned(auth);
+  else { if (auth) clearAuth(); renderForm(); }
+  setMode('login');
+})();
+</script>
+</body>
+</html>
