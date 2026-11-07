@@ -43,16 +43,24 @@ alter table public.user_spaces enable row level security;
 --    （app_settings 的主键是 id text，用 'u-账号id' 当 id，不用改主键）
 -- ------------------------------------------------------------
 create or replace function public.on_user_created() returns trigger
-  language plpgsql security definer set search_path = public as $$
+  language plpgsql security definer set search_path = public, pg_catalog as $$
+declare
+  k text;
 begin
-  insert into public.user_spaces (user_id, app_key)
-  values (new.id, encode(gen_random_bytes(24), 'hex'))
-  on conflict (user_id) do nothing;
+  begin
+    -- gen_random_uuid() 是数据库内置函数，不依赖额外扩展
+    k := replace(gen_random_uuid()::text || gen_random_uuid()::text, '-', '');
+    insert into public.user_spaces (user_id, app_key)
+      values (new.id, k)
+      on conflict (user_id) do nothing;
 
-  insert into public.app_settings (id, user_id, data)
-  values ('u-' || new.id::text, new.id, '{}'::jsonb)
-  on conflict (id) do nothing;
-
+    insert into public.app_settings (id, user_id, data)
+      values ('u-' || new.id::text, new.id, '{}'::jsonb)
+      on conflict (id) do nothing;
+  exception when others then
+    -- 建空间失败不能拖垮注册；页面登录后会用 ensure_my_space() 补建
+    raise warning 'auto space skipped: %', sqlerrm;
+  end;
   return new;
 end $$;
 
@@ -88,7 +96,7 @@ create or replace function public.my_app_key() returns text
 --    旧数据（user_id 为空）归第一个登录的账号，之后没人能再认领
 -- ------------------------------------------------------------
 create or replace function public.ensure_my_space() returns text
-  language plpgsql security definer set search_path = public as $$
+  language plpgsql security definer set search_path = public, pg_catalog as $$
 declare
   uid_ uuid; k text; t text;
 begin
@@ -97,7 +105,7 @@ begin
 
   select app_key into k from public.user_spaces where user_id = uid_;
   if k is null then
-    k := encode(gen_random_bytes(24), 'hex');
+    k := replace(gen_random_uuid()::text || gen_random_uuid()::text, '-', '');
     insert into public.user_spaces (user_id, app_key) values (uid_, k);
   end if;
 

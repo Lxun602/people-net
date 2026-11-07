@@ -26,6 +26,7 @@ people-net/
 ├── supabase-schema.sql          # 建表补丁：设置表 / 习惯唯一约束 / 数量改文本
 ├── supabase-harden.sql          # 加固补丁：加同步口令，挡住未授权读写
 ├── supabase-multi-account.sql   # 多账号补丁：账号隔离 + 自动下发口令
+├── supabase-fix-signup.sql      # 注册报错 "Database error saving new user" 时跑这个
 ├── .github/workflows/deploy.yml # GitHub Pages 自动部署
 ├── .nojekyll
 ├── .gitignore
@@ -141,6 +142,7 @@ var SUPABASE_KEY = 'sb_publishable_<你的钥匙>';
 
 1. Supabase 后台 → **Authentication → Providers** 打开 **Email**；**URL Configuration → Site URL** 填 `https://llxcad.cn`。要关掉邮箱验证就顺手关，不然注册后要去邮箱点确认链接。
 2. SQL Editor 跑 `supabase-multi-account.sql`。它会给 7 张表加 `user_id` 列、建账号口令表、注册时自动建空间、换掉旧的放行策略。**不删现有数据**：旧数据由第一个登录的账号一次性认领。
+   - 如果注册时报 **Database error saving new user**，再跑一次 `supabase-fix-signup.sql`（可重复执行、不动数据）。它把生成随机口令换成数据库内置函数，并给注册触发器加保险：建空间失败也不再打断注册，空间由页面登录后自己补建。
 3. 打开 `https://llxcad.cn/login.html`，点「注册新账号」建账号。想几个账号就建几个，各用各的邮箱密码。
 
 之后的行为：
